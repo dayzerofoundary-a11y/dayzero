@@ -1,0 +1,18 @@
+- [ ] Phase 1: Expand Prisma schema
+  - [ ] Update files/prisma/schema.prisma with Submission, SubmissionFile, Notification models
+  - [ ] Run prisma migrate dev (or deploy) to create DB migration
+- [ ] Phase 2: Implement POST /api/v1/intake
+  - [ ] Add multer middleware (memory storage) with file limits + MIME whitelist
+  - [ ] Add Zod intake validator
+  - [ ] Implement Turnstile verification (server-side)
+  - [ ] Implement CAST ID generator (CAST-${year}-${6-digit-sequence})
+  - [ ] Implement Cloudinary upload + rollback helper
+  - [ ] Implement Prisma transaction to persist Submission + SubmissionFile + Notification
+  - [ ] Return 201 with { success:true, castId, message }
+  - [ ] Map errors to 400/413/415/500 formats
+- [ ] Phase 3: Swagger/OpenAPI docs
+  - [ ] Document /api/v1/intake
+- [ ] Verification
+  - [ ] Run build/typecheck
+  - [ ] Manual curl/form-data tests for success + failure modes
+

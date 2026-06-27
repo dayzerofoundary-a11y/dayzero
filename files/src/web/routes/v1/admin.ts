@@ -1,0 +1,148 @@
+import { Router } from 'express'
+import crypto from 'crypto'
+import type { Request, Response, NextFunction } from 'express'
+
+export const adminRoutes = Router()
+
+// ── In-memory token store (process-scoped, sufficient for single-instance) ───
+// Token → expiry timestamp. Tokens expire after 8 hours.
+const TOKEN_TTL_MS = 8 * 60 * 60 * 1000
+const activeTokens = new Map<string, number>()
+
+// Purge expired tokens periodically to avoid unbounded growth
+setInterval(() => {
+    const now = Date.now()
+    for (const [tok, exp] of activeTokens.entries()) {
+        if (exp < now) activeTokens.delete(tok)
+    }
+}, 60 * 60 * 1000)
+
+// ── Auth middleware — verifies Bearer token issued by /admin/login ────────────
+function requireAdminToken(req: Request, res: Response, next: NextFunction) {
+    const header = req.headers['authorization'] ?? ''
+    const token = header.startsWith('Bearer ') ? header.slice(7) : ''
+    const expiry = activeTokens.get(token)
+    if (!token || !expiry || expiry < Date.now()) {
+        res.status(401).json({
+            success: false,
+            message: 'Unauthorised — invalid or expired session token',
+            data: null,
+            errors: [{ code: 'TOKEN_EXPIRED' }],
+        })
+        return
+    }
+    next()
+}
+
+// ── POST /api/v1/admin/login ─────────────────────────────────────────────────
+// Verifies the admin password server-side and issues a short-lived token.
+// The password is NEVER sent to the client — comparison happens here only.
+adminRoutes.post('/login', (req: Request, res: Response) => {
+    const { password } = req.body as { password?: string }
+    const adminPassword = process.env.ADMIN_PASSWORD
+
+    if (!adminPassword || adminPassword === 'change-me') {
+        res.status(503).json({
+            success: false,
+            message: 'Admin password not configured on this server',
+            data: null,
+            errors: [{ message: 'Set ADMIN_PASSWORD in the server .env file' }],
+        })
+        return
+    }
+
+    if (!password || typeof password !== 'string') {
+        res.status(400).json({
+            success: false,
+            message: 'Password is required',
+            data: null,
+            errors: [{ field: 'password', message: 'Required' }],
+        })
+        return
+    }
+
+    // Constant-time comparison prevents timing attacks
+    const expected = Buffer.from(adminPassword)
+    const provided = Buffer.from(password)
+    const match =
+        expected.length === provided.length &&
+        crypto.timingSafeEqual(expected, provided)
+
+    if (!match) {
+        res.status(401).json({
+            success: false,
+            message: 'Invalid password',
+            data: null,
+            errors: [{ message: 'Invalid password' }],
+        })
+        return
+    }
+
+    // Issue a 32-byte random token valid for 8 hours
+    const token = crypto.randomBytes(32).toString('hex')
+    activeTokens.set(token, Date.now() + TOKEN_TTL_MS)
+
+    res.status(200).json({
+        success: true,
+        message: 'Authenticated',
+        data: { token, expiresIn: TOKEN_TTL_MS / 1000 },
+        pagination: null,
+        errors: null,
+    })
+})
+
+// ── All routes below require a valid admin token ──────────────────────────────
+adminRoutes.use(requireAdminToken)
+
+// ── POST /api/v1/admin/logout ────────────────────────────────────────────────
+adminRoutes.post('/logout', (req: Request, res: Response) => {
+    const token = req.headers['authorization']?.slice(7) ?? ''
+    activeTokens.delete(token)
+    res.status(200).json({ success: true, message: 'Logged out', data: null, pagination: null, errors: null })
+})
+
+// ── GET /api/v1/admin/submissions ────────────────────────────────────────────
+// Returns in-memory submission log. In a production system this would query
+// the database. Submissions are accumulated here until the process restarts.
+const submissionLog: Array<{
+    id: string
+    castId: string
+    name: string
+    email: string
+    role: string
+    affiliation: string
+    category: string
+    idea: string
+    ip: string
+    createdAt: string
+}> = []
+
+// Export so intake.ts can append to it
+export function logSubmission(entry: (typeof submissionLog)[number]) {
+    submissionLog.unshift(entry) // newest first
+    if (submissionLog.length > 1000) submissionLog.pop() // cap at 1000
+}
+
+adminRoutes.get('/submissions', (_req: Request, res: Response) => {
+    res.status(200).json({
+        success: true,
+        message: 'OK',
+        data: submissionLog,
+        pagination: { total: submissionLog.length },
+        errors: null,
+    })
+})
+
+// ── GET /api/v1/admin/dashboard ──────────────────────────────────────────────
+adminRoutes.get('/dashboard', (_req: Request, res: Response) => {
+    res.status(200).json({
+        success: true,
+        message: 'OK',
+        data: {
+            totalSubmissions: submissionLog.length,
+            latestSubmission: submissionLog[0] ?? null,
+        },
+        pagination: null,
+        errors: null,
+    })
+})

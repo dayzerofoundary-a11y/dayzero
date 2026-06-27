@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: dayzerofoundry-api
+    env: node
+    buildCommand: "cd files && npm install"
+    startCommand: "cd files && node server.js"
+    envVars:
+      - key: PORT
+        value: 4000
+      - key: RESEND_API_KEY
+        sync: false
+      - key: NOTIFICATION_RECIPIENTS
+        sync: false
+      - key: TURNSTILE_SECRET_KEY
+        sync: false

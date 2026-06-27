@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  passwordHash  String
+  role          String   @default("user")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  deletedAt     DateTime?
+
+  @@index([role])
+}
+
+model Submission {
+  id          String   @id @default(uuid())
+  castId      String   @unique
+
+  name        String
+  email       String
+  role        String
+  affiliation String
+  category    String
+  idea        String
+
+  status      String   @default("received")
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  deletedAt   DateTime?
+
+  files        SubmissionFile[]
+  notifications Notification[]
+
+  @@index([email])
+  @@index([category])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model SubmissionFile {
+  id                String   @id @default(uuid())
+  submissionId     String
+
+  publicId         String
+  secureUrl        String
+  format           String?
+  bytes            BigInt?
+  width            Int?
+  height           Int?
+  originalFilename String?
+
+  createdAt         DateTime @default(now())
+
+  submission Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+
+  @@index([submissionId])
+}
+
+model Notification {
+  id            String   @id @default(uuid())
+  submissionId String
+
+  // e.g. email recipient
+  recipient     String
+
+  status        String   @default("pending") // pending | processing | sent | failed
+  retryCount    Int      @default(0)
+  lastError     String?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  submission    Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+
+  @@index([status])
+  @@index([retryCount])
+}
+
