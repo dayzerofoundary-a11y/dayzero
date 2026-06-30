@@ -16,12 +16,19 @@ import { registerRoutes } from './routes/index.js'
 export function initApp(app: Express) {
     // Security
     app.use(helmet())
-    // Fix 8: CORS — never default to wildcard; only allow explicitly listed origins
+    // Fix 8: CORS — allow explicitly listed origins and all Vercel deployment subdomains
     app.use(
         cors({
-            origin: process.env.CORS_ORIGIN
-                ? process.env.CORS_ORIGIN.split(',').map((s) => s.trim())
-                : ['http://127.0.0.1:5173', 'http://localhost:5173'],
+            origin: (origin, callback) => {
+                const allowed = process.env.CORS_ORIGIN
+                    ? process.env.CORS_ORIGIN.split(',').map((s) => s.trim())
+                    : ['http://127.0.0.1:5173', 'http://localhost:5173']
+                if (!origin || allowed.includes(origin) || origin.endsWith('.vercel.app')) {
+                    callback(null, true)
+                } else {
+                    callback(new Error('Not allowed by CORS'))
+                }
+            },
             credentials: true,
         })
     )
