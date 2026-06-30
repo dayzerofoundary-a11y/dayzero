@@ -210,7 +210,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
       toast.dismiss(loadingToastId);
       const message =
         err instanceof TypeError
-          ? "Backend is not reachable. Make sure the API is running with npm run dev."
+          ? `Backend is not reachable at "${intakeUrl}". Error: ${err.message || String(err)}`
           : err.message || "Failed to submit. Please ensure the backend server is running.";
       toast.error(message);
     } finally {

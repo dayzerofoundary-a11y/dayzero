@@ -50,8 +50,8 @@ export function AdminDashboard() {
       }
       setToken(data.data.token);
       await fetchSubmissions(data.data.token);
-    } catch {
-      setError("Could not reach the server. Make sure the API is running.");
+    } catch (err: any) {
+      setError(`Could not reach the server at "${API}/api/v1/admin/login". Details: ${err?.message || String(err)}`);
     } finally {
       setLoginLoading(false);
     }
