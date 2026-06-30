@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import crypto from 'crypto'
 import type { Request, Response, NextFunction } from 'express'
+import { prisma } from '../../../lib/prisma.js'
 
 export const adminRoutes = Router()
 
@@ -123,26 +124,74 @@ export function logSubmission(entry: (typeof submissionLog)[number]) {
     if (submissionLog.length > 1000) submissionLog.pop() // cap at 1000
 }
 
-adminRoutes.get('/submissions', (_req: Request, res: Response) => {
-    res.status(200).json({
-        success: true,
-        message: 'OK',
-        data: submissionLog,
-        pagination: { total: submissionLog.length },
-        errors: null,
-    })
+adminRoutes.get('/submissions', async (_req: Request, res: Response) => {
+    try {
+        const submissions = await prisma.submission.findMany({
+            orderBy: { createdAt: 'desc' },
+            include: { files: true }
+        })
+
+        // Serialize BigInt safely for JSON
+        const serialized = submissions.map(sub => ({
+            ...sub,
+            files: sub.files.map(f => ({
+                ...f,
+                bytes: f.bytes ? Number(f.bytes) : null
+            }))
+        }))
+
+        res.status(200).json({
+            success: true,
+            message: 'OK',
+            data: serialized,
+            pagination: { total: serialized.length },
+            errors: null,
+        })
+    } catch (err: any) {
+        console.error('[admin] fetch submissions error:', err)
+        res.status(500).json({
+            success: false,
+            message: 'Failed to fetch submissions',
+            data: null,
+            errors: [{ message: 'Database error' }]
+        })
+    }
 })
 
 // ── GET /api/v1/admin/dashboard ──────────────────────────────────────────────
-adminRoutes.get('/dashboard', (_req: Request, res: Response) => {
-    res.status(200).json({
-        success: true,
-        message: 'OK',
-        data: {
-            totalSubmissions: submissionLog.length,
-            latestSubmission: submissionLog[0] ?? null,
-        },
-        pagination: null,
-        errors: null,
-    })
+adminRoutes.get('/dashboard', async (_req: Request, res: Response) => {
+    try {
+        const totalSubmissions = await prisma.submission.count()
+        const latestSubmission = await prisma.submission.findFirst({
+            orderBy: { createdAt: 'desc' },
+            include: { files: true }
+        })
+
+        const serializedLatest = latestSubmission ? {
+            ...latestSubmission,
+            files: latestSubmission.files.map(f => ({
+                ...f,
+                bytes: f.bytes ? Number(f.bytes) : null
+            }))
+        } : null
+
+        res.status(200).json({
+            success: true,
+            message: 'OK',
+            data: {
+                totalSubmissions,
+                latestSubmission: serializedLatest,
+            },
+            pagination: null,
+            errors: null,
+        })
+    } catch (err) {
+        console.error('[admin] fetch dashboard error:', err)
+        res.status(500).json({
+            success: false,
+            message: 'Failed to fetch dashboard stats',
+            data: null,
+            errors: [{ message: 'Database error' }]
+        })
+    }
 })

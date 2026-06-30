@@ -179,7 +179,8 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || "Submission failed");
+        const errorMessage = data.errors?.[0]?.message || data.message || "Submission failed";
+        throw new Error(errorMessage);
       }
 
       const data = await response.json();

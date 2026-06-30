@@ -30,6 +30,25 @@ export function initApp(app: Express) {
     app.use(express.json({ limit: '2mb' }))
     app.use(express.urlencoded({ extended: true, limit: '2mb' }))
 
+    // NoSQL Injection Prevention Middleware (strips keys starting with $ or containing .)
+    app.use((req, _res, next) => {
+        const sanitize = (obj: any) => {
+            if (obj && typeof obj === 'object') {
+                for (const key in obj) {
+                    if (key.startsWith('$') || key.includes('.')) {
+                        delete obj[key]
+                    } else if (typeof obj[key] === 'object') {
+                        sanitize(obj[key])
+                    }
+                }
+            }
+        }
+        sanitize(req.body)
+        sanitize(req.query)
+        sanitize(req.params)
+        next()
+    })
+
     // Performance
     app.use(compression())
 

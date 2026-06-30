@@ -8,27 +8,16 @@ for (const key of SECRETS_TO_CHECK) {
     const val = process.env[key]
     if (!val || INSECURE_DEFAULTS.includes(val)) {
         if (process.env.NODE_ENV === 'production') {
-            // eslint-disable-next-line no-console
             console.error(`[FATAL] ${key} is not set or uses an insecure default. Refusing to start in production.`)
             process.exit(1)
         } else {
-            // eslint-disable-next-line no-console
             console.warn(`[WARN] ${key} is using an insecure default value. Change it before deploying.`)
         }
     }
 }
 
 import express from 'express'
-import cors from 'cors'
-import helmet from 'helmet'
-import compression from 'compression'
-import morgan from 'morgan'
-import type { } from 'morgan'
-
-import rateLimit from 'express-rate-limit'
-
 import { initApp } from './web/app.js'
-
 
 async function main() {
     const app = express()
@@ -36,14 +25,11 @@ async function main() {
 
     const port = process.env.PORT ? Number(process.env.PORT) : 4000
     app.listen(port, () => {
-        // eslint-disable-next-line no-console
         console.log(`[api] listening on :${port}`)
     })
 }
 
 main().catch((err) => {
-    // eslint-disable-next-line no-console
     console.error(err)
     process.exit(1)
 })
-

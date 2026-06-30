@@ -1,10 +1,11 @@
 import { Router } from 'express'
 import multer from 'multer'
 import nodemailer from 'nodemailer'
-import crypto from 'crypto'
 import rateLimit from 'express-rate-limit'
 import { z } from 'zod'
 import { logSubmission } from './admin.js'
+import { prisma } from '../../../lib/prisma.js'
+import { uploadToCloudinary, deleteFromCloudinary } from '../../../lib/cloudinary.js'
 
 export const intakeRoutes = Router()
 
@@ -86,14 +87,34 @@ const intakeSchema = z.object({
 })
 
 // ── Cast-ID generator (DZ-YY-NNNN) ───────────────────────────────────────────
-// Fix 11: seed counter from a stable base so restarts don't collide within a year
-let _castCounter = Math.floor(Date.now() / 1000) % 9000 + 1000
-
-function generateCastId(): string {
+async function generateCastId(): Promise<string> {
     const yy = new Date().getUTCFullYear().toString().slice(-2)
-    const seq = String(_castCounter++).padStart(4, '0')
-    if (_castCounter > 9999) _castCounter = 1
-    return `DZ-${yy}-${seq}`
+    const yearPrefix = `DZ-${yy}-`
+    
+    // Find the latest submission with this year prefix in the database
+    const latest = await prisma.submission.findFirst({
+        where: {
+            castId: {
+                startsWith: yearPrefix
+            }
+        },
+        orderBy: {
+            castId: 'desc'
+        }
+    })
+    
+    let nextSeq = 1
+    if (latest) {
+        const parts = latest.castId.split('-')
+        const lastSeqStr = parts[parts.length - 1]
+        const lastSeq = parseInt(lastSeqStr, 10)
+        if (!isNaN(lastSeq)) {
+            nextSeq = lastSeq + 1
+        }
+    }
+    
+    const seq = String(nextSeq).padStart(4, '0')
+    return `${yearPrefix}${seq}`
 }
 
 // ── Nodemailer transporter ────────────────────────────────────────────────────
@@ -106,7 +127,11 @@ function createTransporter() {
             user: process.env.SMTP_USER,
             pass: process.env.SMTP_PASS,
         },
-    })
+        connectionTimeout: 10000,
+        greetingTimeout: 10000,
+        socketTimeout: 20000,
+        family: 4,
+    } as any)
 }
 
 // ── Email HTML template (all values are HTML-escaped before insertion) ────────
@@ -186,9 +211,10 @@ function buildEmailHtml(fields: EmailFields, castId: string): string {
 </body>
 </html>`
 }
-
 // ── POST /api/v1/intake ───────────────────────────────────────────────────────
 intakeRoutes.post('/', upload.single('file'), async (req, res) => {
+    let uploadResult: any = null
+    let castId = ''
     try {
         // ── 1. Zod validation (Fix 9) ────────────────────────────────────────
         const parsed = intakeSchema.safeParse(req.body)
@@ -221,7 +247,6 @@ intakeRoutes.post('/', upload.single('file'), async (req, res) => {
         }
 
         // ── 3. Fix 5: Turnstile — verify whenever secret is configured ───────
-        // (not tied to NODE_ENV — if TURNSTILE_SECRET is set, always verify)
         if (process.env.TURNSTILE_SECRET) {
             if (!turnstileToken) {
                 res.status(422).json({
@@ -253,8 +278,21 @@ intakeRoutes.post('/', upload.single('file'), async (req, res) => {
             }
         }
 
-        // ── 4. Generate Cast-ID ───────────────────────────────────────────────
-        const castId = generateCastId()
+        // ── 4. Upload file to Cloudinary if provided ──────────────────────────
+        if (req.file) {
+            try {
+                uploadResult = await uploadToCloudinary(req.file.buffer, req.file.mimetype, req.file.originalname)
+            } catch (uploadErr: any) {
+                console.error('[intake] Cloudinary upload error:', uploadErr)
+                res.status(502).json({
+                    success: false,
+                    message: 'Failed to store uploaded file',
+                    data: null,
+                    errors: [{ field: 'file', message: uploadErr?.message || 'Upload error' }],
+                })
+                return
+            }
+        }
 
         // ── 5. Parse compound "idea" field from frontend ──────────────────────
         const ideaNameMatch   = idea.match(/^Idea Name:\s*(.+)/m)
@@ -273,9 +311,62 @@ intakeRoutes.post('/', upload.single('file'), async (req, res) => {
             fileAttached: !!req.file,
         }
 
-        // ── 6. Log to admin dashboard ─────────────────────────────────────────
+        // ── 6. Save to Database using Prisma sequential writes ───────────────
+        let submission: any = null
+        let notification: any = null
+        let retries = 3
+        while (retries > 0) {
+            castId = await generateCastId()
+            try {
+                submission = await prisma.submission.create({
+                    data: {
+                        castId,
+                        name: fields.name,
+                        email: fields.email,
+                        role: fields.role,
+                        affiliation: fields.affiliation,
+                        category: fields.category,
+                        idea: `${fields.ideaName} — ${fields.ambition}\n\n${fields.description}`,
+                    }
+                })
+                break // Success!
+            } catch (dbErr: any) {
+                // If it is a Cast-ID uniqueness constraint violation, retry
+                if (dbErr.code === 'P2002' && dbErr.meta?.target?.includes('castId')) {
+                    retries--
+                    if (retries === 0) throw dbErr
+                    continue
+                }
+                throw dbErr
+            }
+        }
+
+        // Create the files record separately if file was uploaded
+        if (uploadResult) {
+            await prisma.submissionFile.create({
+                data: {
+                    submissionId: submission.id,
+                    publicId: uploadResult.publicId,
+                    secureUrl: uploadResult.secureUrl,
+                    format: uploadResult.format,
+                    bytes: BigInt(uploadResult.bytes),
+                    originalFilename: req.file?.originalname || 'file',
+                }
+            })
+        }
+
+        // Create the notification record separately
+        notification = await prisma.notification.create({
+            data: {
+                submissionId: submission.id,
+                recipient: process.env.SMTP_TO ?? process.env.SMTP_USER ?? fields.email,
+                status: 'pending',
+            }
+        })
+
+        // ── 7. Log to admin dashboard (legacy in-memory fallback) ─────────────
         logSubmission({
-            id:          crypto.randomUUID(),
+            id:          submission.id,
             castId,
             name:        fields.name,
             email:       fields.email,
@@ -284,60 +375,90 @@ intakeRoutes.post('/', upload.single('file'), async (req, res) => {
             category:    fields.category,
             idea:        `${fields.ideaName} — ${fields.ambition}\n\n${fields.description}`,
             ip:          req.ip ?? '',
-            createdAt:   new Date().toISOString(),
+            createdAt:   submission.createdAt.toISOString(),
         })
 
-        // ── 7. Send email ─────────────────────────────────────────────────────
+        // ── 8. Send email asynchronously in the background (Non-blocking!) ────
         const smtpHost = process.env.SMTP_HOST
         const smtpTo   = process.env.SMTP_TO ?? process.env.SMTP_USER
 
-        if (smtpHost && smtpTo) {
-            try {
-                const transporter = createTransporter()
+        if (smtpHost && smtpTo && notification) {
+            // Dispatch email dispatch asynchronously
+            (async () => {
+                try {
+                    const transporter = createTransporter()
 
-                const mailOptions: nodemailer.SendMailOptions = {
-                    from:    `"DayZero Foundry" <${process.env.SMTP_FROM ?? process.env.SMTP_USER}>`,
-                    to:      smtpTo,
-                    replyTo: fields.email, // validated as proper email by Zod above
-                    subject: `[DayZero] New Idea — ${fields.ideaName} · ${castId}`,
-                    html:    buildEmailHtml(fields, castId),
-                    text: [
-                        `NEW IDEA SUBMISSION — ${castId}`,
-                        `Date: ${new Date().toISOString()}`,
-                        '',
-                        'IDEA',
-                        `Name: ${fields.ideaName}`,
-                        `Ambition: ${fields.ambition}`,
-                        `Category: ${fields.category}`,
-                        `Description:\n${fields.description}`,
-                        '',
-                        'SUBMITTER',
-                        `Name: ${fields.name}`,
-                        `Email: ${fields.email}`,
-                        `Role: ${fields.role}`,
-                        `Affiliation: ${fields.affiliation}`,
-                        req.file ? `\nAttachment: ${req.file.originalname} (${(req.file.size / 1024).toFixed(1)} KB)` : '',
-                    ].join('\n'),
+                    const mailOptions: nodemailer.SendMailOptions = {
+                        from:    `"DayZero Foundry" <${process.env.SMTP_FROM ?? process.env.SMTP_USER}>`,
+                        to:      smtpTo,
+                        replyTo: fields.email,
+                        subject: `[DayZero] New Idea — ${fields.ideaName} · ${castId}`,
+                        html:    buildEmailHtml(fields, castId),
+                        text: [
+                            `NEW IDEA SUBMISSION — ${castId}`,
+                            `Date: ${new Date().toISOString()}`,
+                            '',
+                            'IDEA',
+                            `Name: ${fields.ideaName}`,
+                            `Ambition: ${fields.ambition}`,
+                            `Category: ${fields.category}`,
+                            `Description:\n${fields.description}`,
+                            '',
+                            'SUBMITTER',
+                            `Name: ${fields.name}`,
+                            `Email: ${fields.email}`,
+                            `Role: ${fields.role}`,
+                            `Affiliation: ${fields.affiliation}`,
+                            req.file ? `\nAttachment: ${req.file.originalname} (${(req.file.size / 1024).toFixed(1)} KB)` : '',
+                        ].join('\n'),
+                    }
+
+                    if (req.file) {
+                        mailOptions.attachments = [{
+                            filename:    req.file.originalname,
+                            content:     req.file.buffer,
+                            contentType: req.file.mimetype,
+                        }]
+                    }
+
+                    await transporter.sendMail(mailOptions)
+
+                    // Update notification to sent
+                    await prisma.notification.update({
+                        where: { id: notification.id },
+                        data: { status: 'sent' },
+                    })
+                } catch (emailErr: any) {
+                    console.error('[intake] email error:', emailErr)
+                    // Update notification to failed
+                    await prisma.notification.update({
+                        where: { id: notification.id },
+                        data: {
+                            status: 'failed',
+                            lastError: emailErr?.message || String(emailErr),
+                        },
+                    })
                 }
-
-                if (req.file) {
-                    mailOptions.attachments = [{
-                        filename:    req.file.originalname,
-                        content:     req.file.buffer,
-                        contentType: req.file.mimetype,
-                    }]
-                }
-
-                await transporter.sendMail(mailOptions)
-            } catch (emailErr) {
-                console.error('[intake] email error:', emailErr)
-                // Email failure is non-fatal — submission is still accepted
-            }
+            })().catch(err => {
+                console.error('[intake] background email worker error:', err)
+            })
         } else {
             console.log('[intake] SMTP not configured — submission logged only:', { castId, name: fields.name })
+            if (notification) {
+                // Update notification to failed
+                prisma.notification.update({
+                    where: { id: notification.id },
+                    data: {
+                        status: 'failed',
+                        lastError: 'SMTP not configured',
+                    },
+                }).catch(err => {
+                    console.error('[intake] failed to update notification status:', err)
+                })
+            }
         }
 
-        // ── 8. Respond ────────────────────────────────────────────────────────
+        // ── 9. Respond ────────────────────────────────────────────────────────
         res.status(201).json({
             success: true,
             message: 'Idea submitted successfully',
@@ -347,6 +468,14 @@ intakeRoutes.post('/', upload.single('file'), async (req, res) => {
         })
     } catch (err) {
         console.error('[intake] unexpected error:', err)
+        // Cleanup Cloudinary file if transaction failed
+        if (uploadResult && uploadResult.publicId) {
+            try {
+                await deleteFromCloudinary(uploadResult.publicId)
+            } catch (cleanupErr) {
+                console.error('[intake] Cloudinary cleanup error:', cleanupErr)
+            }
+        }
         res.status(500).json({
             success: false,
             message: 'Internal server error',
