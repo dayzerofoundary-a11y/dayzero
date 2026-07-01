@@ -204,6 +204,201 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
     setShowSignatureModal(false);
   };
 
+  // ── AI Refiner States & Helpers ───────────────────────────────────────────
+  const [isRefining, setIsRefining] = useState(false);
+  const [showRefinerModal, setShowRefinerModal] = useState(false);
+  const [refinedText, setRefinedText] = useState("");
+
+  const handleRefineClick = () => {
+    const text = form.memo.trim();
+    if (!text) {
+      toast.error("Please enter a brief description first so the AI can refine it!");
+      return;
+    }
+
+    setIsRefining(true);
+    const loadingToastId = toast.loading("AI is structuring your idea...");
+
+    setTimeout(() => {
+      const result = refineIdeaText(text, form.category);
+      setRefinedText(result);
+      toast.dismiss(loadingToastId);
+      setIsRefining(false);
+      setShowRefinerModal(true);
+    }, 1200);
+  };
+
+  // ── Filing Certificate States & Helpers ─────────────────────────────────────
+  const [showCertificate, setShowCertificate] = useState(false);
+  const [certDetails, setCertDetails] = useState({
+    castId: "",
+    ideaName: "",
+    name: "",
+    role: "",
+    affiliation: "",
+    category: "",
+    signatureImage: null as string | null,
+    dateString: ""
+  });
+
+  const downloadCertificate = () => {
+    const canvas = document.createElement("canvas");
+    canvas.width = 1200;
+    canvas.height = 800;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    // 1. Background
+    ctx.fillStyle = "#F4EFE4";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // 2. Borders
+    ctx.strokeStyle = "#A8822C";
+    ctx.lineWidth = 6;
+    ctx.strokeRect(30, 30, canvas.width - 60, canvas.height - 60);
+
+    ctx.lineWidth = 2;
+    ctx.strokeRect(45, 45, canvas.width - 90, canvas.height - 90);
+
+    // 3. Watermark/Guilloche concentric circles
+    ctx.strokeStyle = "rgba(168,130,44,0.04)";
+    ctx.lineWidth = 1;
+    for (let r = 80; r <= 220; r += 20) {
+      ctx.beginPath();
+      ctx.arc(canvas.width / 2, canvas.height / 2, r, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    // 4. Header Text
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#131929";
+    ctx.font = "bold 44px Georgia, serif";
+    ctx.fillText("DAYZERO FOUNDRY", canvas.width / 2, 130);
+
+    ctx.fillStyle = "#A8822C";
+    ctx.font = "bold 13px 'DM Sans', sans-serif";
+    ctx.fillText("STEALTH PROJECT INTAKE REGISTRY", canvas.width / 2, 170);
+
+    // Line separator
+    ctx.strokeStyle = "rgba(168,130,44,0.3)";
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(canvas.width / 2 - 120, 200);
+    ctx.lineTo(canvas.width / 2 + 120, 200);
+    ctx.stroke();
+
+    // 5. Certification legal statement
+    ctx.fillStyle = "#6A6355";
+    ctx.font = "italic 16px Georgia, serif";
+    ctx.fillText("This document certifies that the confidential concept outlined below has been officially", canvas.width / 2, 245);
+    ctx.fillText("recorded in the DayZero Foundry ledger and is fully protected under the legally binding", canvas.width / 2, 275);
+    ctx.fillText("Non-Disclosure Agreement (NDA) executed prior to transmission.", canvas.width / 2, 305);
+
+    // 6. Data Rows
+    const detailsY = 370;
+    const labelX = 260;
+    const valueX = 420;
+    const rowHeight = 45;
+
+    ctx.textAlign = "left";
+    const detailsList = [
+      { label: "CAST REGISTRY NO.", value: certDetails.castId },
+      { label: "FILING DATE", value: certDetails.dateString },
+      { label: "SUBMITTER NAME", value: certDetails.name },
+      { label: "IDEA NAME", value: certDetails.ideaName.length > 35 ? certDetails.ideaName.slice(0, 35) + "..." : certDetails.ideaName },
+      { label: "CLASSIFICATION", value: certDetails.category || "General / Stealth" }
+    ];
+
+    detailsList.forEach((item, index) => {
+      const y = detailsY + index * rowHeight;
+      ctx.fillStyle = "#A8822C";
+      ctx.font = "bold 11px 'DM Sans', sans-serif";
+      ctx.fillText(item.label, labelX, y);
+
+      ctx.fillStyle = "#131929";
+      ctx.font = "16px Georgia, serif";
+      ctx.fillText(item.value, valueX, y);
+
+      ctx.strokeStyle = "rgba(19,25,41,0.06)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(labelX, y + 15);
+      ctx.lineTo(canvas.width - 260, y + 15);
+      ctx.stroke();
+    });
+
+    // 7. Green/Gold Certified Wax Seal
+    const sealX = 280;
+    const sealY = 660;
+    
+    ctx.fillStyle = "#1A4A3C";
+    ctx.beginPath();
+    ctx.arc(sealX, sealY, 52, 0, Math.PI * 2);
+    ctx.fill();
+    
+    ctx.strokeStyle = "rgba(244,239,228,0.4)";
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.arc(sealX, sealY, 46, 0, Math.PI * 2);
+    ctx.stroke();
+
+    ctx.fillStyle = "#F4EFE4";
+    ctx.textAlign = "center";
+    ctx.font = "bold 8px 'DM Sans', sans-serif";
+    ctx.fillText("CERTIFIED", sealX, sealY - 10);
+    ctx.fillStyle = "#C9A24A";
+    ctx.font = "bold 15px Georgia, serif";
+    ctx.fillText("DZF", sealX, sealY + 5);
+    ctx.fillStyle = "rgba(244,239,228,0.7)";
+    ctx.font = "bold 6px 'DM Sans', sans-serif";
+    ctx.fillText("& SECURED", sealX, sealY + 18);
+
+    // 8. Signature Area
+    const sigX = canvas.width - 320;
+    const sigY = 650;
+
+    ctx.strokeStyle = "rgba(19,25,41,0.25)";
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(sigX - 100, sigY + 15);
+    ctx.lineTo(sigX + 100, sigY + 15);
+    ctx.stroke();
+
+    ctx.fillStyle = "#6A6355";
+    ctx.textAlign = "center";
+    ctx.font = "9px 'DM Sans', sans-serif";
+    ctx.fillText("DISCLOSING PARTY SIGNATURE", sigX, sigY + 32);
+
+    if (certDetails.signatureImage) {
+      const img = new Image();
+      img.src = certDetails.signatureImage;
+      img.onload = () => {
+        ctx.drawImage(img, sigX - 90, sigY - 35, 180, 45);
+        triggerDownload();
+      };
+    } else {
+      ctx.fillStyle = "#1E2535";
+      ctx.font = "italic 32px Georgia, serif";
+      ctx.fillText(certDetails.name || "Stealth Founder", sigX, sigY - 2);
+      triggerDownload();
+    }
+
+    function triggerDownload() {
+      ctx.fillStyle = "rgba(106,99,85,0.45)";
+      ctx.textAlign = "center";
+      ctx.font = "9px 'DM Sans', sans-serif";
+      ctx.fillText("Confidential Idea Registry · DayZero Foundry · Protected under legally binding NDA agreement.", canvas.width / 2, 755);
+
+      const link = document.createElement("a");
+      link.download = `DayZero_Certificate_${certDetails.castId || "Filing"}.png`;
+      link.href = canvas.toDataURL("image/png");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      toast.success("Filing certificate downloaded successfully!");
+    }
+  };
+
   const filteredCategories = CATEGORIES.filter((c) =>
     c.toLowerCase().includes(categorySearch.toLowerCase())
   );
@@ -295,14 +490,31 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
       }
 
       const data = await response.json();
+      
+      // Save details for the downloadable certificate
+      setCertDetails({
+        castId: data.castId,
+        ideaName: form.ideaName,
+        name: form.name,
+        role: form.role,
+        affiliation: form.affiliation,
+        category: form.category,
+        signatureImage: signatureImage,
+        dateString: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
+      });
+
       toast.dismiss(loadingToastId);
 
       setShowSeal(true);
       toast.success(`Protected under NDA — Reference ${data.castId}`, {
-        description: "You will be contacted within 48 working hours.",
+        description: "Filing certificate generated.",
         duration: 6500,
       });
-      setTimeout(() => setShowSeal(false), 4000);
+
+      setTimeout(() => {
+        setShowSeal(false);
+        setShowCertificate(true);
+      }, 3500);
 
       // Reset form
       setForm({
@@ -745,7 +957,39 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                   borderBottom: "1px solid rgba(19,25,41,0.08)",
                 }}
               >
-                <label style={labelStyle}>Memo — Describe the idea</label>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.25rem" }}>
+                  <label style={{ ...labelStyle, marginBottom: 0 }}>Memo — Describe the idea</label>
+                  <button
+                    type="button"
+                    onClick={handleRefineClick}
+                    disabled={isRefining}
+                    style={{
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: "0.58rem",
+                      fontWeight: 600,
+                      letterSpacing: "0.08em",
+                      textTransform: "uppercase",
+                      padding: "0.25rem 0.6rem",
+                      background: "rgba(168,130,44,0.06)",
+                      border: "1px solid rgba(168,130,44,0.25)",
+                      color: "#A8822C",
+                      cursor: "pointer",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "0.25rem",
+                      borderRadius: "2px",
+                      transition: "all 0.2s"
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = "rgba(168,130,44,0.12)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = "rgba(168,130,44,0.06)";
+                    }}
+                  >
+                    <span>✨</span> {isRefining ? "Refining..." : "Refine with AI"}
+                  </button>
+                </div>
                 <textarea
                   value={form.memo}
                   onChange={(e) => update("memo", e.target.value)}
@@ -1854,6 +2098,495 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
         )}
       </AnimatePresence>
 
+      {/* AI Refiner Preview Modal */}
+      <AnimatePresence>
+        {showRefinerModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              zIndex: 300,
+              background: "rgba(13,18,32,0.85)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "1rem",
+            }}
+            onClick={() => setShowRefinerModal(false)}
+          >
+            <motion.div
+              initial={prefersReduced ? {} : { scale: 0.95, opacity: 0, y: 10 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 10 }}
+              transition={{ duration: 0.2 }}
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                background: "#F4EFE4",
+                width: "100%",
+                maxWidth: "700px",
+                maxHeight: "85vh",
+                display: "flex",
+                flexDirection: "column",
+                border: "1px solid rgba(168,130,44,0.3)",
+                boxShadow: "0 24px 64px rgba(13,18,32,0.4)",
+              }}
+            >
+              {/* Header */}
+              <div
+                style={{
+                  padding: "1.25rem 1.5rem",
+                  borderBottom: "1px solid rgba(168,130,44,0.15)",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <h3
+                  style={{
+                    fontFamily: "'Playfair Display', serif",
+                    fontSize: "1.2rem",
+                    fontWeight: 600,
+                    color: "#131929",
+                    margin: 0,
+                  }}
+                >
+                  ✨ AI Scope Alignment
+                </h3>
+                <button
+                  onClick={() => setShowRefinerModal(false)}
+                  style={{
+                    background: "transparent",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: "0.5rem",
+                    color: "#6A6355",
+                    display: "flex",
+                  }}
+                >
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path d="M1 1L13 13M1 13L13 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Comparison Content */}
+              <div style={{ padding: "1.5rem", overflowY: "auto", display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "1rem" }}>
+                  {/* Original Box */}
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div style={{ fontSize: "0.6rem", textTransform: "uppercase", letterSpacing: "0.1em", color: "#6A6355", fontWeight: 600, marginBottom: "0.4rem" }}>
+                      Your Draft
+                    </div>
+                    <div style={{ padding: "0.75rem", background: "rgba(19,25,41,0.03)", border: "1px solid rgba(19,25,41,0.08)", fontSize: "0.85rem", color: "#131929", fontFamily: "'DM Sans', sans-serif", fontWeight: 300, lineHeight: 1.5, minHeight: "60px" }}>
+                      {form.memo}
+                    </div>
+                  </div>
+
+                  {/* Refined Box */}
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div style={{ fontSize: "0.6rem", textTransform: "uppercase", letterSpacing: "0.1em", color: "#A8822C", fontWeight: 600, marginBottom: "0.4rem" }}>
+                      ✨ AI-Refined 3-Point MVP Scope
+                    </div>
+                    <pre style={{
+                      margin: 0,
+                      padding: "1rem",
+                      background: "#FFF",
+                      border: "1px solid rgba(168,130,44,0.3)",
+                      borderRadius: "2px",
+                      fontSize: "0.8rem",
+                      color: "#1E2535",
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontWeight: 300,
+                      lineHeight: 1.6,
+                      whiteSpace: "pre-wrap",
+                      boxShadow: "inset 0 2px 8px rgba(19,25,41,0.02)",
+                    }}>
+                      {refinedText}
+                    </pre>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Footer */}
+              <div
+                style={{
+                  padding: "1rem 1.5rem",
+                  borderTop: "1px solid rgba(168,130,44,0.15)",
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  gap: "0.75rem",
+                  background: "rgba(168,130,44,0.02)",
+                }}
+              >
+                <button
+                  type="button"
+                  onClick={() => setShowRefinerModal(false)}
+                  style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: "0.7rem",
+                    fontWeight: 500,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    padding: "0.6rem 1.25rem",
+                    border: "1px solid rgba(19,25,41,0.15)",
+                    background: "transparent",
+                    color: "#131929",
+                    cursor: "pointer",
+                  }}
+                >
+                  Keep Original
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    update("memo", refinedText);
+                    setShowRefinerModal(false);
+                    toast.success("AI-Refined scope applied to your draft!");
+                  }}
+                  style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: "0.7rem",
+                    fontWeight: 500,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    padding: "0.6rem 1.25rem",
+                    background: "#131929",
+                    color: "#F4EFE4",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  Apply Refined Scope
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Filing Certificate Modal Overlay */}
+      <AnimatePresence>
+        {showCertificate && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              zIndex: 300,
+              background: "rgba(13,18,32,0.92)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "1rem",
+              overflowY: "auto",
+            }}
+          >
+            <motion.div
+              initial={prefersReduced ? {} : { scale: 0.95, opacity: 0, y: 15 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 15 }}
+              transition={{ duration: 0.3, type: "spring", stiffness: 260, damping: 24 }}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "1.5rem",
+                width: "100%",
+                maxWidth: "680px",
+                alignItems: "center",
+              }}
+            >
+              {/* Certificate paper visual */}
+              <div
+                style={{
+                  background: "#F4EFE4",
+                  border: "1px solid rgba(168,130,44,0.45)",
+                  padding: "6px",
+                  boxShadow: "0 24px 72px rgba(13,18,32,0.5)",
+                  width: "100%",
+                  boxSizing: "border-box",
+                  position: "relative",
+                }}
+              >
+                <div
+                  style={{
+                    border: "1px solid rgba(168,130,44,0.25)",
+                    padding: "2rem 2.5rem",
+                    position: "relative",
+                  }}
+                >
+                  <GuillocheBackground color="#131929" opacity={0.03} />
+
+                  {/* Concentric watermark circles */}
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      width: "300px",
+                      height: "300px",
+                      border: "1px dashed rgba(168,130,44,0.06)",
+                      borderRadius: "50%",
+                      pointerEvents: "none",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "240px",
+                        height: "240px",
+                        border: "1px dashed rgba(168,130,44,0.04)",
+                        borderRadius: "50%",
+                      }}
+                    />
+                  </div>
+
+                  {/* Header */}
+                  <div style={{ textAlign: "center", marginBottom: "2rem" }}>
+                    <div
+                      style={{
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontSize: "0.55rem",
+                        fontWeight: 500,
+                        letterSpacing: "0.35em",
+                        textTransform: "uppercase",
+                        color: "#A8822C",
+                        marginBottom: "0.5rem",
+                      }}
+                    >
+                      Certificate of Filing
+                    </div>
+                    <div
+                      style={{
+                        fontFamily: "'Playfair Display', serif",
+                        fontSize: "2rem",
+                        fontWeight: 600,
+                        color: "#131929",
+                        letterSpacing: "0.02em",
+                      }}
+                    >
+                      DayZeroFoundry
+                    </div>
+                    <div
+                      style={{
+                        width: "60px",
+                        height: "1px",
+                        background: "#A8822C",
+                        margin: "0.75rem auto",
+                      }}
+                    />
+                    <div
+                      style={{
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontSize: "0.5rem",
+                        fontWeight: 400,
+                        letterSpacing: "0.15em",
+                        textTransform: "uppercase",
+                        color: "#6A6355",
+                      }}
+                    >
+                      Stealth Idea Registry · Secure Record
+                    </div>
+                  </div>
+
+                  {/* Certification details */}
+                  <div style={{ textAlign: "center", marginBottom: "2rem" }}>
+                    <p
+                      style={{
+                        fontFamily: "Georgia, serif",
+                        fontSize: "0.82rem",
+                        fontStyle: "italic",
+                        color: "#6A6355",
+                        lineHeight: 1.6,
+                        margin: "0 auto 2rem",
+                        maxWidth: "500px",
+                      }}
+                    >
+                      This document certifies that the confidential concept outlined below has been officially recorded in the DayZero Foundry ledger and is fully protected under the legally binding Non-Disclosure Agreement (NDA) executed prior to transmission.
+                    </p>
+
+                    {/* Metadata table */}
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "0.85rem",
+                        maxWidth: "480px",
+                        margin: "0 auto",
+                        textAlign: "left",
+                      }}
+                    >
+                      {[
+                        { label: "Cast Registry No.", value: certDetails.castId },
+                        { label: "Filing Date", value: certDetails.dateString },
+                        { label: "Submitter", value: certDetails.name },
+                        { label: "Project Title", value: certDetails.ideaName || "Stealth Concept" },
+                        { label: "Classification", value: certDetails.category || "Stealth Tech" },
+                      ].map((item, idx) => (
+                        <div
+                          key={idx}
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "baseline",
+                            borderBottom: "1px solid rgba(19,25,41,0.06)",
+                            paddingBottom: "0.3rem",
+                          }}
+                        >
+                          <span
+                            style={{
+                              fontFamily: "'DM Sans', sans-serif",
+                              fontSize: "0.6rem",
+                              fontWeight: 600,
+                              textTransform: "uppercase",
+                              letterSpacing: "0.1em",
+                              color: "#A8822C",
+                            }}
+                          >
+                            {item.label}
+                          </span>
+                          <span
+                            style={{
+                              fontFamily: "Georgia, serif",
+                              fontSize: "0.8rem",
+                              fontWeight: 500,
+                              color: "#131929",
+                              textAlign: "right",
+                            }}
+                          >
+                            {item.value}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Stamp & Signatures */}
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      marginTop: "2.5rem",
+                      paddingTop: "1.5rem",
+                      borderTop: "1px dashed rgba(168,130,44,0.25)",
+                    }}
+                  >
+                    {/* Golden/Green Seal */}
+                    <div style={{ transform: "scale(0.8)", transformOrigin: "left center" }}>
+                      <FullWaxSeal />
+                    </div>
+
+                    {/* Signature */}
+                    <div style={{ textAlign: "center", minWidth: "160px" }}>
+                      <div
+                        style={{
+                          height: "45px",
+                          display: "flex",
+                          alignItems: "flex-end",
+                          justifyContent: "center",
+                          borderBottom: "1px solid rgba(19,25,41,0.25)",
+                          paddingBottom: "2px",
+                          marginBottom: "0.3rem",
+                        }}
+                      >
+                        {certDetails.signatureImage ? (
+                          <img src={certDetails.signatureImage} alt="Signature" style={{ height: "40px", maxWidth: "160px", objectFit: "contain" }} />
+                        ) : (
+                          <span style={{ fontFamily: "'Pinyon Script', cursive", fontSize: "1.8rem", color: "#1E2535" }}>
+                            {certDetails.name || "Stealth Founder"}
+                          </span>
+                        )}
+                      </div>
+                      <div
+                        style={{
+                          fontFamily: "'DM Sans', sans-serif",
+                          fontSize: "0.48rem",
+                          letterSpacing: "0.15em",
+                          textTransform: "uppercase",
+                          color: "#6A6355",
+                        }}
+                      >
+                        Disclosing Party Signature
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div style={{ display: "flex", gap: "1rem", width: "100%", justifyContent: "center" }}>
+                <button
+                  onClick={downloadCertificate}
+                  style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    padding: "1rem 2rem",
+                    background: "#A8822C",
+                    color: "#F4EFE4",
+                    border: "none",
+                    cursor: "pointer",
+                    boxShadow: "0 8px 30px rgba(168,130,44,0.3)",
+                    transition: "transform 0.2s, background 0.2s",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "#C9A24A";
+                    e.currentTarget.style.transform = "translateY(-1px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "#A8822C";
+                    e.currentTarget.style.transform = "translateY(0)";
+                  }}
+                >
+                  Download Certificate (PNG)
+                </button>
+                <button
+                  onClick={() => setShowCertificate(false)}
+                  style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    padding: "1rem 2.5rem",
+                    background: "#F4EFE4",
+                    color: "#131929",
+                    border: "1px solid rgba(19,25,41,0.15)",
+                    cursor: "pointer",
+                    transition: "transform 0.2s",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "translateY(-1px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "translateY(0)";
+                  }}
+                >
+                  Done
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <style>{`
         .cheque-card input,
         .cheque-card textarea,
@@ -2038,3 +2771,100 @@ const FullWaxSeal = React.memo(function FullWaxSeal() {
     </svg>
   );
 });
+
+function refineIdeaText(input: string, category: string): string {
+  const text = input.trim();
+  if (!text) return "";
+
+  // Normalize category
+  const cat = (category || "").toLowerCase();
+
+  // Extract core theme nouns
+  const hasAI = /\b(ai|artificial|intelligence|gpt|bot|llm|model|machine|learning)\b/i.test(text);
+  const hasMap = /\b(map|gps|tracking|location|coordinate|geo)\b/i.test(text);
+  const hasDelivery = /\b(delivery|deliver|shipping|courier|laundry|dry|clean|uber|on-demand)\b/i.test(text);
+  const hasFinance = /\b(finance|pay|payment|wallet|transaction|crypto|bank|money|card)\b/i.test(text);
+  const hasHealth = /\b(health|med|patient|doctor|clinical|hospital|wellness|care)\b/i.test(text);
+  const hasEdu = /\b(education|edtech|learn|student|teacher|course|class|school)\b/i.test(text);
+
+  // 1. Core Concept elevator pitch
+  let coreConcept = `A high-performance ${category || "digital"} platform engineered for ${hasAI ? "intelligent automation" : "seamless user orchestration"}. `;
+  if (hasDelivery) {
+    coreConcept += `It resolves delivery friction by synchronizing real-time on-demand requests with localized logistics agents.`;
+  } else if (hasHealth) {
+    coreConcept += `It streamlines healthcare coordination by providing secure, low-latency access to records and patient scheduling.`;
+  } else if (hasFinance) {
+    coreConcept += `It secures transactional flows via encrypted payment protocols and decentralized ledger state checks.`;
+  } else if (hasAI) {
+    coreConcept += `It leverages machine learning models to analyze inputs and automate complex decision trees with high precision.`;
+  } else if (hasEdu) {
+    coreConcept += `It democratizes localized learning by providing direct, intuitive portals for material delivery and tracking.`;
+  } else {
+    coreConcept += `It integrates high-fidelity data pipelines into a unified administrative workspace to maximize operational efficiency.`;
+  }
+
+  // 2. 3-Point MVP Scope
+  let phase1Title = "Unified Intake Console";
+  let phase1Desc = "A highly responsive portal enabling users to trigger requests and view live statuses.";
+  let phase2Title = "Asynchronous Match & Queue Engine";
+  let phase2Desc = "The core workflow layer that coordinates and routes requests based on real-time database lookups.";
+  let phase3Title = "Administrative Ledger & Audit Portal";
+  let phase3Desc = "A secure dashboard for operators to oversee activity logs, manage credentials, and audit compliance.";
+
+  if (hasDelivery) {
+    phase1Title = "On-Demand Booking Dashboard";
+    phase1Desc = "Mobile-responsive portal allowing users to input requests, specify time slots, and view courier progress.";
+    phase2Title = "Logistics Routing & Dispatch Engine";
+    phase2Desc = "Coordinates geographic routes, matches couriers, and triggers automated SMS/email alerts.";
+    phase3Title = "Partner Settlement Portal";
+    phase3Desc = "Administrative panel for tracking payouts, auditing deliveries, and managing agent credentials.";
+  } else if (hasAI) {
+    phase1Title = "Intelligent Prompt & Input Interface";
+    phase1Desc = "Minimalist interface optimized for file uploads and prompt structure validation.";
+    phase2Title = "AI Inference & Parsing Middleware";
+    phase2Desc = "Connects to processing pipelines, structures inputs, and executes analysis models asynchronously.";
+    phase3Title = "Model Training & Accuracy Dashboard";
+    phase3Desc = "Admin control panel to review output logs, adjust thresholds, and monitor model performance.";
+  } else if (hasFinance) {
+    phase1Title = "Encrypted Transaction Dashboard";
+    phase1Desc = "High-security portal for users to connect payment accounts, initiate trades, or execute transfers.";
+    phase2Title = "Atomic Transaction & Ledger Engine";
+    phase2Desc = "Executes state transitions, handles payment gateway integrations, and secures double-entry bookkeeping.";
+    phase3Title = "Compliance & Reporting Panel";
+    phase3Desc = "Allows administrators to export tax reports, monitor AML flags, and oversee account security.";
+  } else if (hasHealth) {
+    phase1Title = "Patient Care & Scheduling Portal";
+    phase1Desc = "HIPAA-aligned scheduling interface with direct messaging and booking slots.";
+    phase2Title = "Secure Medical Records Router";
+    phase2Desc = "Retrieves and updates patient files using end-to-end encrypted databases and audit trails.";
+    phase3Title = "Provider Administrative Dashboard";
+    phase3Desc = "Allows clinical managers to configure shift availability, audit system access, and generate billing reports.";
+  } else if (hasEdu) {
+    phase1Title = "Learner Engagement Console";
+    phase1Desc = "A structured dashboard for courses, progress bars, and interactive assignments.";
+    phase2Title = "Curriculum Delivery & Scoring Middleware";
+    phase2Desc = "Delivers modular learning resources and automatically computes progress metrics.";
+    phase3Title = "Educator Portal & Metrics Ledger";
+    phase3Desc = "Allows teachers to compile grades, upload lessons, and evaluate student progress analytics.";
+  }
+
+  // If the user's text had custom details, integrate them
+  const cleanedText = text.replace(/^(describe|make|create|build)\b/i, "").trim();
+  const rawPreview = cleanedText.length > 80 ? cleanedText.slice(0, 80) + "..." : cleanedText;
+
+  return `Idea Scope: ${rawPreview}
+
+1. CORE CONCEPT
+${coreConcept}
+
+2. 3-POINT MVP TECHNICAL SCOPE
+• Milestone I: ${phase1Title}
+  ${phase1Desc}
+• Milestone II: ${phase2Title}
+  ${phase2Desc}
+• Milestone III: ${phase3Title}
+  ${phase3Desc}
+
+3. SECURITY & ARCHITECTURE NODE
+Designed for stealth-mode deployment. Built with secure database encryption, low-latency API endpoints, and a modular architecture ready for direct handoff to engineering.`;
+}
