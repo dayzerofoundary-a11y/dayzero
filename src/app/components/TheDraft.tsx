@@ -2786,6 +2786,9 @@ function refineIdeaText(input: string, category: string): string {
   const hasFinance = /\b(finance|pay|payment|wallet|transaction|crypto|bank|money|card)\b/i.test(text);
   const hasHealth = /\b(health|med|patient|doctor|clinical|hospital|wellness|care)\b/i.test(text);
   const hasEdu = /\b(education|edtech|learn|student|teacher|course|class|school)\b/i.test(text);
+  const hasBag = /\b(bag|backpack|suitcase|luggage|fashion|brand|purse|handbag|wallet|product|shop|store|ecommerce|e-commerce)\b/i.test(text);
+  const hasTravel = /\b(travel|flight|hotel|trip|booking|vacation|tourism)\b/i.test(text);
+  const hasFood = /\b(food|restaurant|chef|dining|recipe|kitchen|groceries|meal)\b/i.test(text);
 
   // 1. Core Concept elevator pitch
   let coreConcept = `A high-performance ${category || "digital"} platform engineered for ${hasAI ? "intelligent automation" : "seamless user orchestration"}. `;
@@ -2799,6 +2802,12 @@ function refineIdeaText(input: string, category: string): string {
     coreConcept += `It leverages machine learning models to analyze inputs and automate complex decision trees with high precision.`;
   } else if (hasEdu) {
     coreConcept += `It democratizes localized learning by providing direct, intuitive portals for material delivery and tracking.`;
+  } else if (hasBag) {
+    coreConcept += `It bridges direct-to-consumer digital commerce with structured supply-chain logistics to orchestrate product catalog and purchases.`;
+  } else if (hasTravel) {
+    coreConcept += `It simplifies travel coordination by aggregating multi-vendor transit resources and active itineraries.`;
+  } else if (hasFood) {
+    coreConcept += `It streamlines meal orchestration by bridging dynamic digital orders with localized kitchen fulfillment tracks.`;
   } else {
     coreConcept += `It integrates high-fidelity data pipelines into a unified administrative workspace to maximize operational efficiency.`;
   }
@@ -2846,6 +2855,27 @@ function refineIdeaText(input: string, category: string): string {
     phase2Desc = "Delivers modular learning resources and automatically computes progress metrics.";
     phase3Title = "Educator Portal & Metrics Ledger";
     phase3Desc = "Allows teachers to compile grades, upload lessons, and evaluate student progress analytics.";
+  } else if (hasBag) {
+    phase1Title = "D2C Digital Showroom & Checkout";
+    phase1Desc = "A highly responsive catalog detailing product variations, material specifications, and handling secure checkouts.";
+    phase2Title = "Inventory Ledger & Order Broker";
+    phase2Desc = "Real-time registry tracking batch quantities and routing customer orders to designated warehouses.";
+    phase3Title = "Fulfillment & Dispatch Panel";
+    phase3Desc = "Administrative workspace to manage supplier communication, print shipping labels, and track transit APIs.";
+  } else if (hasTravel) {
+    phase1Title = "Booking Console & Itinerary Builder";
+    phase1Desc = "Interactive scheduling system permitting custom trip builds and real-time flight checks.";
+    phase2Title = "Transit API Aggregator Engine";
+    phase2Desc = "Integrates external APIs (GDS, hotel, and vehicle) to yield combined booking lists dynamically.";
+    phase3Title = "Vendor Payout & Markup Ledger";
+    phase3Desc = "Administration ledger to record reservations, audit commission margins, and handle supplier payouts.";
+  } else if (hasFood) {
+    phase1Title = "Visual Menu & Cart Console";
+    phase1Desc = "Responsive customer-facing catalog allowing menu customization, item staging, and secure checkout.";
+    phase2Title = "Kitchen Order Routing Engine";
+    phase2Desc = "Distributes incoming tickets to prep stations and updates client dispatch timelines in real-time.";
+    phase3Title = "Vendor Commissions & Delivery Ledger";
+    phase3Desc = "Administrative module to calculate partner payouts, audit rider collections, and export daily sales summaries.";
   }
 
   // If the user's text had custom details, integrate them
