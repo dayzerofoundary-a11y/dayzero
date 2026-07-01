@@ -270,8 +270,10 @@ export function Hero({ draftRef }: HeroProps) {
             <div
               aria-hidden
               style={{
-                position: "absolute",
-                inset: 0,
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
                 background: `radial-gradient(circle at ${shimmerPos.x}% ${shimmerPos.y}%, rgba(201,162,74,0.12) 0%, transparent 55%)`,
                 pointerEvents: "none",
                 zIndex: 10,

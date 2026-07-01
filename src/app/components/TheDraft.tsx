@@ -1224,7 +1224,10 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
             transition={{ duration: 0.3 }}
             style={{
               position: "fixed",
-              inset: 0,
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
               zIndex: 100,
               background: "rgba(13,18,32,0.82)",
               display: "flex",
@@ -1285,7 +1288,10 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
             transition={{ duration: 0.2 }}
             style={{
               position: "fixed",
-              inset: 0,
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
               zIndex: 200,
               background: "rgba(13,18,32,0.85)",
               display: "flex",
