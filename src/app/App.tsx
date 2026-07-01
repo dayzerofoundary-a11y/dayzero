@@ -8,6 +8,7 @@ import { SignedAndSealed } from "./components/SignedAndSealed";
 import { VerifiedCertified } from "./components/VerifiedCertified";
 import { Pillars } from "./components/Pillars";
 import { HowItWorks } from "./components/HowItWorks";
+import { WorkspacePreview } from "./components/WorkspacePreview";
 import { Team } from "./components/Team";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
@@ -60,6 +61,7 @@ export default function App() {
         <VerifiedCertified />
         <Pillars />
         <HowItWorks />
+        <WorkspacePreview />
         <Team />
         <Contact />
       </main>
