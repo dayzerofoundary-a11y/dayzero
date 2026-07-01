@@ -61,7 +61,7 @@ export function Footer() {
           Every idea is currency.
           <br />
           <span style={{ color: "rgba(168,130,44,0.6)" }}>
-            We mint yours into a real product.
+            We mint yours into a market-ready product.
           </span>
         </div>
 

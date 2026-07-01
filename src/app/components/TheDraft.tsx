@@ -96,6 +96,114 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
   const [categorySearch, setCategorySearch] = useState("");
   const categoryDropdownRef = useRef<HTMLDivElement>(null);
 
+  // ── Signature States & Helpers ─────────────────────────────────────────────
+  const [signatureImage, setSignatureImage] = useState<string | null>(null);
+  const [showSignatureModal, setShowSignatureModal] = useState(false);
+  const [signatureTab, setSignatureTab] = useState<"draw" | "type">("draw");
+  const [paths, setPaths] = useState<Array<Array<{ x: number; y: number }>>>([]);
+  const [isDrawing, setIsDrawing] = useState(false);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  const drawPathsOnCanvas = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = "#1E2535";
+    ctx.lineWidth = 2.5;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+
+    paths.forEach((path) => {
+      if (path.length === 0) return;
+      ctx.beginPath();
+      ctx.moveTo(path[0].x, path[0].y);
+      for (let i = 1; i < path.length; i++) {
+        ctx.lineTo(path[i].x, path[i].y);
+      }
+      ctx.stroke();
+    });
+  }, [paths]);
+
+  useEffect(() => {
+    if (showSignatureModal && signatureTab === "draw") {
+      // Give a tiny timeout for canvas element mount if needed
+      const t = setTimeout(() => drawPathsOnCanvas(), 10);
+      return () => clearTimeout(t);
+    }
+  }, [paths, showSignatureModal, signatureTab, drawPathsOnCanvas]);
+
+  const getCoordinates = (e: React.MouseEvent | React.TouchEvent): { x: number; y: number } | null => {
+    const canvas = canvasRef.current;
+    if (!canvas) return null;
+    const rect = canvas.getBoundingClientRect();
+
+    let clientX = 0;
+    let clientY = 0;
+
+    if ("touches" in e) {
+      if (e.touches.length === 0) return null;
+      clientX = e.touches[0].clientX;
+      clientY = e.touches[0].clientY;
+    } else {
+      clientX = e.clientX;
+      clientY = e.clientY;
+    }
+
+    const x = ((clientX - rect.left) / rect.width) * canvas.width;
+    const y = ((clientY - rect.top) / rect.height) * canvas.height;
+    return { x, y };
+  };
+
+  const startDrawing = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+    const coords = getCoordinates(e);
+    if (!coords) return;
+    setIsDrawing(true);
+    setPaths((prev) => [...prev, [coords]]);
+  };
+
+  const draw = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+    if (!isDrawing) return;
+    const coords = getCoordinates(e);
+    if (!coords) return;
+    setPaths((prev) => {
+      const next = [...prev];
+      if (next.length === 0) return next;
+      const lastPath = [...next[next.length - 1], coords];
+      next[next.length - 1] = lastPath;
+      return next;
+    });
+  };
+
+  const stopDrawing = () => {
+    setIsDrawing(false);
+  };
+
+  const handleUndo = () => {
+    setPaths((prev) => prev.slice(0, -1));
+  };
+
+  const handleClear = () => {
+    setPaths([]);
+  };
+
+  const adoptSignature = () => {
+    if (signatureTab === "draw") {
+      const canvas = canvasRef.current;
+      if (!canvas || paths.length === 0) {
+        toast.error("Please draw a signature first.");
+        return;
+      }
+      const dataUrl = canvas.toDataURL("image/png");
+      setSignatureImage(dataUrl);
+    } else {
+      setSignatureImage(null);
+    }
+    setShowSignatureModal(false);
+  };
+
   const filteredCategories = CATEGORIES.filter((c) =>
     c.toLowerCase().includes(categorySearch.toLowerCase())
   );
@@ -171,6 +279,9 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
       if (form.file) {
         formData.append("file", form.file);
       }
+      if (signatureImage) {
+        formData.append("signature", signatureImage);
+      }
 
       const response = await fetch(intakeUrl, {
         method: "POST",
@@ -206,6 +317,8 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
         file: null,
       });
       setNdaAccepted(false);
+      setSignatureImage(null);
+      setPaths([]);
     } catch (err: any) {
       toast.dismiss(loadingToastId);
       const message =
@@ -1105,33 +1218,74 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                   }}
                   className="submit-row"
                 >
-                  <div className="signature-block">
+                  <div
+                    className="signature-block"
+                    onClick={() => setShowSignatureModal(true)}
+                    style={{ cursor: "pointer", transition: "opacity 0.2s" }}
+                    onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.8")}
+                    onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+                  >
+                    {signatureImage ? (
+                      <div
+                        style={{
+                          height: "50px",
+                          display: "flex",
+                          alignItems: "flex-end",
+                          minWidth: "180px",
+                          borderBottom: "1px solid rgba(19,25,41,0.2)",
+                          paddingBottom: "2px",
+                        }}
+                      >
+                        <img src={signatureImage} alt="Handdrawn Signature" style={{ height: "45px", maxWidth: "220px", objectFit: "contain" }} />
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          fontFamily: "'Pinyon Script', cursive",
+                          fontSize: "2.2rem",
+                          color: "#1E2535",
+                          lineHeight: 1.2,
+                          minWidth: "180px",
+                          borderBottom: "1px solid rgba(19,25,41,0.2)",
+                          paddingBottom: "2px",
+                        }}
+                        className="signature-name"
+                      >
+                        {form.name || "Your Signature"}
+                      </div>
+                    )}
                     <div
                       style={{
-                        fontFamily: "'Pinyon Script', cursive",
-                        fontSize: "2rem",
-                        color: "#1E2535",
-                        lineHeight: 1.2,
-                        minWidth: "180px",
-                        borderBottom: "1px solid rgba(19,25,41,0.2)",
-                        paddingBottom: "2px",
-                      }}
-                      className="signature-name"
-                    >
-                      {form.name || "Your Signature"}
-                    </div>
-                    <div
-                      style={{
-                        fontFamily: "'DM Sans', sans-serif",
-                        fontSize: "0.52rem",
-                        letterSpacing: "0.2em",
-                        textTransform: "uppercase",
-                        color: "#6A6355",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
                         marginTop: "0.3rem",
+                        gap: "1rem"
                       }}
                     >
-                      {form.role}
-                      {form.affiliation ? ` · ${form.affiliation}` : ""}
+                      <div
+                        style={{
+                          fontFamily: "'DM Sans', sans-serif",
+                          fontSize: "0.52rem",
+                          letterSpacing: "0.2em",
+                          textTransform: "uppercase",
+                          color: "#6A6355",
+                        }}
+                      >
+                        {form.role || "Role"}
+                        {form.affiliation ? ` · ${form.affiliation}` : ""}
+                      </div>
+                      <div
+                        style={{
+                          fontFamily: "'DM Sans', sans-serif",
+                          fontSize: "0.45rem",
+                          letterSpacing: "0.05em",
+                          color: "#A8822C",
+                          fontWeight: 500
+                        }}
+                      >
+                        (Click to Sign)
+                      </div>
                     </div>
                   </div>
 
@@ -1415,6 +1569,284 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                   }}
                 >
                   Agree &amp; Continue
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Signature Adopt Modal Overlay */}
+      <AnimatePresence>
+        {showSignatureModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              zIndex: 300,
+              background: "rgba(13,18,32,0.85)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "1rem",
+            }}
+            onClick={() => setShowSignatureModal(false)}
+          >
+            <motion.div
+              initial={prefersReduced ? {} : { scale: 0.95, opacity: 0, y: 10 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 10 }}
+              transition={{ duration: 0.2 }}
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                background: "#F4EFE4",
+                width: "100%",
+                maxWidth: "500px",
+                display: "flex",
+                flexDirection: "column",
+                border: "1px solid rgba(168,130,44,0.3)",
+                boxShadow: "0 24px 64px rgba(13,18,32,0.4)",
+              }}
+            >
+              {/* Header */}
+              <div
+                style={{
+                  padding: "1.25rem 1.5rem",
+                  borderBottom: "1px solid rgba(168,130,44,0.15)",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <h3
+                  style={{
+                    fontFamily: "'Playfair Display', serif",
+                    fontSize: "1.2rem",
+                    fontWeight: 600,
+                    color: "#131929",
+                    margin: 0,
+                  }}
+                >
+                  Adopt Signature
+                </h3>
+                <button
+                  onClick={() => setShowSignatureModal(false)}
+                  style={{
+                    background: "transparent",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: "0.5rem",
+                    color: "#6A6355",
+                    display: "flex",
+                  }}
+                >
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path d="M1 1L13 13M1 13L13 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Tabs */}
+              <div
+                style={{
+                  display: "flex",
+                  borderBottom: "1px solid rgba(168,130,44,0.15)",
+                }}
+              >
+                <button
+                  type="button"
+                  onClick={() => setSignatureTab("draw")}
+                  style={{
+                    flex: 1,
+                    padding: "0.85rem",
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: "0.75rem",
+                    fontWeight: 500,
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    background: signatureTab === "draw" ? "rgba(168,130,44,0.08)" : "transparent",
+                    color: signatureTab === "draw" ? "#A8822C" : "#6A6355",
+                    border: "none",
+                    borderBottom: signatureTab === "draw" ? "2px solid #A8822C" : "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  Draw Signature
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSignatureTab("type")}
+                  style={{
+                    flex: 1,
+                    padding: "0.85rem",
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: "0.75rem",
+                    fontWeight: 500,
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    background: signatureTab === "type" ? "rgba(168,130,44,0.08)" : "transparent",
+                    color: signatureTab === "type" ? "#A8822C" : "#6A6355",
+                    border: "none",
+                    borderBottom: signatureTab === "type" ? "2px solid #A8822C" : "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  Type Name
+                </button>
+              </div>
+
+              {/* Tab Content */}
+              <div style={{ padding: "1.5rem" }}>
+                {signatureTab === "draw" ? (
+                  <div>
+                    <div style={{ border: "1px solid rgba(168,130,44,0.25)", background: "#FFF", borderRadius: "2px", overflow: "hidden", position: "relative" }}>
+                      <canvas
+                        ref={canvasRef}
+                        width={500}
+                        height={180}
+                        onMouseDown={startDrawing}
+                        onMouseMove={draw}
+                        onMouseUp={stopDrawing}
+                        onMouseLeave={stopDrawing}
+                        onTouchStart={startDrawing}
+                        onTouchMove={draw}
+                        onTouchEnd={stopDrawing}
+                        style={{
+                          display: "block",
+                          width: "100%",
+                          height: "180px",
+                          background: "#FFF",
+                          cursor: "crosshair",
+                          touchAction: "none",
+                        }}
+                      />
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.75rem", marginTop: "0.75rem" }}>
+                      <button
+                        type="button"
+                        onClick={handleUndo}
+                        disabled={paths.length === 0}
+                        style={{
+                          fontFamily: "'DM Sans', sans-serif",
+                          fontSize: "0.65rem",
+                          fontWeight: 500,
+                          letterSpacing: "0.08em",
+                          textTransform: "uppercase",
+                          padding: "0.4rem 0.8rem",
+                          border: "1px solid rgba(19,25,41,0.2)",
+                          background: "transparent",
+                          color: "#131929",
+                          cursor: paths.length === 0 ? "default" : "pointer",
+                          opacity: paths.length === 0 ? 0.5 : 1,
+                        }}
+                      >
+                        Undo
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleClear}
+                        disabled={paths.length === 0}
+                        style={{
+                          fontFamily: "'DM Sans', sans-serif",
+                          fontSize: "0.65rem",
+                          fontWeight: 500,
+                          letterSpacing: "0.08em",
+                          textTransform: "uppercase",
+                          padding: "0.4rem 0.8rem",
+                          border: "1px solid rgba(19,25,41,0.2)",
+                          background: "transparent",
+                          color: "#131929",
+                          cursor: paths.length === 0 ? "default" : "pointer",
+                          opacity: paths.length === 0 ? 0.5 : 1,
+                        }}
+                      >
+                        Clear
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <input
+                      type="text"
+                      value={form.name}
+                      onChange={(e) => update("name", e.target.value)}
+                      placeholder="Type your name"
+                      style={{
+                        width: "100%",
+                        padding: "0.75rem",
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontSize: "0.85rem",
+                        border: "1px solid rgba(168,130,44,0.25)",
+                        background: "#FFF",
+                        color: "#131929",
+                        boxSizing: "border-box",
+                      }}
+                    />
+                    <div style={{ marginTop: "1rem", textAlign: "center", padding: "1rem", background: "rgba(168,130,44,0.03)", border: "1px dashed rgba(168,130,44,0.2)" }}>
+                      <div style={{ fontSize: "0.6rem", textTransform: "uppercase", letterSpacing: "0.15em", color: "#6A6355", marginBottom: "0.5rem" }}>
+                        Preview
+                      </div>
+                      <div style={{ fontFamily: "'Pinyon Script', cursive", fontSize: "2rem", color: "#1E2535" }}>
+                        {form.name || "Your Signature"}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Action Footer */}
+              <div
+                style={{
+                  padding: "1rem 1.5rem",
+                  borderTop: "1px solid rgba(168,130,44,0.15)",
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  gap: "0.75rem",
+                  background: "rgba(168,130,44,0.02)",
+                }}
+              >
+                <button
+                  type="button"
+                  onClick={() => setShowSignatureModal(false)}
+                  style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: "0.7rem",
+                    fontWeight: 500,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    padding: "0.6rem 1.25rem",
+                    border: "1px solid rgba(19,25,41,0.15)",
+                    background: "transparent",
+                    color: "#131929",
+                    cursor: "pointer",
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={adoptSignature}
+                  style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: "0.7rem",
+                    fontWeight: 500,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    padding: "0.6rem 1.25rem",
+                    background: "#131929",
+                    color: "#F4EFE4",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  Adopt &amp; Sign
                 </button>
               </div>
             </motion.div>

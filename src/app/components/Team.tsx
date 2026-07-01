@@ -6,22 +6,22 @@ const ATTRIBUTES = [
   {
     icon: UserCheck,
     label: "Employed by you",
-    desc: "For the duration of the build, we operate as your own team — not as a vendor, not as a consulting firm. The idea's success is ours to care about.",
+    desc: "For the duration of the build, we work as part of your team. We focus only on your project and build it as if it were our own.",
   },
   {
     icon: Network,
     label: "No agency structure",
-    desc: "There is no account manager between you and the engineers. You speak directly to the people building the product.",
+    desc: "You'll work directly with the engineers building your product. No account managers. No unnecessary back and forth.",
   },
   {
     icon: ShieldCheck,
     label: "No competing interests",
-    desc: "We do not hold equity, we do not advise other founders, and we do not work on your competitors. Your engagement is exclusive to you.",
+    desc: "We don't take equity in your idea, and we don't work on competing products while your project is active. Our focus stays on your build.",
   },
   {
     icon: Award,
-    label: "Verified by veterans",
-    desc: "Senior engineers and product leaders — people who have built and shipped real products at scale — sit on every certification review.",
+    label: "Reviewed by experienced builders",
+    desc: "Every MVP is reviewed by senior engineers and product leaders before it's delivered. Nothing is handed over until it meets our quality standards.",
   },
 ];
 

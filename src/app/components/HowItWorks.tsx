@@ -6,24 +6,24 @@ const STEPS = [
     stamp: "01",
     verb: "Draft",
     headline: "File your idea.",
-    body: "Complete the confidential intake form — one page, three minutes. The idea's name, its ambition, a brief description. That is all we need to begin.",
-    detail: "Confidentiality agreement executed on receipt.",
+    body: "Complete the intake form — one page, three minutes. Fill out a short form with your idea, its goal, and a brief description. That is all we need to begin.",
+    detail: "NDA signed before we begin.",
     accent: "#A8822C",
   },
   {
     stamp: "02",
     verb: "Endorse",
     headline: "A single scope call.",
-    body: "One conversation — thirty minutes — to align on the scope of the MVP. No pitch, no committee, no approval chain. Just a quiet briefing.",
-    detail: "No commitment required from you at this stage.",
+    body: "One conversation — thirty minutes. One short call to understand your idea and agree on what we'll build. No presentations. No approval process. Simple briefing.",
+    detail: "No commitment required.",
     accent: "#C9A24A",
   },
   {
     stamp: "03",
     verb: "Mint",
-    headline: "Working product delivered.",
-    body: "We build, test, certify, and hand over a functioning MVP. Deployed, documented, ready to show — or not show — as you choose.",
-    detail: "Verified and certified before handoff.",
+    headline: "MVP delivered.",
+    body: "We build, test, and review your MVP before delivery. It arrives documented, ready to deploy, and ready for your next step.",
+    detail: "Reviewed before handoff.",
     accent: "#A8822C",
   },
 ];
@@ -89,7 +89,7 @@ export function HowItWorks() {
               maxWidth: "800px",
             }}
           >
-            Three endorsements from idea to product.
+            From idea to MVP.
           </h2>
           <p
             style={{
@@ -102,8 +102,7 @@ export function HowItWorks() {
               margin: "0 auto",
             }}
           >
-            The process is designed to ask as little of you as possible, and to
-            protect you at every step.
+            The journey from idea to MVP. Three steps. One outcome.
           </p>
         </motion.div>
 

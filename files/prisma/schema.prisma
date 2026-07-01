@@ -29,6 +29,7 @@ model Submission {
   affiliation String
   category    String
   idea        String
+  signature   String?
 
   status      String   @default("received")
 

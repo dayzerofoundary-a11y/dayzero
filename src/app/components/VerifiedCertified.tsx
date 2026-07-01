@@ -2,11 +2,11 @@ import { motion, useReducedMotion } from "motion/react";
 import { GuillocheBackground } from "./GuillocheBackground";
 
 const CRITERIA = [
-  "Functional end-to-end — no stubs, no mocked data in production paths.",
-  "Secure by default — authentication, data handling, and access controls reviewed.",
-  "Deployable without modification — handed off in a runnable state.",
-  "Documented sufficiently for your team to own it immediately.",
-  "Scoped to the core value proposition — no feature creep, no half-built additions.",
+  "Fully functional from start to finish — no unfinished features.",
+  "Secure by design — authentication and access controls are in place.",
+  "Ready to deploy — delivered in a working, runnable state.",
+  "Documented for handoff — your team can continue with confidence.",
+  "Built with focus — only the features that matter, nothing unnecessary.",
 ];
 
 export function VerifiedCertified() {
@@ -83,9 +83,8 @@ export function VerifiedCertified() {
               margin: "0 auto",
             }}
           >
-            Every MVP we build is reviewed and certified <br />
-            by industry veterans before it is handed to you. <br />
-            The certificate is not ceremonial — it is a statement of build quality.
+            Every MVP is reviewed before delivery. The certificate confirms that <br />
+            the build meets our internal quality standards.
           </p>
         </motion.div>
 

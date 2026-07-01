@@ -84,6 +84,7 @@ const intakeSchema = z.object({
     category:       z.string().max(100).optional().default(''),
     idea:           z.string().min(1, 'Idea description is required').max(10_000),
     turnstileToken: z.string().optional(),
+    signature:      z.string().optional(),
 })
 
 // ── Cast-ID generator (DZ-YY-NNNN) ───────────────────────────────────────────
@@ -147,7 +148,7 @@ interface EmailFields {
     fileAttached: boolean
 }
 
-function buildEmailHtml(fields: EmailFields, castId: string): string {
+function buildEmailHtml(fields: EmailFields, castId: string, hasSignature: boolean): string {
     // All values are pre-escaped — safe to embed in HTML
     const row = (label: string, value: string) =>
         value
@@ -193,6 +194,10 @@ function buildEmailHtml(fields: EmailFields, castId: string): string {
             ${row('Role', fields.role)}
             ${row('Affiliation', fields.affiliation)}
             ${fields.fileAttached ? row('Attachment', '✓ File attached (see below)') : ''}
+            ${hasSignature ? `<tr>
+                <td style="padding:8px 12px;font-weight:600;color:#6A6355;white-space:nowrap;vertical-align:top;width:160px">Signature</td>
+                <td style="padding:8px 12px;color:#131929;vertical-align:top"><img src="cid:signatureImage" alt="Signature" style="max-height:45px;display:block"/></td>
+               </tr>` : ''}
           </table>
         </td></tr>
 
@@ -231,7 +236,7 @@ intakeRoutes.post('/', upload.single('file'), async (req, res) => {
             return
         }
 
-        const { name, email, role, affiliation, category, idea, turnstileToken } = parsed.data
+        const { name, email, role, affiliation, category, idea, turnstileToken, signature } = parsed.data
 
         // ── 2. Fix 7: Magic-byte validation ──────────────────────────────────
         if (req.file) {
@@ -327,6 +332,7 @@ intakeRoutes.post('/', upload.single('file'), async (req, res) => {
                         affiliation: fields.affiliation,
                         category: fields.category,
                         idea: `${fields.ideaName} — ${fields.ambition}\n\n${fields.description}`,
+                        signature: signature || null,
                     }
                 })
                 break // Success!
@@ -393,7 +399,7 @@ intakeRoutes.post('/', upload.single('file'), async (req, res) => {
                         to:      smtpTo,
                         replyTo: fields.email,
                         subject: `[DayZero] New Idea — ${fields.ideaName} · ${castId}`,
-                        html:    buildEmailHtml(fields, castId),
+                        html:    buildEmailHtml(fields, castId, !!signature),
                         text: [
                             `NEW IDEA SUBMISSION — ${castId}`,
                             `Date: ${new Date().toISOString()}`,
@@ -413,12 +419,27 @@ intakeRoutes.post('/', upload.single('file'), async (req, res) => {
                         ].join('\n'),
                     }
 
+                    const mailAttachments: any[] = []
                     if (req.file) {
-                        mailOptions.attachments = [{
+                        mailAttachments.push({
                             filename:    req.file.originalname,
                             content:     req.file.buffer,
                             contentType: req.file.mimetype,
-                        }]
+                        })
+                    }
+
+                    if (signature && signature.startsWith('data:image/png;base64,')) {
+                        const base64Data = signature.replace(/^data:image\/png;base64,/, '')
+                        mailAttachments.push({
+                            filename:    'signature.png',
+                            content:     Buffer.from(base64Data, 'base64'),
+                            contentType: 'image/png',
+                            cid:         'signatureImage'
+                        })
+                    }
+
+                    if (mailAttachments.length > 0) {
+                        mailOptions.attachments = mailAttachments
                     }
 
                     await transporter.sendMail(mailOptions)
