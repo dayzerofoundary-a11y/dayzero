@@ -3,7 +3,74 @@ import crypto from 'crypto'
 import type { Request, Response, NextFunction } from 'express'
 import { prisma } from '../../../lib/prisma.js'
 
+import nodemailer from 'nodemailer'
+
 export const adminRoutes = Router()
+
+adminRoutes.get('/test-email', async (req: Request, res: Response) => {
+    try {
+        const smtpHost = process.env.SMTP_HOST
+        const smtpPort = Number(process.env.SMTP_PORT ?? 587)
+        const smtpUser = process.env.SMTP_USER
+        const smtpPass = process.env.SMTP_PASS
+        const smtpFrom = process.env.SMTP_FROM ?? smtpUser
+        const smtpTo = process.env.SMTP_TO ?? smtpUser
+
+        if (!smtpHost || !smtpUser || !smtpPass) {
+            res.status(400).json({
+                success: false,
+                message: 'SMTP is not configured. Missing environment variables.',
+                config: { smtpHost, smtpPort, smtpUser, hasPassword: !!smtpPass }
+            })
+            return
+        }
+
+        const transporter = nodemailer.createTransport({
+            host: smtpHost,
+            port: smtpPort,
+            secure: smtpPort === 465,
+            auth: {
+                user: smtpUser,
+                pass: smtpPass,
+            },
+            connectionTimeout: 10000,
+            greetingTimeout: 10000,
+            socketTimeout: 20000,
+            family: 4,
+        } as any)
+
+        await transporter.verify()
+
+        await transporter.sendMail({
+            from: `"DayZero Test" <${smtpFrom}>`,
+            to: smtpTo,
+            subject: '[DayZero] Test Email',
+            text: 'This is a test email from the DayZero diagnostic endpoint to confirm SMTP delivery works!',
+        })
+
+        res.json({
+            success: true,
+            message: `SMTP connection and test email sent successfully to: ${smtpTo}`,
+            config: { smtpHost, smtpPort, smtpUser, smtpFrom, smtpTo }
+        })
+    } catch (err: any) {
+        console.error('[test-email] failed:', err)
+        res.status(500).json({
+            success: false,
+            message: 'SMTP Verification Failed',
+            error: err?.message || String(err),
+            stack: err?.stack,
+            config: {
+                SMTP_HOST: process.env.SMTP_HOST,
+                SMTP_PORT: process.env.SMTP_PORT,
+                SMTP_USER: process.env.SMTP_USER,
+                SMTP_FROM: process.env.SMTP_FROM,
+                SMTP_TO: process.env.SMTP_TO,
+                hasPassword: !!process.env.SMTP_PASS
+            }
+        })
+    }
+})
 
 // ── In-memory token store (process-scoped, sufficient for single-instance) ───
 // Token → expiry timestamp. Tokens expire after 8 hours.
