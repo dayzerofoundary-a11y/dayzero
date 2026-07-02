@@ -2777,12 +2777,38 @@ function refineIdeaText(input: string, category: string): string {
   const text = input.trim();
   if (!text) return "";
 
-  // Normalize category
-  const cat = (category || "").toLowerCase();
+  // Simple Stopwords list to extract meaningful keywords
+  const stopwords = new Set([
+    "a", "an", "the", "and", "or", "but", "is", "are", "was", "were", "be", "been", "being",
+    "in", "on", "at", "by", "for", "with", "about", "against", "between", "into", "through",
+    "during", "before", "after", "above", "below", "to", "from", "up", "down", "in", "out",
+    "on", "off", "over", "under", "again", "further", "then", "once", "here", "there", "when",
+    "where", "why", "how", "all", "any", "both", "each", "few", "more", "most", "other", "some",
+    "such", "no", "nor", "not", "only", "own", "same", "so", "than", "too", "very", "s", "t",
+    "can", "will", "just", "don", "should", "now", "app", "application", "website", "web", "platform",
+    "create", "build", "make", "want", "need", "needs", "software", "system", "tool", "project", "idea"
+  ]);
 
-  // Extract core theme nouns
+  // Extract clean keywords (significant nouns/verbs)
+  const words = text
+    .toLowerCase()
+    .replace(/[^\w\s]/g, "") // remove punctuation
+    .split(/\s+/)
+    .filter(w => w.length > 3 && !stopwords.has(w));
+
+  // Remove duplicates
+  const uniqueKeywords = Array.from(new Set(words));
+
+  // Capitalize helper
+  const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+  // Weave extracted keywords into variables
+  const key1 = uniqueKeywords[0] ? cap(uniqueKeywords[0]) : "User";
+  const key2 = uniqueKeywords[1] ? cap(uniqueKeywords[1]) : "Data";
+  const key3 = uniqueKeywords[2] ? cap(uniqueKeywords[2]) : "Process";
+
+  // Check categories
   const hasAI = /\b(ai|artificial|intelligence|gpt|bot|llm|model|machine|learning)\b/i.test(text);
-  const hasMap = /\b(map|gps|tracking|location|coordinate|geo)\b/i.test(text);
   const hasDelivery = /\b(delivery|deliver|shipping|courier|laundry|dry|clean|uber|on-demand)\b/i.test(text);
   const hasFinance = /\b(finance|pay|payment|wallet|transaction|crypto|bank|money|card)\b/i.test(text);
   const hasHealth = /\b(health|med|patient|doctor|clinical|hospital|wellness|care)\b/i.test(text);
@@ -2791,92 +2817,99 @@ function refineIdeaText(input: string, category: string): string {
   const hasTravel = /\b(travel|flight|hotel|trip|booking|vacation|tourism)\b/i.test(text);
   const hasFood = /\b(food|restaurant|chef|dining|recipe|kitchen|groceries|meal)\b/i.test(text);
 
-  // 1. Core Concept elevator pitch
-  let coreConcept = `A high-performance ${category || "digital"} platform engineered for ${hasAI ? "intelligent automation" : "seamless user orchestration"}. `;
+  // 1. Core Concept elevator pitch (highly technical!)
+  let coreConcept = "";
   if (hasDelivery) {
-    coreConcept += `It resolves delivery friction by synchronizing real-time on-demand requests with localized logistics agents.`;
+    coreConcept = `A decentralized, high-throughput logistical coordination architecture optimized for real-time dispatch state routing. It leverages low-latency event synchronization to map agent locations directly to consumer queues.`;
   } else if (hasHealth) {
-    coreConcept += `It streamlines healthcare coordination by providing secure, low-latency access to records and patient scheduling.`;
+    coreConcept = `A secure, HIPAA-compliant patient diagnostics and scheduling coordinator. It integrates encrypted multi-tenant data containment with fine-grained access tokens to secure patient-practitioner records.`;
   } else if (hasFinance) {
-    coreConcept += `It secures transactional flows via encrypted payment protocols and decentralized ledger state checks.`;
+    coreConcept = `A high-assurance transactional settlement engine supporting atomic double-entry bookkeeping, multi-gateway ledger processing, and state verification using secure signature hashes.`;
   } else if (hasAI) {
-    coreConcept += `It leverages machine learning models to analyze inputs and automate complex decision trees with high precision.`;
+    coreConcept = `An intelligent cognitive pipeline powered by machine learning architectures. It processes unstructured dataset payloads, extracts semantic vectors, and triggers automated multi-parameter decision trees.`;
   } else if (hasEdu) {
-    coreConcept += `It democratizes localized learning by providing direct, intuitive portals for material delivery and tracking.`;
+    coreConcept = `A modular educational knowledge broker utilizing micro-progress tracking engines and automated curriculum indexers to deliver structured course flows.`;
   } else if (hasBag) {
-    coreConcept += `It bridges direct-to-consumer digital commerce with structured supply-chain logistics to orchestrate product catalog and purchases.`;
+    coreConcept = `A Direct-to-Consumer (D2C) inventory lifecycle and order fulfillment broker. It synchronizes online store catalogs with localized stock ledgers to prevent transactional collisions.`;
   } else if (hasTravel) {
-    coreConcept += `It simplifies travel coordination by aggregating multi-vendor transit resources and active itineraries.`;
+    coreConcept = `A multi-modal transit scheduling and itinerary aggregation engine. It dynamically resolves multi-vendor pricing matrices into a unified customer travel sequence.`;
   } else if (hasFood) {
-    coreConcept += `It streamlines meal orchestration by bridging dynamic digital orders with localized kitchen fulfillment tracks.`;
+    coreConcept = `An on-demand culinary production and delivery broker. It binds live menu states with kitchen queue pipelines and courier routing matrices.`;
   } else {
-    coreConcept += `It integrates high-fidelity data pipelines into a unified administrative workspace to maximize operational efficiency.`;
+    coreConcept = `A high-performance system engineered for the automated coordination of ${key1} structures and ${key2} payloads. It implements a multi-tier database mapping layer to orchestrate ${key3} sequences with sub-second latency.`;
   }
 
-  // 2. 3-Point MVP Scope
-  let phase1Title = "Unified Intake Console";
-  let phase1Desc = "A highly responsive portal enabling users to trigger requests and view live statuses.";
-  let phase2Title = "Asynchronous Match & Queue Engine";
-  let phase2Desc = "The core workflow layer that coordinates and routes requests based on real-time database lookups.";
-  let phase3Title = "Administrative Ledger & Audit Portal";
-  let phase3Desc = "A secure dashboard for operators to oversee activity logs, manage credentials, and audit compliance.";
+  // 2. 3-Point MVP Scope (Advanced technical wording!)
+  let phase1Title = `Intake & ${key1} Gateway`;
+  let phase1Desc = `A secure, highly responsive portal managing ${key1} uploads, schema inputs, and real-time client validation checks.`;
+  let phase2Title = `${key2} Processing & Orchestration Engine`;
+  let phase2Desc = `An asynchronous worker node managing database write routing, validation pipelines, and event coordination based on ${key2} states.`;
+  let phase3Title = `Stealth ${key3} Administrative Ledger`;
+  let phase3Desc = `An encrypted, token-authorized operational portal to oversee transaction logs, configure ${key3} rules, and audit client state audits.`;
 
   if (hasDelivery) {
-    phase1Title = "On-Demand Booking Dashboard";
-    phase1Desc = "Mobile-responsive portal allowing users to input requests, specify time slots, and view courier progress.";
-    phase2Title = "Logistics Routing & Dispatch Engine";
-    phase2Desc = "Coordinates geographic routes, matches couriers, and triggers automated SMS/email alerts.";
-    phase3Title = "Partner Settlement Portal";
-    phase3Desc = "Administrative panel for tracking payouts, auditing deliveries, and managing agent credentials.";
+    phase1Title = "Geographic Booking & Intake Gateway";
+    phase1Desc = "Mobile-optimized interface managing dynamic coordinate inputs, scheduled pickup profiles, and delivery progress indexes.";
+    phase2Title = "Asynchronous Routing & Dispatch Matcher";
+    phase2Desc = "A back-end scheduler running geographical optimization queries to pair agents with courier targets and emit socket updates.";
+    phase3Title = "Settlement Ledger & Carrier Audit Board";
+    phase3Desc = "Secure administrator console auditing payload completions, calculating payouts, and managing operator credentials.";
   } else if (hasAI) {
-    phase1Title = "Intelligent Prompt & Input Interface";
-    phase1Desc = "Minimalist interface optimized for file uploads and prompt structure validation.";
-    phase2Title = "AI Inference & Parsing Middleware";
-    phase2Desc = "Connects to processing pipelines, structures inputs, and executes analysis models asynchronously.";
-    phase3Title = "Model Training & Accuracy Dashboard";
-    phase3Desc = "Admin control panel to review output logs, adjust thresholds, and monitor model performance.";
+    phase1Title = "Ingress Parser & Vector Interface";
+    phase1Desc = "Responsive layout configured for structured document uploads, prompt templates, and schema compliance checks.";
+    phase2Title = "Inference & Processing Middleware";
+    phase2Desc = "Orchestrates API calls to processing engines, handles request caching, and parses outputs into structured JSON format.";
+    phase3Title = "Inference Logs & Precision Tuner";
+    phase3Desc = "Control board to review model usage metrics, adjust confidence thresholds, and inspect prompt history.";
   } else if (hasFinance) {
-    phase1Title = "Encrypted Transaction Dashboard";
-    phase1Desc = "High-security portal for users to connect payment accounts, initiate trades, or execute transfers.";
-    phase2Title = "Atomic Transaction & Ledger Engine";
-    phase2Desc = "Executes state transitions, handles payment gateway integrations, and secures double-entry bookkeeping.";
-    phase3Title = "Compliance & Reporting Panel";
-    phase3Desc = "Allows administrators to export tax reports, monitor AML flags, and oversee account security.";
+    phase1Title = "Atomic Transaction & Checkout Portal";
+    phase1Desc = "High-security payment ingress supporting card tokenization, client account linkups, and instant receipt verification.";
+    phase2Title = "Ledger State & Payout Settlement Engine";
+    phase2Desc = "Handles database transactions with isolation check locks, integrates Stripe/webhooks, and verifies ledger accounts.";
+    phase3Title = "AML Compliance & Audit Registry";
+    phase3Desc = "Administrative reporting dashboard to audit transaction logs, flag anomalies, and export tax summaries.";
   } else if (hasHealth) {
-    phase1Title = "Patient Care & Scheduling Portal";
-    phase1Desc = "HIPAA-aligned scheduling interface with direct messaging and booking slots.";
-    phase2Title = "Secure Medical Records Router";
-    phase2Desc = "Retrieves and updates patient files using end-to-end encrypted databases and audit trails.";
-    phase3Title = "Provider Administrative Dashboard";
-    phase3Desc = "Allows clinical managers to configure shift availability, audit system access, and generate billing reports.";
+    phase1Title = "HIPAA Patient Care & Intake Board";
+    phase1Desc = "Fully encrypted portal for medical history forms, scheduler slots, and secure client communication.";
+    phase2Title = "Encrypted Patient Record Broker";
+    phase2Desc = "Synchronizes clinical records with database storage using AES-256 field-level encryption and full audit trails.";
+    phase3Title = "Clinical Administration Ledger";
+    phase3Desc = "Authorized dashboard tracking practitioner permissions, shift scheduling logs, and system access checks.";
   } else if (hasEdu) {
-    phase1Title = "Learner Engagement Console";
-    phase1Desc = "A structured dashboard for courses, progress bars, and interactive assignments.";
-    phase2Title = "Curriculum Delivery & Scoring Middleware";
-    phase2Desc = "Delivers modular learning resources and automatically computes progress metrics.";
-    phase3Title = "Educator Portal & Metrics Ledger";
-    phase3Desc = "Allows teachers to compile grades, upload lessons, and evaluate student progress analytics.";
+    phase1Title = "Learner Portal & Course Dashboard";
+    phase1Desc = "Modular curriculum console featuring progress states, video player containers, and quiz forms.";
+    phase2Title = "Progress Tracking & Scoring Engine";
+    phase2Desc = "Computes score metrics, processes lesson completion states, and updates student certification records.";
+    phase3Title = "Educator Curriculum & Analytics Portal";
+    phase3Desc = "Teacher console to build modular lessons, adjust scoring, and review aggregate student completion data.";
   } else if (hasBag) {
-    phase1Title = "D2C Digital Showroom & Checkout";
-    phase1Desc = "A highly responsive catalog detailing product variations, material specifications, and handling secure checkouts.";
-    phase2Title = "Inventory Ledger & Order Broker";
-    phase2Desc = "Real-time registry tracking batch quantities and routing customer orders to designated warehouses.";
-    phase3Title = "Fulfillment & Dispatch Panel";
-    phase3Desc = "Administrative workspace to manage supplier communication, print shipping labels, and track transit APIs.";
+    phase1Title = "Product Showroom & Ingress Checkout";
+    phase1Desc = "D2C catalog interface managing visual variants, dimensional details, and secure cart payment gates.";
+    phase2Title = "Stock Registry & Inventory Broker";
+    phase2Desc = "Monitors real-time stock balances across warehouses and manages order dispatch queues on incoming purchases.";
+    phase3Title = "Logistics Carrier & Fulfillment Portal";
+    phase3Desc = "Backend shipping administrator to print dispatch labels, map shipping updates, and track tracking APIs.";
   } else if (hasTravel) {
-    phase1Title = "Booking Console & Itinerary Builder";
-    phase1Desc = "Interactive scheduling system permitting custom trip builds and real-time flight checks.";
-    phase2Title = "Transit API Aggregator Engine";
-    phase2Desc = "Integrates external APIs (GDS, hotel, and vehicle) to yield combined booking lists dynamically.";
-    phase3Title = "Vendor Payout & Markup Ledger";
-    phase3Desc = "Administration ledger to record reservations, audit commission margins, and handle supplier payouts.";
+    phase1Title = "Visual Itinerary & Booking Ingress";
+    phase1Desc = "Search dashboard permitting custom date settings, route configurations, and customer details.";
+    phase2Title = "External API Aggregator Engine";
+    phase2Desc = "Aggregates travel availability databases (flights, hotels) into a single, unified booking payload.";
+    phase3Title = "Reservation Ledger & Markup Controller";
+    phase3Desc = "Operations dashboard monitoring reservation receipts, configuring ticketing margins, and routing vendor payouts.";
+  } else if (hasTravel) {
+    phase1Title = "Visual Itinerary & Booking Ingress";
+    phase1Desc = "Search dashboard permitting custom date settings, route configurations, and customer details.";
+    phase2Title = "External API Aggregator Engine";
+    phase2Desc = "Aggregates travel availability databases (flights, hotels) into a single, unified booking payload.";
+    phase3Title = "Reservation Ledger & Markup Controller";
+    phase3Desc = "Operations dashboard monitoring reservation receipts, configuring ticketing margins, and routing vendor payouts.";
   } else if (hasFood) {
-    phase1Title = "Visual Menu & Cart Console";
-    phase1Desc = "Responsive customer-facing catalog allowing menu customization, item staging, and secure checkout.";
-    phase2Title = "Kitchen Order Routing Engine";
-    phase2Desc = "Distributes incoming tickets to prep stations and updates client dispatch timelines in real-time.";
-    phase3Title = "Vendor Commissions & Delivery Ledger";
-    phase3Desc = "Administrative module to calculate partner payouts, audit rider collections, and export daily sales summaries.";
+    phase1Title = "Menu Cart & Checkout Interface";
+    phase1Desc = "Responsive catalog allowing dietary toggles, ingredient selection, and payment checkouts.";
+    phase2Title = "Production Queue & Ticket Router";
+    phase2Desc = "Distributes kitchen preparation orders to correct preparation terminals and updates customer delivery states.";
+    phase3Title = "Rider Settlement & Daily Payout Board";
+    phase3Desc = "Administration ledger mapping dispatcher balances, rider commissions, and daily sales summaries.";
   }
 
   // If the user's text had custom details, integrate them
@@ -2897,7 +2930,7 @@ ${coreConcept}
   ${phase3Desc}
 
 3. SECURITY & ARCHITECTURE NODE
-Designed for stealth-mode deployment. Built with secure database encryption, low-latency API endpoints, and a modular architecture ready for direct handoff to engineering.`;
+Designed for stealth-mode deployment. Engineered with database-level encryption, sub-second API endpoint responses, and a modular architecture ready for Git handoff and seamless scale.`;
 }
 
 function playStampSound() {
