@@ -40,7 +40,7 @@ export function Footer() {
               fontWeight: 300,
               letterSpacing: "0.2em",
               textTransform: "uppercase",
-              color: "rgba(244,239,228,0.6)",
+              color: "#F4EFE4",
             }}
           >
             A Veixon Product · Est. {new Date().getFullYear()}
@@ -54,7 +54,7 @@ export function Footer() {
             fontSize: "0.65rem",
             fontWeight: 300,
             letterSpacing: "0.15em",
-            color: "rgba(244,239,228,0.7)",
+            color: "#F4EFE4",
             textAlign: "center",
           }}
         >
@@ -80,7 +80,7 @@ export function Footer() {
               paddingBottom: "1px",
               transition: "color 0.2s",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#F4EFE4")}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "#FFFFFF")}
             onMouseLeave={(e) => (e.currentTarget.style.color = "#C9A24A")}
           >
             hello@dayzero.build
@@ -91,7 +91,7 @@ export function Footer() {
               fontSize: "0.58rem",
               fontWeight: 300,
               letterSpacing: "0.12em",
-              color: "rgba(244,239,228,0.55)",
+              color: "rgba(244,239,228,0.8)",
               marginTop: "0.35rem",
             }}
           >
@@ -119,7 +119,7 @@ export function Footer() {
             fontSize: "0.58rem",
             fontWeight: 300,
             letterSpacing: "0.1em",
-            color: "rgba(244,239,228,0.45)",
+            color: "rgba(244,239,228,0.7)",
           }}
         >
           © {new Date().getFullYear()} Veixon. All rights reserved.
@@ -132,7 +132,7 @@ export function Footer() {
             fontSize: "0.58rem",
             fontWeight: 300,
             letterSpacing: "0.1em",
-            color: "rgba(244,239,228,0.45)",
+            color: "rgba(244,239,228,0.7)",
           }}
         >
           DZ-LEDGER-{new Date().getFullYear()}
