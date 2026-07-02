@@ -39,7 +39,7 @@ export function Nav({ onDraftClick }: NavProps) {
   const darkSections = ["hero", "sealed", "pillars", "team"];
   const isDarkNav = darkSections.includes(activeSection);
   const textColor = isDarkNav ? "#F4EFE4" : "#131929";
-  const mutedColor = isDarkNav ? "rgba(244,239,228,0.65)" : "#6A6355";
+  const mutedColor = isDarkNav ? "rgba(244, 239, 228, 0.88)" : "#6A6355";
 
   let headerBg = "transparent";
   let borderBottom = "1px solid transparent";

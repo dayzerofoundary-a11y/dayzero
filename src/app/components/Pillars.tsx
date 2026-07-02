@@ -213,7 +213,7 @@ export function Pillars() {
                   fontSize: "0.82rem",
                   fontWeight: 300,
                   lineHeight: 1.7,
-                  color: "rgba(244,239,228,0.55)",
+                  color: "rgba(244, 239, 228, 0.82)",
                   flex: 1,
                 }}
               >

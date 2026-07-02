@@ -90,7 +90,7 @@ export function SignedAndSealed() {
               fontSize: "1.1rem",
               fontWeight: 300,
               lineHeight: 1.7,
-              color: "rgba(244,239,228,0.65)",
+              color: "rgba(244, 239, 228, 0.88)",
               maxWidth: "680px",
               margin: "0 auto",
             }}
@@ -181,7 +181,7 @@ export function SignedAndSealed() {
                     fontFamily: "'Poppins', sans-serif",
                     fontSize: "0.85rem",
                     fontWeight: 300,
-                    color: "rgba(244,239,228,0.55)",
+                    color: "rgba(244, 239, 228, 0.82)",
                     letterSpacing: "0.08em",
                   }}
                 >
@@ -198,7 +198,7 @@ export function SignedAndSealed() {
                   fontSize: "0.75rem",
                   fontWeight: 600,
                   letterSpacing: "0.15em",
-                  color: "rgba(244,239,228,0.45)",
+                  color: "rgba(244, 239, 228, 0.75)",
                   textTransform: "uppercase",
                   marginBottom: "0.3rem",
                 }}
@@ -301,7 +301,7 @@ export function SignedAndSealed() {
                   fontSize: "0.85rem",
                   fontWeight: 300,
                   lineHeight: 1.7,
-                  color: "rgba(244,239,228,0.6)",
+                  color: "rgba(244, 239, 228, 0.85)",
                   margin: 0,
                   flex: 1,
                 }}

@@ -153,7 +153,7 @@ export function Hero({ draftRef }: HeroProps) {
               fontSize: "1.05rem",
               fontWeight: 300,
               lineHeight: 1.7,
-              color: "rgba(244,239,228,0.72)",
+              color: "rgba(244, 239, 228, 0.9)",
               maxWidth: "460px",
               marginBottom: "2.5rem",
             }}
@@ -200,7 +200,7 @@ export function Hero({ draftRef }: HeroProps) {
                     fontWeight: 500,
                     letterSpacing: "0.22em",
                     textTransform: "uppercase",
-                    color: "rgba(244,239,228,0.65)",
+                    color: "rgba(244, 239, 228, 0.88)",
                     marginBottom: "0.2rem",
                   }}
                 >
