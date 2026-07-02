@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@marsidev/react-turnstile": "^1.5.3",
+    "@vercel/analytics": "^2.0.1",
     "canvas-confetti": "1.9.4",
     "lucide-react": "0.487.0",
     "motion": "12.23.24",
