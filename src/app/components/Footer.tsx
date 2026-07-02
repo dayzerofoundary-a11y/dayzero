@@ -40,7 +40,7 @@ export function Footer() {
               fontWeight: 300,
               letterSpacing: "0.2em",
               textTransform: "uppercase",
-              color: "rgba(244,239,228,0.35)",
+              color: "rgba(244,239,228,0.6)",
             }}
           >
             A Veixon Product · Est. {new Date().getFullYear()}
@@ -54,13 +54,13 @@ export function Footer() {
             fontSize: "0.65rem",
             fontWeight: 300,
             letterSpacing: "0.15em",
-            color: "rgba(244,239,228,0.3)",
+            color: "rgba(244,239,228,0.7)",
             textAlign: "center",
           }}
         >
           Every idea is currency.
           <br />
-          <span style={{ color: "rgba(168,130,44,0.6)" }}>
+          <span style={{ color: "#C9A24A" }}>
             We mint yours into a market-ready product.
           </span>
         </div>
@@ -74,14 +74,14 @@ export function Footer() {
               fontSize: "0.7rem",
               fontWeight: 400,
               letterSpacing: "0.12em",
-              color: "#A8822C",
+              color: "#C9A24A",
               textDecoration: "none",
-              borderBottom: "1px solid rgba(168,130,44,0.35)",
+              borderBottom: "1px solid rgba(201,162,74,0.4)",
               paddingBottom: "1px",
               transition: "color 0.2s",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#C9A24A")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "#A8822C")}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "#F4EFE4")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "#C9A24A")}
           >
             hello@dayzero.build
           </a>
@@ -91,7 +91,7 @@ export function Footer() {
               fontSize: "0.58rem",
               fontWeight: 300,
               letterSpacing: "0.12em",
-              color: "rgba(244,239,228,0.25)",
+              color: "rgba(244,239,228,0.55)",
               marginTop: "0.35rem",
             }}
           >
@@ -119,7 +119,7 @@ export function Footer() {
             fontSize: "0.58rem",
             fontWeight: 300,
             letterSpacing: "0.1em",
-            color: "rgba(244,239,228,0.2)",
+            color: "rgba(244,239,228,0.45)",
           }}
         >
           © {new Date().getFullYear()} Veixon. All rights reserved.
@@ -132,7 +132,7 @@ export function Footer() {
             fontSize: "0.58rem",
             fontWeight: 300,
             letterSpacing: "0.1em",
-            color: "rgba(244,239,228,0.2)",
+            color: "rgba(244,239,228,0.45)",
           }}
         >
           DZ-LEDGER-{new Date().getFullYear()}
