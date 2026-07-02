@@ -1565,130 +1565,6 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                   />
                 </div>
 
-                {/* Biometric Touch Scanning Area */}
-                <div
-                  style={{
-                    width: "100%",
-                    marginBottom: "1.5rem",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    border: "1px dashed rgba(168,130,44,0.25)",
-                    borderRadius: "6px",
-                    padding: "1.2rem",
-                    background: "rgba(19, 25, 41, 0.03)",
-                    position: "relative",
-                    userSelect: "none",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontFamily: "'Poppins', sans-serif",
-                      fontSize: "0.52rem",
-                      letterSpacing: "0.18em",
-                      textTransform: "uppercase",
-                      color: isScanSuccess ? "#1A4A3C" : "#6A6355",
-                      fontWeight: 600,
-                      marginBottom: "0.8rem",
-                    }}
-                  >
-                    {isScanSuccess 
-                      ? "✓ Biometric Identity Authenticated" 
-                      : isScanning 
-                        ? `Scanning Fingerprint... ${scanProgress}%` 
-                        : "Press & Hold Scanner to Authorize NDA"}
-                  </div>
-
-                  <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center", width: "80px", height: "80px" }}>
-                    {/* Glowing pulse ring on success */}
-                    {isScanSuccess && <div className="pulse-ring" />}
-
-                    <div
-                      onMouseDown={handleScanStart}
-                      onMouseUp={handleScanEnd}
-                      onMouseLeave={handleScanEnd}
-                      onTouchStart={handleScanStart}
-                      onTouchEnd={handleScanEnd}
-                      style={{
-                        width: "64px",
-                        height: "64px",
-                        borderRadius: "50%",
-                        border: `2px solid ${isScanSuccess ? "#1A4A3C" : isScanning ? "#C9A24A" : "rgba(168, 130, 44, 0.4)"}`,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        cursor: isScanSuccess ? "default" : "pointer",
-                        background: isScanSuccess ? "rgba(26, 74, 60, 0.08)" : isScanning ? "rgba(201, 162, 74, 0.05)" : "transparent",
-                        position: "relative",
-                        overflow: "hidden",
-                        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                        zIndex: 2,
-                      }}
-                    >
-                      {/* Scanning progress ring */}
-                      {isScanning && (
-                        <div
-                          style={{
-                            position: "absolute",
-                            bottom: 0,
-                            left: 0,
-                            right: 0,
-                            height: `${scanProgress}%`,
-                            background: "rgba(201, 162, 74, 0.2)",
-                            transition: "height 0.05s linear",
-                          }}
-                        />
-                      )}
-
-                      {/* Laser sweep line */}
-                      {isScanning && <div className="laser-line" />}
-
-                      {/* Fingerprint SVG Icon */}
-                      <svg
-                        viewBox="0 0 24 24"
-                        width="32"
-                        height="32"
-                        fill="none"
-                        stroke={isScanSuccess ? "#1A4A3C" : isScanning ? "#C9A24A" : "#A8822C"}
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        style={{
-                          zIndex: 2,
-                          transform: isScanning ? "scale(1.05)" : "scale(1)",
-                          transition: "transform 0.1s linear",
-                        }}
-                      >
-                        <path d="M12 2a10 10 0 0 0-10 10" />
-                        <path d="M12 5a7 7 0 0 0-7 7" />
-                        <path d="M8 12a4 4 0 0 1 8 0" />
-                        <path d="M12 8a4 4 0 0 0-4 4v3" />
-                        <path d="M16 15v-3a4 4 0 0 0-4-4" />
-                        <path d="M12 12v3" />
-                        <path d="M22 12a10 10 0 0 1-10 10" />
-                        <path d="M19 12a7 7 0 0 1-7 7" />
-                        <path d="M15 12a3 3 0 0 1-3 3" />
-                        <path d="M12 15a3 3 0 0 1-3-3" />
-                      </svg>
-                    </div>
-                  </div>
-
-                  <div
-                    style={{
-                      fontFamily: "'Poppins', sans-serif",
-                      fontSize: "0.45rem",
-                      color: "rgba(106, 99, 85, 0.7)",
-                      marginTop: "0.6rem",
-                      letterSpacing: "0.05em",
-                      textAlign: "center",
-                    }}
-                  >
-                    {isScanSuccess 
-                      ? "Secure handshake completed. Document ready for certification." 
-                      : "Hold click/press until biometric sequence completes."}
-                  </div>
-                </div>
-
                 {/* Signed + Submit */}
                 <div
                   style={{
@@ -1704,20 +1580,10 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                 >
                   <div
                     className="signature-block"
-                    onClick={() => {
-                      if (isScanSuccess) {
-                        setShowSignatureModal(true);
-                      } else {
-                        toast.error("Please complete biometric authorization scan first.");
-                      }
-                    }}
-                    style={{ cursor: isScanSuccess ? "pointer" : "not-allowed", transition: "opacity 0.2s" }}
-                    onMouseEnter={(e) => {
-                      if (isScanSuccess) e.currentTarget.style.opacity = "0.8";
-                    }}
-                    onMouseLeave={(e) => {
-                      if (isScanSuccess) e.currentTarget.style.opacity = "1";
-                    }}
+                    onClick={() => setShowSignatureModal(true)}
+                    style={{ cursor: "pointer", transition: "opacity 0.2s" }}
+                    onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.8")}
+                    onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
                   >
                     {signatureImage ? (
                       <div
@@ -1737,7 +1603,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                         style={{
                           fontFamily: "'Pinyon Script', cursive",
                           fontSize: "2.2rem",
-                          color: isScanSuccess ? "#1E2535" : "rgba(30, 37, 53, 0.3)",
+                          color: "#1E2535",
                           lineHeight: 1.2,
                           minWidth: "180px",
                           borderBottom: "1px solid rgba(19,25,41,0.2)",
@@ -1774,7 +1640,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                           fontFamily: "'Poppins', sans-serif",
                           fontSize: "0.45rem",
                           letterSpacing: "0.05em",
-                          color: isScanSuccess ? "#A8822C" : "rgba(168, 130, 44, 0.4)",
+                          color: "#A8822C",
                           fontWeight: 500
                         }}
                       >
@@ -1786,7 +1652,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                   <button
                     type="button"
                     onClick={handleSubmit}
-                    disabled={isSubmitting || !isScanSuccess}
+                    disabled={isSubmitting}
                     style={{
                       fontFamily: "'Poppins', sans-serif",
                       fontSize: "0.76rem",
@@ -1794,35 +1660,35 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                       letterSpacing: "0.22em",
                       textTransform: "uppercase",
                       padding: "1rem 2rem",
-                      background: isScanSuccess ? "#131929" : "rgba(19, 25, 41, 0.4)",
-                      color: isScanSuccess ? "#F4EFE4" : "rgba(244, 239, 228, 0.4)",
-                      border: isScanSuccess ? "1px solid #131929" : "1px solid rgba(19, 25, 41, 0.1)",
-                      cursor: (isSubmitting || !isScanSuccess) ? "not-allowed" : "pointer",
+                      background: "#131929",
+                      color: "#F4EFE4",
+                      border: "1px solid #131929",
+                      cursor: isSubmitting ? "not-allowed" : "pointer",
                       transition: "background 0.2s, transform 0.08s",
                       display: "flex",
                       alignItems: "center",
                       gap: "0.8rem",
                       opacity: isSubmitting ? 0.7 : 1,
                     }}
-                    onMouseEnter={(e) => {
-                      if (isScanSuccess) e.currentTarget.style.background = "#1E2535";
-                    }}
-                    onMouseLeave={(e) => {
-                      if (isScanSuccess) e.currentTarget.style.background = "#131929";
-                    }}
-                    onMouseDown={(e) => {
-                      if (isScanSuccess) e.currentTarget.style.transform = "scale(0.97)";
-                    }}
-                    onMouseUp={(e) => {
-                      if (isScanSuccess) e.currentTarget.style.transform = "scale(1)";
-                    }}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.background = "#1E2535")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.background = "#131929")
+                    }
+                    onMouseDown={(e) =>
+                      (e.currentTarget.style.transform = "scale(0.97)")
+                    }
+                    onMouseUp={(e) =>
+                      (e.currentTarget.style.transform = "scale(1)")
+                    }
                   >
                     <SealIcon />
-                    {isSubmitting ? "Filing..." : !isScanSuccess ? "Awaiting Secure Scan" : "File for Review"}
+                    {isSubmitting ? "Filing..." : "File for Review"}
                   </button>
                 </div>
               </motion.div>
-
+              
               {/* MICR */}
               <motion.div
                 initial={prefersReduced ? {} : { opacity: 0 }}
@@ -2838,37 +2704,6 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
       </AnimatePresence>
 
       <style>{`
-        @keyframes laser-sweep {
-          0% { top: 0%; }
-          50% { top: 100%; }
-          100% { top: 0%; }
-        }
-        @keyframes biometric-pulse {
-          0% { transform: scale(1); opacity: 0.8; }
-          100% { transform: scale(1.35); opacity: 0; }
-        }
-        .laser-line {
-          position: absolute;
-          left: 0;
-          right: 0;
-          height: 2px;
-          background: #C9A24A;
-          box-shadow: 0 0 8px #C9A24A;
-          animation: laser-sweep 1.8s infinite linear;
-          pointer-events: none;
-          z-index: 3;
-        }
-        .pulse-ring {
-          position: absolute;
-          width: 76px;
-          height: 76px;
-          border-radius: 50%;
-          border: 2px solid #1A4A3C;
-          animation: biometric-pulse 1.5s infinite ease-out;
-          pointer-events: none;
-          z-index: 1;
-        }
-
         .cheque-card input,
         .cheque-card textarea,
         .cheque-card button {
