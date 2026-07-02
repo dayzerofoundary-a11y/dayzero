@@ -11,6 +11,7 @@ import { HowItWorks } from "./components/HowItWorks";
 import { Team } from "./components/Team";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
+import { Analytics } from "@vercel/analytics/react";
 
 export default function App() {
   const draftRef = useRef<HTMLElement>(null);
@@ -45,7 +46,7 @@ export default function App() {
             color: "#F4EFE4",
             border: "1px solid rgba(168,130,44,0.45)",
             borderRadius: "0",
-            fontFamily: "'DM Sans', sans-serif",
+            fontFamily: "'Poppins', sans-serif",
             fontSize: "0.82rem",
             letterSpacing: "0.04em",
             boxShadow: "0 8px 32px rgba(13,18,32,0.5)",
@@ -64,12 +65,13 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      <Analytics />
 
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         html {
-          font-family: 'DM Sans', system-ui, sans-serif;
+          font-family: 'Poppins', 'Poppins', system-ui, sans-serif;
           scroll-behavior: smooth;
         }
 

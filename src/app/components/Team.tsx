@@ -61,7 +61,7 @@ export function Team() {
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Poppins', sans-serif",
               fontSize: "0.8rem",
               fontWeight: 500,
               letterSpacing: "0.3em",
@@ -91,7 +91,7 @@ export function Team() {
           </h2>
           <p
             style={{
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Poppins', sans-serif",
               fontSize: "1.1rem",
               fontWeight: 300,
               lineHeight: 1.7,
@@ -161,7 +161,7 @@ export function Team() {
               >
                 <span
                   style={{
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "'Poppins', sans-serif",
                     fontSize: "0.8rem",
                     fontWeight: 600,
                     letterSpacing: "0.05em",
@@ -185,7 +185,7 @@ export function Team() {
                 </div>
                 <div
                   style={{
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "'Poppins', sans-serif",
                     fontSize: "0.85rem",
                     fontWeight: 300,
                     color: "rgba(244,239,228,0.55)",
@@ -201,7 +201,7 @@ export function Team() {
             <div style={{ textAlign: "right" }} className="team-card-right">
               <div
                 style={{
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "'Poppins', sans-serif",
                   fontSize: "0.75rem",
                   fontWeight: 600,
                   letterSpacing: "0.15em",
@@ -305,7 +305,7 @@ export function Team() {
               {/* Body text */}
               <p
                 style={{
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "'Poppins', sans-serif",
                   fontSize: "0.82rem",
                   fontWeight: 300,
                   lineHeight: 1.7,

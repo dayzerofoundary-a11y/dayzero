@@ -276,7 +276,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
     ctx.fillText("DAYZERO FOUNDRY", canvas.width / 2, 130);
 
     ctx.fillStyle = "#A8822C";
-    ctx.font = "bold 13px 'DM Sans', sans-serif";
+    ctx.font = "bold 13px 'Poppins', sans-serif";
     ctx.fillText("STEALTH PROJECT INTAKE REGISTRY", canvas.width / 2, 170);
 
     // Line separator
@@ -312,7 +312,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
     detailsList.forEach((item, index) => {
       const y = detailsY + index * rowHeight;
       ctx.fillStyle = "#A8822C";
-      ctx.font = "bold 11px 'DM Sans', sans-serif";
+      ctx.font = "bold 11px 'Poppins', sans-serif";
       ctx.fillText(item.label, labelX, y);
 
       ctx.fillStyle = "#131929";
@@ -344,13 +344,13 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
 
     ctx.fillStyle = "#F4EFE4";
     ctx.textAlign = "center";
-    ctx.font = "bold 8px 'DM Sans', sans-serif";
+    ctx.font = "bold 8px 'Poppins', sans-serif";
     ctx.fillText("CERTIFIED", sealX, sealY - 10);
     ctx.fillStyle = "#C9A24A";
     ctx.font = "bold 15px Georgia, serif";
     ctx.fillText("DZF", sealX, sealY + 5);
     ctx.fillStyle = "rgba(244,239,228,0.7)";
-    ctx.font = "bold 6px 'DM Sans', sans-serif";
+    ctx.font = "bold 6px 'Poppins', sans-serif";
     ctx.fillText("& SECURED", sealX, sealY + 18);
 
     // 8. Signature Area
@@ -366,7 +366,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
 
     ctx.fillStyle = "#6A6355";
     ctx.textAlign = "center";
-    ctx.font = "9px 'DM Sans', sans-serif";
+    ctx.font = "9px 'Poppins', sans-serif";
     ctx.fillText("DISCLOSING PARTY SIGNATURE", sigX, sigY + 32);
 
     if (certDetails.signatureImage) {
@@ -386,7 +386,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
     function triggerDownload() {
       ctx.fillStyle = "rgba(106,99,85,0.45)";
       ctx.textAlign = "center";
-      ctx.font = "9px 'DM Sans', sans-serif";
+      ctx.font = "9px 'Poppins', sans-serif";
       ctx.fillText("Confidential Idea Registry · DayZero Foundry · Protected under legally binding NDA agreement.", canvas.width / 2, 755);
 
       const link = document.createElement("a");
@@ -549,7 +549,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
     border: "none",
     borderBottom: `1px solid ${hasError ? "#8B1A1A" : "rgba(19,25,41,0.25)"}`,
     outline: "none",
-    fontFamily: "'DM Sans', sans-serif",
+    fontFamily: "'Poppins', sans-serif",
     fontSize: "1.1rem",
     fontWeight: 300,
     color: "#131929",
@@ -558,7 +558,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
   });
 
   const labelStyle: React.CSSProperties = {
-    fontFamily: "'DM Sans', sans-serif",
+    fontFamily: "'Poppins', sans-serif",
     fontSize: "0.7rem",
     fontWeight: 500,
     letterSpacing: "0.18em",
@@ -604,7 +604,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Poppins', sans-serif",
               fontSize: "0.8rem",
               fontWeight: 500,
               letterSpacing: "0.3em",
@@ -638,7 +638,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
           </h2>
           <p
             style={{
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Poppins', sans-serif",
               fontSize: "1.1rem",
               fontWeight: 300,
               lineHeight: 1.7,
@@ -730,7 +730,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                   </div>
                   <div
                     style={{
-                      fontFamily: "'DM Sans', sans-serif",
+                      fontFamily: "'Poppins', sans-serif",
                       fontSize: "0.7rem",
                       fontWeight: 500,
                       letterSpacing: "0.22em",
@@ -744,7 +744,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                 <div style={{ textAlign: "right" }}>
                   <div
                     style={{
-                      fontFamily: "'DM Sans', sans-serif",
+                      fontFamily: "'Poppins', sans-serif",
                       fontSize: "0.7rem",
                       letterSpacing: "0.18em",
                       textTransform: "uppercase",
@@ -765,7 +765,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                   </div>
                   <div
                     style={{
-                      fontFamily: "'DM Sans', sans-serif",
+                      fontFamily: "'Poppins', sans-serif",
                       fontSize: "0.8rem",
                       color: "#6A6355",
                       marginTop: "0.2rem",
@@ -844,7 +844,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                 {errors.ideaName && (
                   <div
                     style={{
-                      fontFamily: "'DM Sans', sans-serif",
+                      fontFamily: "'Poppins', sans-serif",
                       fontSize: "0.6rem",
                       color: "#8B1A1A",
                       letterSpacing: "0.1em",
@@ -878,7 +878,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                 >
                   <span
                     style={{
-                      fontFamily: "'DM Sans', sans-serif",
+                      fontFamily: "'Poppins', sans-serif",
                       fontSize: "0.8rem",
                       color: "#6A6355",
                       whiteSpace: "nowrap",
@@ -921,7 +921,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                   </div>
                   <span
                     style={{
-                      fontFamily: "'DM Sans', sans-serif",
+                      fontFamily: "'Poppins', sans-serif",
                       fontSize: "0.8rem",
                       color: "#6A6355",
                       whiteSpace: "nowrap",
@@ -964,7 +964,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                     onClick={handleRefineClick}
                     disabled={isRefining}
                     style={{
-                      fontFamily: "'DM Sans', sans-serif",
+                      fontFamily: "'Poppins', sans-serif",
                       fontSize: "0.58rem",
                       fontWeight: 600,
                       letterSpacing: "0.08em",
@@ -998,7 +998,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                   style={{
                     ...inputStyle(!!errors.memo),
                     resize: "none",
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "'Poppins', sans-serif",
                     fontSize: "1.05rem",
                     fontWeight: 300,
                     lineHeight: 1.7,
@@ -1009,7 +1009,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                 {errors.memo && (
                   <div
                     style={{
-                      fontFamily: "'DM Sans', sans-serif",
+                      fontFamily: "'Poppins', sans-serif",
                       fontSize: "0.6rem",
                       color: "#8B1A1A",
                       letterSpacing: "0.1em",
@@ -1036,7 +1036,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                   <label
                     style={{
                       cursor: "pointer",
-                      fontFamily: "'DM Sans', sans-serif",
+                      fontFamily: "'Poppins', sans-serif",
                       fontSize: "0.95rem",
                       fontWeight: 500,
                       color: "#A8822C",
@@ -1069,7 +1069,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                     />
                   </label>
                   <span style={{
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "'Poppins', sans-serif",
                     fontSize: "0.95rem",
                     color: form.file ? "#131929" : "#6A6355",
                     whiteSpace: "nowrap",
@@ -1089,7 +1089,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                         color: "#8B1A1A",
                         cursor: "pointer",
                         fontSize: "0.8rem",
-                        fontFamily: "'DM Sans', sans-serif",
+                        fontFamily: "'Poppins', sans-serif",
                         padding: "0"
                       }}
                     >
@@ -1131,7 +1131,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                           background: "transparent",
                           cursor: "pointer",
                           transition: "border-color 0.2s",
-                          fontFamily: "'DM Sans', sans-serif",
+                          fontFamily: "'Poppins', sans-serif",
                           fontSize: "1rem",
                           fontWeight: 300,
                           color: form.role ? "#131929" : "#9A9388",
@@ -1184,7 +1184,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                                   background: "transparent",
                                   border: "none",
                                   outline: "none",
-                                  fontFamily: "'DM Sans', sans-serif",
+                                  fontFamily: "'Poppins', sans-serif",
                                   fontSize: "0.95rem",
                                   fontWeight: 300,
                                   color: "#131929",
@@ -1197,7 +1197,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                                 <div
                                   style={{
                                     padding: "0.6rem 0.6rem",
-                                    fontFamily: "'DM Sans', sans-serif",
+                                    fontFamily: "'Poppins', sans-serif",
                                     fontSize: "0.75rem",
                                     color: "#9A9388",
                                     fontStyle: "italic",
@@ -1217,7 +1217,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                                     style={{
                                       padding: "0.5rem 0.6rem",
                                       cursor: "pointer",
-                                      fontFamily: "'DM Sans', sans-serif",
+                                      fontFamily: "'Poppins', sans-serif",
                                       fontSize: "0.95rem",
                                       fontWeight: form.role === r ? 500 : 300,
                                       color: form.role === r ? "#131929" : "#6A6355",
@@ -1267,7 +1267,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                     {errors.name && (
                       <div
                         style={{
-                          fontFamily: "'DM Sans', sans-serif",
+                          fontFamily: "'Poppins', sans-serif",
                           fontSize: "0.6rem",
                           color: "#8B1A1A",
                         }}
@@ -1318,7 +1318,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                     {errors.email && (
                       <div
                         style={{
-                          fontFamily: "'DM Sans', sans-serif",
+                          fontFamily: "'Poppins', sans-serif",
                           fontSize: "0.6rem",
                           color: "#8B1A1A",
                         }}
@@ -1342,7 +1342,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                           background: "transparent",
                           cursor: "pointer",
                           transition: "border-color 0.2s",
-                          fontFamily: "'DM Sans', sans-serif",
+                          fontFamily: "'Poppins', sans-serif",
                           fontSize: "0.82rem",
                           fontWeight: 300,
                           color: form.category ? "#131929" : "#9A9388",
@@ -1375,19 +1375,19 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                                 type="text" value={categorySearch}
                                 onChange={(e) => setCategorySearch(e.target.value)}
                                 placeholder="Search categories…" autoFocus
-                                style={{ width: "100%", background: "transparent", border: "none", outline: "none", fontFamily: "'DM Sans', sans-serif", fontSize: "0.78rem", fontWeight: 300, color: "#131929", padding: "0.2rem 0" }}
+                                style={{ width: "100%", background: "transparent", border: "none", outline: "none", fontFamily: "'Poppins', sans-serif", fontSize: "0.78rem", fontWeight: 300, color: "#131929", padding: "0.2rem 0" }}
                               />
                             </div>
                             <div style={{ overflowY: "auto", maxHeight: "170px" }}>
                               {filteredCategories.length === 0 ? (
-                                <div style={{ padding: "0.6rem", fontFamily: "'DM Sans', sans-serif", fontSize: "0.75rem", color: "#9A9388", fontStyle: "italic" }}>No categories found</div>
+                                <div style={{ padding: "0.6rem", fontFamily: "'Poppins', sans-serif", fontSize: "0.75rem", color: "#9A9388", fontStyle: "italic" }}>No categories found</div>
                               ) : (
                                 filteredCategories.map((c) => (
                                   <div
                                     key={c}
                                     onClick={() => { update("category", c); setCategoryDropdownOpen(false); setCategorySearch(""); }}
                                     style={{
-                                      padding: "0.4rem 0.6rem", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", fontSize: "0.78rem",
+                                      padding: "0.4rem 0.6rem", cursor: "pointer", fontFamily: "'Poppins', sans-serif", fontSize: "0.78rem",
                                       fontWeight: form.category === c ? 500 : 300, color: form.category === c ? "#131929" : "#6A6355",
                                       background: form.category === c ? "rgba(168,130,44,0.1)" : "transparent",
                                       transition: "background 0.12s, color 0.12s", letterSpacing: "0.03em",
@@ -1425,7 +1425,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                     onChange={(e) => setNdaAccepted(e.target.checked)}
                     style={{ marginTop: "0.15rem", accentColor: "#A8822C", cursor: "pointer" }}
                   />
-                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.72rem", fontWeight: 300, color: "#6A6355", lineHeight: 1.6 }}>
+                  <div style={{ fontFamily: "'Poppins', sans-serif", fontSize: "0.72rem", fontWeight: 300, color: "#6A6355", lineHeight: 1.6 }}>
                     I acknowledge and agree to the{" "}
                     <span
                       onClick={() => setShowNDA(true)}
@@ -1509,7 +1509,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                     >
                       <div
                         style={{
-                          fontFamily: "'DM Sans', sans-serif",
+                          fontFamily: "'Poppins', sans-serif",
                           fontSize: "0.52rem",
                           letterSpacing: "0.2em",
                           textTransform: "uppercase",
@@ -1521,7 +1521,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                       </div>
                       <div
                         style={{
-                          fontFamily: "'DM Sans', sans-serif",
+                          fontFamily: "'Poppins', sans-serif",
                           fontSize: "0.45rem",
                           letterSpacing: "0.05em",
                           color: "#A8822C",
@@ -1538,7 +1538,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                     onClick={handleSubmit}
                     disabled={isSubmitting}
                     style={{
-                      fontFamily: "'DM Sans', sans-serif",
+                      fontFamily: "'Poppins', sans-serif",
                       fontSize: "0.76rem",
                       fontWeight: 500,
                       letterSpacing: "0.22em",
@@ -1600,7 +1600,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
             style={{
               textAlign: "center",
               marginTop: "1.25rem",
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Poppins', sans-serif",
               fontSize: "0.7rem",
               fontWeight: 300,
               color: "#6A6355",
@@ -1661,7 +1661,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
               </div>
               <div
                 style={{
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "'Poppins', sans-serif",
                   fontSize: "0.75rem",
                   fontWeight: 400,
                   letterSpacing: "0.25em",
@@ -1756,7 +1756,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                 style={{
                   padding: "1.5rem",
                   overflowY: "auto",
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "'Poppins', sans-serif",
                   fontSize: "0.85rem",
                   fontWeight: 300,
                   color: "#3F3A30",
@@ -1800,7 +1800,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                     setShowNDA(false);
                   }}
                   style={{
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "'Poppins', sans-serif",
                     fontSize: "0.75rem",
                     fontWeight: 500,
                     letterSpacing: "0.1em",
@@ -1910,7 +1910,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                   style={{
                     flex: 1,
                     padding: "0.85rem",
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "'Poppins', sans-serif",
                     fontSize: "0.75rem",
                     fontWeight: 500,
                     letterSpacing: "0.08em",
@@ -1930,7 +1930,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                   style={{
                     flex: 1,
                     padding: "0.85rem",
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "'Poppins', sans-serif",
                     fontSize: "0.75rem",
                     fontWeight: 500,
                     letterSpacing: "0.08em",
@@ -1978,7 +1978,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                         onClick={handleUndo}
                         disabled={paths.length === 0}
                         style={{
-                          fontFamily: "'DM Sans', sans-serif",
+                          fontFamily: "'Poppins', sans-serif",
                           fontSize: "0.65rem",
                           fontWeight: 500,
                           letterSpacing: "0.08em",
@@ -1998,7 +1998,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                         onClick={handleClear}
                         disabled={paths.length === 0}
                         style={{
-                          fontFamily: "'DM Sans', sans-serif",
+                          fontFamily: "'Poppins', sans-serif",
                           fontSize: "0.65rem",
                           fontWeight: 500,
                           letterSpacing: "0.08em",
@@ -2025,7 +2025,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                       style={{
                         width: "100%",
                         padding: "0.75rem",
-                        fontFamily: "'DM Sans', sans-serif",
+                        fontFamily: "'Poppins', sans-serif",
                         fontSize: "0.85rem",
                         border: "1px solid rgba(168,130,44,0.25)",
                         background: "#FFF",
@@ -2060,7 +2060,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                   type="button"
                   onClick={() => setShowSignatureModal(false)}
                   style={{
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "'Poppins', sans-serif",
                     fontSize: "0.7rem",
                     fontWeight: 500,
                     letterSpacing: "0.1em",
@@ -2078,7 +2078,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                   type="button"
                   onClick={adoptSignature}
                   style={{
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "'Poppins', sans-serif",
                     fontSize: "0.7rem",
                     fontWeight: 500,
                     letterSpacing: "0.1em",
@@ -2183,7 +2183,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                     <div style={{ fontSize: "0.6rem", textTransform: "uppercase", letterSpacing: "0.1em", color: "#6A6355", fontWeight: 600, marginBottom: "0.4rem" }}>
                       Your Draft
                     </div>
-                    <div style={{ padding: "0.75rem", background: "rgba(19,25,41,0.03)", border: "1px solid rgba(19,25,41,0.08)", fontSize: "0.85rem", color: "#131929", fontFamily: "'DM Sans', sans-serif", fontWeight: 300, lineHeight: 1.5, minHeight: "60px" }}>
+                    <div style={{ padding: "0.75rem", background: "rgba(19,25,41,0.03)", border: "1px solid rgba(19,25,41,0.08)", fontSize: "0.85rem", color: "#131929", fontFamily: "'Poppins', sans-serif", fontWeight: 300, lineHeight: 1.5, minHeight: "60px" }}>
                       {form.memo}
                     </div>
                   </div>
@@ -2201,7 +2201,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                       borderRadius: "2px",
                       fontSize: "0.8rem",
                       color: "#1E2535",
-                      fontFamily: "'DM Sans', sans-serif",
+                      fontFamily: "'Poppins', sans-serif",
                       fontWeight: 300,
                       lineHeight: 1.6,
                       whiteSpace: "pre-wrap",
@@ -2228,7 +2228,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                   type="button"
                   onClick={() => setShowRefinerModal(false)}
                   style={{
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "'Poppins', sans-serif",
                     fontSize: "0.7rem",
                     fontWeight: 500,
                     letterSpacing: "0.1em",
@@ -2250,7 +2250,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                     toast.success("AI-Refined scope applied to your draft!");
                   }}
                   style={{
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "'Poppins', sans-serif",
                     fontSize: "0.7rem",
                     fontWeight: 500,
                     letterSpacing: "0.1em",
@@ -2359,7 +2359,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                   <div style={{ textAlign: "center", marginBottom: "2rem" }}>
                     <div
                       style={{
-                        fontFamily: "'DM Sans', sans-serif",
+                        fontFamily: "'Poppins', sans-serif",
                         fontSize: "0.55rem",
                         fontWeight: 500,
                         letterSpacing: "0.35em",
@@ -2391,7 +2391,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                     />
                     <div
                       style={{
-                        fontFamily: "'DM Sans', sans-serif",
+                        fontFamily: "'Poppins', sans-serif",
                         fontSize: "0.5rem",
                         fontWeight: 400,
                         letterSpacing: "0.15em",
@@ -2449,7 +2449,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                         >
                           <span
                             style={{
-                              fontFamily: "'DM Sans', sans-serif",
+                              fontFamily: "'Poppins', sans-serif",
                               fontSize: "0.6rem",
                               fontWeight: 600,
                               textTransform: "uppercase",
@@ -2514,7 +2514,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                       </div>
                       <div
                         style={{
-                          fontFamily: "'DM Sans', sans-serif",
+                          fontFamily: "'Poppins', sans-serif",
                           fontSize: "0.48rem",
                           letterSpacing: "0.15em",
                           textTransform: "uppercase",
@@ -2533,7 +2533,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                 <button
                   onClick={downloadCertificate}
                   style={{
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "'Poppins', sans-serif",
                     fontSize: "0.75rem",
                     fontWeight: 600,
                     letterSpacing: "0.12em",
@@ -2560,7 +2560,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                 <button
                   onClick={() => setShowCertificate(false)}
                   style={{
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "'Poppins', sans-serif",
                     fontSize: "0.75rem",
                     fontWeight: 600,
                     letterSpacing: "0.12em",
@@ -2757,7 +2757,7 @@ const FullWaxSeal = React.memo(function FullWaxSeal() {
       <circle cx="70" cy="70" r="50" fill="none" stroke="rgba(244,239,228,0.15)" strokeWidth="0.5" strokeDasharray="3 3" />
       <circle cx="70" cy="70" r="44" fill="rgba(19,25,41,0.2)" />
       <text x="70" y="62" textAnchor="middle" fill="#F4EFE4"
-        style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "9px", fontWeight: 600, letterSpacing: "0.35em" }}>
+        style={{ fontFamily: "'Poppins', sans-serif", fontSize: "9px", fontWeight: 600, letterSpacing: "0.35em" }}>
         CERTIFIED
       </text>
       <text x="70" y="78" textAnchor="middle" fill="#C9A24A"
@@ -2765,7 +2765,7 @@ const FullWaxSeal = React.memo(function FullWaxSeal() {
         DZF
       </text>
       <text x="70" y="92" textAnchor="middle" fill="rgba(244,239,228,0.65)"
-        style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "7px", letterSpacing: "0.25em" }}>
+        style={{ fontFamily: "'Poppins', sans-serif", fontSize: "7px", letterSpacing: "0.25em" }}>
         &amp; FILED
       </text>
     </svg>

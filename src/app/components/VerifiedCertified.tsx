@@ -44,7 +44,7 @@ export function VerifiedCertified() {
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Poppins', sans-serif",
               fontSize: "0.8rem",
               fontWeight: 500,
               letterSpacing: "0.3em",
@@ -74,7 +74,7 @@ export function VerifiedCertified() {
           </h2>
           <p
             style={{
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Poppins', sans-serif",
               fontSize: "1.1rem",
               fontWeight: 300,
               lineHeight: 1.75,
@@ -125,7 +125,7 @@ export function VerifiedCertified() {
               <div style={{ textAlign: "center", marginBottom: "2rem" }}>
                 <div
                   style={{
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "'Poppins', sans-serif",
                     fontSize: "0.55rem",
                     fontWeight: 400,
                     letterSpacing: "0.35em",
@@ -157,7 +157,7 @@ export function VerifiedCertified() {
                 />
                 <div
                   style={{
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "'Poppins', sans-serif",
                     fontSize: "0.7rem",
                     fontWeight: 300,
                     color: "#6A6355",
@@ -223,7 +223,7 @@ export function VerifiedCertified() {
                     </div>
                     <span
                       style={{
-                        fontFamily: "'DM Sans', sans-serif",
+                        fontFamily: "'Poppins', sans-serif",
                         fontSize: "0.88rem",
                         fontWeight: 300,
                         lineHeight: 1.6,
@@ -262,7 +262,7 @@ export function VerifiedCertified() {
                   </div>
                   <div
                     style={{
-                      fontFamily: "'DM Sans', sans-serif",
+                      fontFamily: "'Poppins', sans-serif",
                       fontSize: "0.52rem",
                       letterSpacing: "0.2em",
                       textTransform: "uppercase",
@@ -299,7 +299,7 @@ function CertifiedEmeraldStamp() {
       <circle cx="50" cy="50" r="40" stroke="#1A4A3C" strokeWidth="0.75" strokeDasharray="2.5 2" />
       <circle cx="50" cy="50" r="33" fill="rgba(26,74,60,0.08)" />
       <text x="50" y="44" textAnchor="middle" fill="#1A4A3C"
-        style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "7px", fontWeight: 700, letterSpacing: "0.3em" }}>
+        style={{ fontFamily: "'Poppins', sans-serif", fontSize: "7px", fontWeight: 700, letterSpacing: "0.3em" }}>
         CERTIFIED
       </text>
       <text x="50" y="57" textAnchor="middle" fill="#1A4A3C"
@@ -307,7 +307,7 @@ function CertifiedEmeraldStamp() {
         DZF
       </text>
       <text x="50" y="68" textAnchor="middle" fill="rgba(26,74,60,0.7)"
-        style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "5px", letterSpacing: "0.2em" }}>
+        style={{ fontFamily: "'Poppins', sans-serif", fontSize: "5px", letterSpacing: "0.2em" }}>
         VERIFIED BUILD
       </text>
     </svg>

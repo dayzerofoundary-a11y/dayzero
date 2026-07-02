@@ -63,7 +63,7 @@ export function HowItWorks() {
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Poppins', sans-serif",
               fontSize: "0.8rem",
               fontWeight: 500,
               letterSpacing: "0.3em",
@@ -93,7 +93,7 @@ export function HowItWorks() {
           </h2>
           <p
             style={{
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Poppins', sans-serif",
               fontSize: "1.1rem",
               fontWeight: 300,
               lineHeight: 1.7,
@@ -194,7 +194,7 @@ export function HowItWorks() {
                 >
                   <div
                     style={{
-                      fontFamily: "'DM Sans', sans-serif",
+                      fontFamily: "'Poppins', sans-serif",
                       fontSize: "0.52rem",
                       fontWeight: 400,
                       letterSpacing: "0.3em",
@@ -232,7 +232,7 @@ export function HowItWorks() {
               </div>
               <div
                 style={{
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "'Poppins', sans-serif",
                   fontSize: "0.88rem",
                   fontWeight: 300,
                   lineHeight: 1.7,
@@ -244,7 +244,7 @@ export function HowItWorks() {
               </div>
               <div
                 style={{
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "'Poppins', sans-serif",
                   fontSize: "0.62rem",
                   fontWeight: 400,
                   letterSpacing: "0.15em",

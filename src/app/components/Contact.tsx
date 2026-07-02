@@ -61,7 +61,7 @@ export function Contact() {
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Poppins', sans-serif",
               fontSize: "0.8rem",
               fontWeight: 500,
               letterSpacing: "0.3em",
@@ -91,7 +91,7 @@ export function Contact() {
           </h2>
           <p
             style={{
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Poppins', sans-serif",
               fontSize: "1.1rem",
               fontWeight: 300,
               lineHeight: 1.7,
@@ -176,7 +176,7 @@ export function Contact() {
                 </div>
                 <div
                   style={{
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "'Poppins', sans-serif",
                     fontSize: "0.68rem",
                     fontWeight: 500,
                     letterSpacing: "0.15em",
@@ -203,7 +203,7 @@ export function Contact() {
                     display: "flex",
                     alignItems: "center",
                     gap: "0.75rem",
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "'Poppins', sans-serif",
                     fontSize: "0.9rem",
                     color: "#131929",
                     textDecoration: "none",
@@ -222,7 +222,7 @@ export function Contact() {
                     display: "flex",
                     alignItems: "center",
                     gap: "0.75rem",
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "'Poppins', sans-serif",
                     fontSize: "0.9rem",
                     color: "#131929",
                     textDecoration: "none",

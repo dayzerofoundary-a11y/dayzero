@@ -88,7 +88,7 @@ export function Pillars() {
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Poppins', sans-serif",
               fontSize: "0.8rem",
               fontWeight: 500,
               letterSpacing: "0.3em",
@@ -186,7 +186,7 @@ export function Pillars() {
 
               <div
                 style={{
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "'Poppins', sans-serif",
                   fontSize: "0.72rem",
                   fontWeight: 500,
                   letterSpacing: "0.1em",
@@ -209,7 +209,7 @@ export function Pillars() {
 
               <div
                 style={{
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "'Poppins', sans-serif",
                   fontSize: "0.82rem",
                   fontWeight: 300,
                   lineHeight: 1.7,

@@ -103,7 +103,7 @@ export function Nav({ onDraftClick }: NavProps) {
           </span>
           <span
             style={{
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Poppins', sans-serif",
               fontSize: "0.65rem",
               letterSpacing: "0.22em",
               textTransform: "uppercase",
@@ -136,7 +136,7 @@ export function Nav({ onDraftClick }: NavProps) {
               key={label}
               href={href}
               style={{
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "'Poppins', sans-serif",
                 fontSize: "0.7rem",
                 fontWeight: 400,
                 letterSpacing: "0.18em",
@@ -165,7 +165,7 @@ export function Nav({ onDraftClick }: NavProps) {
             background: scrolled ? "#A8822C" : "transparent",
             border: "1px solid #A8822C",
             color: scrolled ? "#F4EFE4" : "#A8822C",
-            fontFamily: "'DM Sans', sans-serif",
+            fontFamily: "'Poppins', sans-serif",
             fontSize: "0.68rem",
             fontWeight: 500,
             letterSpacing: "0.2em",

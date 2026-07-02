@@ -18,7 +18,7 @@ createRoot(document.getElementById("root")!).render(
         path="/admin"
         element={
           <Suspense fallback={
-            <div style={{ minHeight: "100vh", background: "#131929", display: "flex", alignItems: "center", justifyContent: "center", color: "#F4EFE4", fontFamily: "'DM Sans', sans-serif", fontSize: "0.85rem", letterSpacing: "0.1em" }}>
+            <div style={{ minHeight: "100vh", background: "#131929", display: "flex", alignItems: "center", justifyContent: "center", color: "#F4EFE4", fontFamily: "'Poppins', sans-serif", fontSize: "0.85rem", letterSpacing: "0.1em" }}>
               Loading...
             </div>
           }>

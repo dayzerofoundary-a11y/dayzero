@@ -23,7 +23,13 @@ export function initApp(app: Express) {
                 const allowed = process.env.CORS_ORIGIN
                     ? process.env.CORS_ORIGIN.split(',').map((s) => s.trim())
                     : ['http://127.0.0.1:5173', 'http://localhost:5173']
-                if (!origin || allowed.includes(origin) || origin.endsWith('.vercel.app')) {
+                if (
+                    !origin || 
+                    allowed.includes(origin) || 
+                    origin.endsWith('.vercel.app') || 
+                    origin.includes('dayzerofoundary.in') || 
+                    origin.includes('dayzerofoundry.in')
+                ) {
                     callback(null, true)
                 } else {
                     callback(new Error('Not allowed by CORS'))

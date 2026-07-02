@@ -35,7 +35,7 @@ export function Footer() {
           </div>
           <div
             style={{
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Poppins', sans-serif",
               fontSize: "0.6rem",
               fontWeight: 300,
               letterSpacing: "0.2em",
@@ -50,7 +50,7 @@ export function Footer() {
         {/* Centre — ruling */}
         <div
           style={{
-            fontFamily: "'DM Sans', sans-serif",
+            fontFamily: "'Poppins', sans-serif",
             fontSize: "0.65rem",
             fontWeight: 300,
             letterSpacing: "0.15em",
@@ -70,7 +70,7 @@ export function Footer() {
           <a
             href="mailto:hello@dayzero.build"
             style={{
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Poppins', sans-serif",
               fontSize: "0.7rem",
               fontWeight: 400,
               letterSpacing: "0.12em",
@@ -87,7 +87,7 @@ export function Footer() {
           </a>
           <div
             style={{
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Poppins', sans-serif",
               fontSize: "0.58rem",
               fontWeight: 300,
               letterSpacing: "0.12em",
@@ -115,7 +115,7 @@ export function Footer() {
       >
         <span
           style={{
-            fontFamily: "'DM Sans', sans-serif",
+            fontFamily: "'Poppins', sans-serif",
             fontSize: "0.58rem",
             fontWeight: 300,
             letterSpacing: "0.1em",
@@ -128,7 +128,7 @@ export function Footer() {
         </span>
         <span
           style={{
-            fontFamily: "'DM Sans', sans-serif",
+            fontFamily: "'Poppins', sans-serif",
             fontSize: "0.58rem",
             fontWeight: 300,
             letterSpacing: "0.1em",

@@ -104,7 +104,7 @@ export function Hero({ draftRef }: HeroProps) {
             style={{
               display: "inline-flex",
               alignItems: "center",
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Poppins', sans-serif",
               fontSize: "0.8rem",
               fontWeight: 500,
               letterSpacing: "0.3em",
@@ -149,7 +149,7 @@ export function Hero({ draftRef }: HeroProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
             style={{
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Poppins', sans-serif",
               fontSize: "1.05rem",
               fontWeight: 300,
               lineHeight: 1.7,
@@ -195,7 +195,7 @@ export function Hero({ draftRef }: HeroProps) {
               >
                 <div
                   style={{
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "'Poppins', sans-serif",
                     fontSize: "0.55rem",
                     fontWeight: 500,
                     letterSpacing: "0.22em",
@@ -324,7 +324,7 @@ export function Hero({ draftRef }: HeroProps) {
                   </div>
                   <div
                     style={{
-                      fontFamily: "'DM Sans', sans-serif",
+                      fontFamily: "'Poppins', sans-serif",
                       fontSize: "0.65rem",
                       letterSpacing: "0.15em",
                       textTransform: "uppercase",
@@ -340,7 +340,7 @@ export function Hero({ draftRef }: HeroProps) {
                 <div style={{ textAlign: "right" }}>
                   <div
                     style={{
-                      fontFamily: "'DM Sans', sans-serif",
+                      fontFamily: "'Poppins', sans-serif",
                       fontSize: "0.52rem",
                       letterSpacing: "0.15em",
                       textTransform: "uppercase",
@@ -374,7 +374,7 @@ export function Hero({ draftRef }: HeroProps) {
               <div style={{ marginBottom: "0.9rem" }}>
                 <div
                   style={{
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "'Poppins', sans-serif",
                     fontSize: "0.55rem",
                     fontWeight: 400,
                     letterSpacing: "0.18em",
@@ -424,7 +424,7 @@ export function Hero({ draftRef }: HeroProps) {
               <div style={{ marginBottom: "1rem" }}>
                 <div
                   style={{
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "'Poppins', sans-serif",
                     fontSize: "0.55rem",
                     letterSpacing: "0.18em",
                     textTransform: "uppercase",
@@ -438,7 +438,7 @@ export function Hero({ draftRef }: HeroProps) {
                   style={{
                     borderBottom: "1px solid rgba(19,25,41,0.2)",
                     paddingBottom: "0.3rem",
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "'Poppins', sans-serif",
                     fontSize: "0.75rem",
                     fontWeight: 300,
                     color: "#131929",
@@ -473,7 +473,7 @@ export function Hero({ draftRef }: HeroProps) {
                   </div>
                   <div
                     style={{
-                      fontFamily: "'DM Sans', sans-serif",
+                      fontFamily: "'Poppins', sans-serif",
                       fontSize: "0.5rem",
                       letterSpacing: "0.18em",
                       textTransform: "uppercase",
@@ -518,7 +518,7 @@ export function Hero({ draftRef }: HeroProps) {
           <button
             onClick={scrollToDraft}
             style={{
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Poppins', sans-serif",
               fontSize: "0.72rem",
               fontWeight: 500,
               letterSpacing: "0.2em",
@@ -542,7 +542,7 @@ export function Hero({ draftRef }: HeroProps) {
               document.getElementById("sealed")?.scrollIntoView({ behavior: "smooth" })
             }
             style={{
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Poppins', sans-serif",
               fontSize: "0.72rem",
               fontWeight: 400,
               letterSpacing: "0.18em",
@@ -680,7 +680,7 @@ const CertifiedStamp = React.memo(function CertifiedStamp({ small = false }: { s
         y="41"
         textAnchor="middle"
         fill="#1A4A3C"
-        style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "7px", fontWeight: 600, letterSpacing: "0.25em" }}
+        style={{ fontFamily: "'Poppins', sans-serif", fontSize: "7px", fontWeight: 600, letterSpacing: "0.25em" }}
       >
         CERTIFIED
       </text>
@@ -689,7 +689,7 @@ const CertifiedStamp = React.memo(function CertifiedStamp({ small = false }: { s
         y="53"
         textAnchor="middle"
         fill="#1A4A3C"
-        style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "5px", fontWeight: 400, letterSpacing: "0.2em" }}
+        style={{ fontFamily: "'Poppins', sans-serif", fontSize: "5px", fontWeight: 400, letterSpacing: "0.2em" }}
       >
         DAYZERO FOUNDRY
       </text>
