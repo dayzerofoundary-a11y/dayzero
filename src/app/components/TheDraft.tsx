@@ -679,7 +679,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
     fontWeight: 500,
     letterSpacing: "0.18em",
     textTransform: "uppercase",
-    color: "#6A6355",
+    color: "#A8822C",
     display: "block",
     marginBottom: "0.3rem",
   };
@@ -996,7 +996,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                     style={{
                       fontFamily: "'Poppins', sans-serif",
                       fontSize: "0.8rem",
-                      color: "#6A6355",
+                      color: "#A8822C",
                       whiteSpace: "nowrap",
                     }}
                     className="ambition-label"
@@ -1039,7 +1039,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                     style={{
                       fontFamily: "'Poppins', sans-serif",
                       fontSize: "0.8rem",
-                      color: "#6A6355",
+                      color: "#A8822C",
                       whiteSpace: "nowrap",
                     }}
                     className="ambition-label"
