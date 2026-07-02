@@ -253,8 +253,13 @@ function buildEmailHtml(fields: EmailFields, castId: string, hasSignature: boole
                       <tr>
                         <td style="background-color: #1A4A3C; padding: 12px 18px; border-radius: 2px; text-align: center; border: 1px solid #C9A24A;">
                           <div style="font-family: 'Poppins', sans-serif; font-size: 8px; font-weight: 600; letter-spacing: 0.12em; color: #F4EFE4;">DZF CERTIFIED</div>
-                          <div style="font-family: Georgia, serif; font-size: 15px; font-weight: 700; color: #C9A24A; margin: 3px 0;">SECURE</div>
-                          <div style="font-family: 'Poppins', sans-serif; font-size: 7px; color: rgba(244, 239, 228, 0.75);">RECORD RECORDED</div>
+                          <!-- Concentric HTML Fingerprint ridges representation -->
+                          <div style="margin: 6px auto; width: 24px; height: 16px; border: 1px solid #C9A24A; border-bottom: none; border-radius: 12px 12px 0 0;">
+                            <div style="margin: 2px auto 0; width: 16px; height: 11px; border: 1px solid #C9A24A; border-bottom: none; border-radius: 8px 8px 0 0;">
+                              <div style="margin: 2px auto 0; width: 8px; height: 6px; border: 1px solid #C9A24A; border-radius: 50%;"></div>
+                            </div>
+                          </div>
+                          <div style="font-family: 'Poppins', sans-serif; font-size: 7px; color: rgba(244, 239, 228, 0.75);">BIOMETRICALLY SIGNED</div>
                         </td>
                       </tr>
                     </table>

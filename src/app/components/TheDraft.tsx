@@ -1073,7 +1073,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                   borderBottom: "1px solid rgba(19,25,41,0.08)",
                 }}
               >
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.25rem" }}>
+                <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "center", gap: "1rem", marginBottom: "0.25rem" }}>
                   <label style={{ ...labelStyle, marginBottom: 0 }}>Memo — Describe the idea</label>
                   <button
                     type="button"
@@ -1600,68 +1600,77 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                         : "Press & Hold Scanner to Authorize NDA"}
                   </div>
 
-                  <div
-                    onMouseDown={handleScanStart}
-                    onMouseUp={handleScanEnd}
-                    onMouseLeave={handleScanEnd}
-                    onTouchStart={handleScanStart}
-                    onTouchEnd={handleScanEnd}
-                    style={{
-                      width: "64px",
-                      height: "64px",
-                      borderRadius: "50%",
-                      border: `2px solid ${isScanSuccess ? "#1A4A3C" : isScanning ? "#C9A24A" : "rgba(168, 130, 44, 0.4)"}`,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      cursor: isScanSuccess ? "default" : "pointer",
-                      background: isScanSuccess ? "rgba(26, 74, 60, 0.08)" : isScanning ? "rgba(201, 162, 74, 0.05)" : "transparent",
-                      position: "relative",
-                      overflow: "hidden",
-                      transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                    }}
-                  >
-                    {/* Scanning progress ring */}
-                    {isScanning && (
-                      <div
-                        style={{
-                          position: "absolute",
-                          bottom: 0,
-                          left: 0,
-                          right: 0,
-                          height: `${scanProgress}%`,
-                          background: "rgba(201, 162, 74, 0.2)",
-                          transition: "height 0.05s linear",
-                        }}
-                      />
-                    )}
+                  <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center", width: "80px", height: "80px" }}>
+                    {/* Glowing pulse ring on success */}
+                    {isScanSuccess && <div className="pulse-ring" />}
 
-                    {/* Fingerprint SVG Icon */}
-                    <svg
-                      viewBox="0 0 24 24"
-                      width="32"
-                      height="32"
-                      fill="none"
-                      stroke={isScanSuccess ? "#1A4A3C" : isScanning ? "#C9A24A" : "#A8822C"}
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
+                    <div
+                      onMouseDown={handleScanStart}
+                      onMouseUp={handleScanEnd}
+                      onMouseLeave={handleScanEnd}
+                      onTouchStart={handleScanStart}
+                      onTouchEnd={handleScanEnd}
                       style={{
+                        width: "64px",
+                        height: "64px",
+                        borderRadius: "50%",
+                        border: `2px solid ${isScanSuccess ? "#1A4A3C" : isScanning ? "#C9A24A" : "rgba(168, 130, 44, 0.4)"}`,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        cursor: isScanSuccess ? "default" : "pointer",
+                        background: isScanSuccess ? "rgba(26, 74, 60, 0.08)" : isScanning ? "rgba(201, 162, 74, 0.05)" : "transparent",
+                        position: "relative",
+                        overflow: "hidden",
+                        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                         zIndex: 2,
-                        transform: isScanning ? "scale(1.05)" : "scale(1)",
-                        transition: "transform 0.1s linear",
                       }}
                     >
-                      <path d="M12 2a10 10 0 0 0-10 10" />
-                      <path d="M12 5a7 7 0 0 0-7 7" />
-                      <path d="M8 12a4 4 0 0 1 8 0" />
-                      <path d="M12 8a4 4 0 0 0-4 4v3" />
-                      <path d="M16 15v-3a4 4 0 0 0-4-4" />
-                      <path d="M12 12v3" />
-                      <path d="M22 12a10 10 0 0 1-10 10" />
-                      <path d="M19 12a7 7 0 0 1-7 7" />
-                      <path d="M15 12a3 3 0 0 1-3 3" />
-                      <path d="M12 15a3 3 0 0 1-3-3" />
-                    </svg>
+                      {/* Scanning progress ring */}
+                      {isScanning && (
+                        <div
+                          style={{
+                            position: "absolute",
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            height: `${scanProgress}%`,
+                            background: "rgba(201, 162, 74, 0.2)",
+                            transition: "height 0.05s linear",
+                          }}
+                        />
+                      )}
+
+                      {/* Laser sweep line */}
+                      {isScanning && <div className="laser-line" />}
+
+                      {/* Fingerprint SVG Icon */}
+                      <svg
+                        viewBox="0 0 24 24"
+                        width="32"
+                        height="32"
+                        fill="none"
+                        stroke={isScanSuccess ? "#1A4A3C" : isScanning ? "#C9A24A" : "#A8822C"}
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        style={{
+                          zIndex: 2,
+                          transform: isScanning ? "scale(1.05)" : "scale(1)",
+                          transition: "transform 0.1s linear",
+                        }}
+                      >
+                        <path d="M12 2a10 10 0 0 0-10 10" />
+                        <path d="M12 5a7 7 0 0 0-7 7" />
+                        <path d="M8 12a4 4 0 0 1 8 0" />
+                        <path d="M12 8a4 4 0 0 0-4 4v3" />
+                        <path d="M16 15v-3a4 4 0 0 0-4-4" />
+                        <path d="M12 12v3" />
+                        <path d="M22 12a10 10 0 0 1-10 10" />
+                        <path d="M19 12a7 7 0 0 1-7 7" />
+                        <path d="M15 12a3 3 0 0 1-3 3" />
+                        <path d="M12 15a3 3 0 0 1-3-3" />
+                      </svg>
+                    </div>
                   </div>
 
                   <div
@@ -2829,6 +2838,37 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
       </AnimatePresence>
 
       <style>{`
+        @keyframes laser-sweep {
+          0% { top: 0%; }
+          50% { top: 100%; }
+          100% { top: 0%; }
+        }
+        @keyframes biometric-pulse {
+          0% { transform: scale(1); opacity: 0.8; }
+          100% { transform: scale(1.35); opacity: 0; }
+        }
+        .laser-line {
+          position: absolute;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: #C9A24A;
+          box-shadow: 0 0 8px #C9A24A;
+          animation: laser-sweep 1.8s infinite linear;
+          pointer-events: none;
+          z-index: 3;
+        }
+        .pulse-ring {
+          position: absolute;
+          width: 76px;
+          height: 76px;
+          border-radius: 50%;
+          border: 2px solid #1A4A3C;
+          animation: biometric-pulse 1.5s infinite ease-out;
+          pointer-events: none;
+          z-index: 1;
+        }
+
         .cheque-card input,
         .cheque-card textarea,
         .cheque-card button {
