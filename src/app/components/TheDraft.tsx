@@ -506,6 +506,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
       toast.dismiss(loadingToastId);
 
       setShowSeal(true);
+      playStampSound();
       toast.success(`Protected under NDA — Reference ${data.castId}`, {
         description: "Filing certificate generated.",
         duration: 6500,
@@ -2897,4 +2898,44 @@ ${coreConcept}
 
 3. SECURITY & ARCHITECTURE NODE
 Designed for stealth-mode deployment. Built with secure database encryption, low-latency API endpoints, and a modular architecture ready for direct handoff to engineering.`;
+}
+
+function playStampSound() {
+  try {
+    const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+
+    // 1. Low Thump (Impact)
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(140, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.35);
+
+    gain.gain.setValueAtTime(0.5, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.35);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.4);
+
+    // 2. High Press Click (Texture)
+    const clickOsc = ctx.createOscillator();
+    const clickGain = ctx.createGain();
+    clickOsc.type = "triangle";
+    clickOsc.frequency.setValueAtTime(600, ctx.currentTime);
+    clickOsc.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.12);
+
+    clickGain.gain.setValueAtTime(0.06, ctx.currentTime);
+    clickGain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.12);
+
+    clickOsc.connect(clickGain);
+    clickGain.connect(ctx.destination);
+    clickOsc.start();
+    clickOsc.stop(ctx.currentTime + 0.15);
+  } catch (e) {
+    console.warn("AudioContext failed", e);
+  }
 }

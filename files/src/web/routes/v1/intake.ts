@@ -149,69 +149,154 @@ interface EmailFields {
 }
 
 function buildEmailHtml(fields: EmailFields, castId: string, hasSignature: boolean): string {
-    // All values are pre-escaped — safe to embed in HTML
     const row = (label: string, value: string) =>
         value
-            ? `<tr>
-                <td style="padding:8px 12px;font-weight:600;color:#6A6355;white-space:nowrap;vertical-align:top;width:160px">${escapeHtml(label)}</td>
-                <td style="padding:8px 12px;color:#131929;vertical-align:top">${escapeHtml(value).replace(/\n/g, '<br>')}</td>
+            ? `<tr style="border-bottom: 1px solid rgba(19, 25, 41, 0.05)">
+                <td style="padding: 10px 14px; font-weight: 600; font-family: 'Poppins', 'Helvetica Neue', Arial, sans-serif; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #A8822C; vertical-align: top; width: 150px;">${escapeHtml(label)}</td>
+                <td style="padding: 10px 14px; font-family: Georgia, serif; font-size: 14px; color: #131929; vertical-align: top;">${escapeHtml(value).replace(/\n/g, '<br>')}</td>
                </tr>`
             : ''
 
     return `<!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="margin:0;padding:0;background:#F4EFE4;font-family:'DM Sans',Arial,sans-serif">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#F4EFE4;padding:40px 0">
-    <tr><td align="center">
-      <table width="600" cellpadding="0" cellspacing="0"
-             style="background:#EDE8DC;border:4px double #A8822C;max-width:600px;width:100%">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { background-color: #0D1220; margin: 0; padding: 0; }
+  </style>
+</head>
+<body style="margin: 0; padding: 0; background-color: #0D1220; -webkit-font-smoothing: antialiased;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #0D1220; padding: 40px 0; width: 100%;">
+    <tr>
+      <td align="center">
+        <!-- Main Container -->
+        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #F4EFE4; border: 1px solid rgba(168, 130, 44, 0.45); max-width: 600px; width: 100%; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);">
+          
+          <!-- Navy Gold Header -->
+          <tr>
+            <td style="background-color: #131929; border-bottom: 3px solid #A8822C; padding: 30px 35px;">
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td>
+                    <span style="font-family: Georgia, serif; font-size: 26px; font-weight: 700; color: #F4EFE4; letter-spacing: 0.02em;">DayZero</span>
+                    <span style="font-family: Georgia, serif; font-size: 18px; font-weight: 600; font-style: italic; color: #C9A24A;">Foundry</span>
+                    <div style="font-family: 'Poppins', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(244, 239, 228, 0.65); margin-top: 6px;">
+                      Stealth Registry Record
+                    </div>
+                  </td>
+                  <td align="right" style="vertical-align: top;">
+                    <div style="font-family: 'Poppins', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: #C9A24A;">Registry Reference</div>
+                    <div style="font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #F4EFE4; margin-top: 4px;">${escapeHtml(castId)}</div>
+                    <div style="font-family: 'Poppins', sans-serif; font-size: 11px; color: rgba(244, 239, 228, 0.55); margin-top: 4px;">${new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
 
-        <!-- Header -->
-        <tr>
-          <td style="padding:24px 28px 16px;border-bottom:1px solid rgba(168,130,44,0.3)">
-            <span style="font-family:Georgia,serif;font-size:28px;font-weight:700;color:#131929">DayZero</span>
-            <span style="font-family:Georgia,serif;font-size:18px;font-weight:600;font-style:italic;color:#A8822C">Foundry</span>
-            <div style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:#6A6355;margin-top:4px">New Idea Submission</div>
-          </td>
-          <td style="padding:24px 28px 16px;text-align:right;border-bottom:1px solid rgba(168,130,44,0.3);vertical-align:top">
-            <div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#6A6355">Cast No.</div>
-            <div style="font-family:Georgia,serif;font-size:22px;font-weight:600;color:#131929">${escapeHtml(castId)}</div>
-            <div style="font-size:12px;color:#6A6355;margin-top:4px">${new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</div>
-          </td>
-        </tr>
+          <!-- Legal Certified Stamp Ribbon -->
+          <tr>
+            <td style="background-color: rgba(168, 130, 44, 0.08); border-bottom: 1px solid rgba(168, 130, 44, 0.15); padding: 12px 35px; text-align: center;">
+              <span style="font-family: 'Poppins', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: #A8822C;">
+                🔒 SECURITY CLEARANCE ACTIVE · PROTECTED UNDER EXECUTION NDA
+              </span>
+            </td>
+          </tr>
 
-        <!-- Fields -->
-        <tr><td colspan="2" style="padding:0 28px 24px">
-          <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:20px;border-collapse:collapse">
-            ${row('Idea Name', fields.ideaName)}
-            ${row('Ambition', fields.ambition)}
-            ${row('Category', fields.category)}
-            ${row('Description', fields.description)}
-            <tr><td colspan="2" style="padding:8px 0"><hr style="border:none;border-top:1px solid rgba(168,130,44,0.2)"></td></tr>
-            ${row('Submitter Name', fields.name)}
-            ${row('Email', fields.email)}
-            ${row('Role', fields.role)}
-            ${row('Affiliation', fields.affiliation)}
-            ${fields.fileAttached ? row('Attachment', '✓ File attached (see below)') : ''}
-            ${hasSignature ? `<tr>
-                <td style="padding:8px 12px;font-weight:600;color:#6A6355;white-space:nowrap;vertical-align:top;width:160px">Signature</td>
-                <td style="padding:8px 12px;color:#131929;vertical-align:top"><img src="cid:signatureImage" alt="Signature" style="max-height:45px;display:block"/></td>
-               </tr>` : ''}
-          </table>
-        </td></tr>
+          <!-- Content Details -->
+          <tr>
+            <td style="padding: 30px 35px 40px;">
+              
+              <!-- Idea Box Heading -->
+              <div style="font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: #A8822C; margin-bottom: 15px;">
+                I. PROJECT SPECIFICATIONS
+              </div>
 
-        <!-- Footer -->
-        <tr>
-          <td colspan="2" style="padding:16px 28px;border-top:1px solid rgba(168,130,44,0.3);background:rgba(168,130,44,0.05)">
-            <p style="margin:0;font-size:11px;color:#6A6355;text-align:center;letter-spacing:0.1em;text-transform:uppercase">
-              Confidential Idea Registry · DayZero Foundry · Protected under NDA
-            </p>
-          </td>
-        </tr>
+              <!-- Main Metadata Table -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-bottom: 30px; background-color: #EDE8DC; border: 1px solid rgba(19, 25, 41, 0.08); width: 100%;">
+                ${row('Idea Name', fields.ideaName)}
+                ${row('Ambition Tier', fields.ambition)}
+                ${row('Classification', fields.category)}
+              </table>
 
-      </table>
-    </td></tr>
+              <!-- Description Block -->
+              <div style="font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: #A8822C; margin-bottom: 15px;">
+                II. CONCEPT MEMORANDUM & SCOPE
+              </div>
+              <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 35px; width: 100%;">
+                <tr>
+                  <td style="background-color: #FFFFFF; border-left: 3px solid #A8822C; padding: 20px; font-family: Georgia, serif; font-size: 14px; line-height: 1.65; color: #1E2535; border-top: 1px solid rgba(19, 25, 41, 0.06); border-right: 1px solid rgba(19, 25, 41, 0.06); border-bottom: 1px solid rgba(19, 25, 41, 0.06);">
+                    ${escapeHtml(fields.description).replace(/\n/g, '<br>')}
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Submitter Block -->
+              <div style="font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: #A8822C; margin-bottom: 15px;">
+                III. DISCLOSING PARTY CERTIFICATION
+              </div>
+              <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-bottom: 30px; background-color: #EDE8DC; border: 1px solid rgba(19, 25, 41, 0.08); width: 100%;">
+                ${row('Full Name', fields.name)}
+                ${row('Email Address', fields.email)}
+                ${row('Designated Role', fields.role)}
+                ${row('Affiliation', fields.affiliation)}
+                ${fields.fileAttached ? row('Documentation', '✓ File payload attached securely') : ''}
+              </table>
+
+              <!-- Signatures Row -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 35px; border-top: 1px dashed rgba(168, 130, 44, 0.3); padding-top: 25px; width: 100%;">
+                <tr>
+                  <!-- Wax Seal Graphic placeholder style -->
+                  <td width="50%" style="vertical-align: middle;">
+                    <table cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td style="background-color: #1A4A3C; padding: 12px 18px; border-radius: 2px; text-align: center; border: 1px solid #C9A24A;">
+                          <div style="font-family: 'Poppins', sans-serif; font-size: 8px; font-weight: 600; letter-spacing: 0.12em; color: #F4EFE4;">DZF CERTIFIED</div>
+                          <div style="font-family: Georgia, serif; font-size: 15px; font-weight: 700; color: #C9A24A; margin: 3px 0;">SECURE</div>
+                          <div style="font-family: 'Poppins', sans-serif; font-size: 7px; color: rgba(244, 239, 228, 0.75);">RECORD RECORDED</div>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <!-- Signature Image -->
+                  <td width="50%" align="right" style="vertical-align: middle; text-align: right;">
+                    <table cellpadding="0" cellspacing="0" style="float: right; text-align: center; min-width: 180px;">
+                      <tr>
+                        <td style="border-bottom: 1px solid #131929; padding-bottom: 4px; height: 45px; text-align: center;">
+                          ${hasSignature 
+                            ? `<img src="cid:signatureImage" alt="Signature" style="max-height: 45px; max-width: 180px; display: block; margin: 0 auto;"/>` 
+                            : `<span style="font-family: Georgia, serif; font-size: 20px; font-style: italic; color: #1E2535; font-weight: 500;">${escapeHtml(fields.name)}</span>`}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="font-family: 'Poppins', sans-serif; font-size: 8px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #6A6355; padding-top: 6px;">
+                          Disclosing Party Signature
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+            </td>
+          </tr>
+
+          <!-- Footer Certificate Registry Label -->
+          <tr>
+            <td style="background-color: #131929; padding: 25px 35px; border-top: 1px solid #A8822C; text-align: center;">
+              <div style="font-family: 'Poppins', sans-serif; font-size: 9px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(244, 239, 228, 0.65);">
+                Confidential Registry • DayZero Foundry • NDA Shield Active
+              </div>
+              <div style="font-family: 'Poppins', sans-serif; font-size: 8px; color: #C9A24A; margin-top: 6px; letter-spacing: 0.05em;">
+                DayZero Ledger Reference Entry · DZ-LEDGER-2026
+              </div>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
   </table>
 </body>
 </html>`
