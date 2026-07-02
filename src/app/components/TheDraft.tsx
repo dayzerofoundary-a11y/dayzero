@@ -104,6 +104,121 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
   const [isDrawing, setIsDrawing] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
+  // ── Biometric Scan States & Handlers ─────────────────────────────────────
+  const [isScanning, setIsScanning] = useState(false);
+  const [isScanSuccess, setIsScanSuccess] = useState(false);
+  const [scanProgress, setScanProgress] = useState(0);
+  const scanIntervalRef = useRef<any>(null);
+  const scanAudioRef = useRef<{ osc: any; gain: any } | null>(null);
+  const scanCtxRef = useRef<any>(null);
+
+  const playScanSuccessSound = () => {
+    try {
+      const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+      if (!AudioCtx) return;
+      const ctx = new AudioCtx();
+      
+      const osc1 = ctx.createOscillator();
+      const gain1 = ctx.createGain();
+      osc1.type = "sine";
+      osc1.frequency.setValueAtTime(880, ctx.currentTime);
+      gain1.gain.setValueAtTime(0.08, ctx.currentTime);
+      gain1.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+      osc1.connect(gain1);
+      gain1.connect(ctx.destination);
+      osc1.start();
+      osc1.stop(ctx.currentTime + 0.2);
+      
+      setTimeout(() => {
+        const osc2 = ctx.createOscillator();
+        const gain2 = ctx.createGain();
+        osc2.type = "sine";
+        osc2.frequency.setValueAtTime(1320, ctx.currentTime + 0.05);
+        gain2.gain.setValueAtTime(0.08, ctx.currentTime + 0.05);
+        gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+        osc2.connect(gain2);
+        gain2.connect(ctx.destination);
+        osc2.start(ctx.currentTime + 0.05);
+        osc2.stop(ctx.currentTime + 0.3);
+      }, 80);
+    } catch (e) {}
+  };
+
+  const handleScanStart = (e: React.MouseEvent | React.TouchEvent) => {
+    e.preventDefault();
+    if (isScanSuccess) return;
+    setIsScanning(true);
+    setScanProgress(0);
+
+    try {
+      const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+      if (AudioCtx) {
+        const ctx = new AudioCtx();
+        scanCtxRef.current = ctx;
+        
+        const oscNode = ctx.createOscillator();
+        const gainNode = ctx.createGain();
+        const filterNode = ctx.createBiquadFilter();
+        
+        oscNode.type = "sawtooth";
+        oscNode.frequency.setValueAtTime(55, ctx.currentTime);
+        filterNode.type = "lowpass";
+        filterNode.frequency.setValueAtTime(100, ctx.currentTime);
+        
+        gainNode.gain.setValueAtTime(0.12, ctx.currentTime);
+        gainNode.gain.linearRampToValueAtTime(0.18, ctx.currentTime + 0.1);
+        
+        oscNode.connect(filterNode);
+        filterNode.connect(gainNode);
+        gainNode.connect(ctx.destination);
+        oscNode.start();
+        
+        scanAudioRef.current = { osc: oscNode, gain: gainNode };
+      }
+    } catch (err) {}
+
+    let progress = 0;
+    scanIntervalRef.current = setInterval(() => {
+      progress += 2;
+      if (progress >= 100) {
+        clearInterval(scanIntervalRef.current);
+        setScanProgress(100);
+        setIsScanning(false);
+        setIsScanSuccess(true);
+        
+        playScanSuccessSound();
+        
+        if (scanAudioRef.current) {
+          try {
+            scanAudioRef.current.osc.stop();
+          } catch (err) {}
+          scanAudioRef.current = null;
+        }
+
+        setTimeout(() => {
+          setShowSignatureModal(true);
+        }, 300);
+      } else {
+        setScanProgress(progress);
+      }
+    }, 12);
+  };
+
+  const handleScanEnd = () => {
+    if (isScanSuccess) return;
+    setIsScanning(false);
+    setScanProgress(0);
+    if (scanIntervalRef.current) {
+      clearInterval(scanIntervalRef.current);
+    }
+    if (scanAudioRef.current) {
+      try {
+        scanAudioRef.current.osc.stop();
+      } catch (err) {}
+      scanAudioRef.current = null;
+    }
+  };
+
   const drawPathsOnCanvas = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -1450,6 +1565,121 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                   />
                 </div>
 
+                {/* Biometric Touch Scanning Area */}
+                <div
+                  style={{
+                    width: "100%",
+                    marginBottom: "1.5rem",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    border: "1px dashed rgba(168,130,44,0.25)",
+                    borderRadius: "6px",
+                    padding: "1.2rem",
+                    background: "rgba(19, 25, 41, 0.03)",
+                    position: "relative",
+                    userSelect: "none",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontFamily: "'Poppins', sans-serif",
+                      fontSize: "0.52rem",
+                      letterSpacing: "0.18em",
+                      textTransform: "uppercase",
+                      color: isScanSuccess ? "#1A4A3C" : "#6A6355",
+                      fontWeight: 600,
+                      marginBottom: "0.8rem",
+                    }}
+                  >
+                    {isScanSuccess 
+                      ? "✓ Biometric Identity Authenticated" 
+                      : isScanning 
+                        ? `Scanning Fingerprint... ${scanProgress}%` 
+                        : "Press & Hold Scanner to Authorize NDA"}
+                  </div>
+
+                  <div
+                    onMouseDown={handleScanStart}
+                    onMouseUp={handleScanEnd}
+                    onMouseLeave={handleScanEnd}
+                    onTouchStart={handleScanStart}
+                    onTouchEnd={handleScanEnd}
+                    style={{
+                      width: "64px",
+                      height: "64px",
+                      borderRadius: "50%",
+                      border: `2px solid ${isScanSuccess ? "#1A4A3C" : isScanning ? "#C9A24A" : "rgba(168, 130, 44, 0.4)"}`,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      cursor: isScanSuccess ? "default" : "pointer",
+                      background: isScanSuccess ? "rgba(26, 74, 60, 0.08)" : isScanning ? "rgba(201, 162, 74, 0.05)" : "transparent",
+                      position: "relative",
+                      overflow: "hidden",
+                      transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                    }}
+                  >
+                    {/* Scanning progress ring */}
+                    {isScanning && (
+                      <div
+                        style={{
+                          position: "absolute",
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          height: `${scanProgress}%`,
+                          background: "rgba(201, 162, 74, 0.2)",
+                          transition: "height 0.05s linear",
+                        }}
+                      />
+                    )}
+
+                    {/* Fingerprint SVG Icon */}
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="32"
+                      height="32"
+                      fill="none"
+                      stroke={isScanSuccess ? "#1A4A3C" : isScanning ? "#C9A24A" : "#A8822C"}
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      style={{
+                        zIndex: 2,
+                        transform: isScanning ? "scale(1.05)" : "scale(1)",
+                        transition: "transform 0.1s linear",
+                      }}
+                    >
+                      <path d="M12 2a10 10 0 0 0-10 10" />
+                      <path d="M12 5a7 7 0 0 0-7 7" />
+                      <path d="M8 12a4 4 0 0 1 8 0" />
+                      <path d="M12 8a4 4 0 0 0-4 4v3" />
+                      <path d="M16 15v-3a4 4 0 0 0-4-4" />
+                      <path d="M12 12v3" />
+                      <path d="M22 12a10 10 0 0 1-10 10" />
+                      <path d="M19 12a7 7 0 0 1-7 7" />
+                      <path d="M15 12a3 3 0 0 1-3 3" />
+                      <path d="M12 15a3 3 0 0 1-3-3" />
+                    </svg>
+                  </div>
+
+                  <div
+                    style={{
+                      fontFamily: "'Poppins', sans-serif",
+                      fontSize: "0.45rem",
+                      color: "rgba(106, 99, 85, 0.7)",
+                      marginTop: "0.6rem",
+                      letterSpacing: "0.05em",
+                      textAlign: "center",
+                    }}
+                  >
+                    {isScanSuccess 
+                      ? "Secure handshake completed. Document ready for certification." 
+                      : "Hold click/press until biometric sequence completes."}
+                  </div>
+                </div>
+
                 {/* Signed + Submit */}
                 <div
                   style={{
@@ -1465,10 +1695,20 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                 >
                   <div
                     className="signature-block"
-                    onClick={() => setShowSignatureModal(true)}
-                    style={{ cursor: "pointer", transition: "opacity 0.2s" }}
-                    onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.8")}
-                    onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+                    onClick={() => {
+                      if (isScanSuccess) {
+                        setShowSignatureModal(true);
+                      } else {
+                        toast.error("Please complete biometric authorization scan first.");
+                      }
+                    }}
+                    style={{ cursor: isScanSuccess ? "pointer" : "not-allowed", transition: "opacity 0.2s" }}
+                    onMouseEnter={(e) => {
+                      if (isScanSuccess) e.currentTarget.style.opacity = "0.8";
+                    }}
+                    onMouseLeave={(e) => {
+                      if (isScanSuccess) e.currentTarget.style.opacity = "1";
+                    }}
                   >
                     {signatureImage ? (
                       <div
@@ -1488,7 +1728,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                         style={{
                           fontFamily: "'Pinyon Script', cursive",
                           fontSize: "2.2rem",
-                          color: "#1E2535",
+                          color: isScanSuccess ? "#1E2535" : "rgba(30, 37, 53, 0.3)",
                           lineHeight: 1.2,
                           minWidth: "180px",
                           borderBottom: "1px solid rgba(19,25,41,0.2)",
@@ -1525,7 +1765,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                           fontFamily: "'Poppins', sans-serif",
                           fontSize: "0.45rem",
                           letterSpacing: "0.05em",
-                          color: "#A8822C",
+                          color: isScanSuccess ? "#A8822C" : "rgba(168, 130, 44, 0.4)",
                           fontWeight: 500
                         }}
                       >
@@ -1537,7 +1777,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                   <button
                     type="button"
                     onClick={handleSubmit}
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || !isScanSuccess}
                     style={{
                       fontFamily: "'Poppins', sans-serif",
                       fontSize: "0.76rem",
@@ -1545,31 +1785,31 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                       letterSpacing: "0.22em",
                       textTransform: "uppercase",
                       padding: "1rem 2rem",
-                      background: "#131929",
-                      color: "#F4EFE4",
-                      border: "1px solid #131929",
-                      cursor: isSubmitting ? "not-allowed" : "pointer",
+                      background: isScanSuccess ? "#131929" : "rgba(19, 25, 41, 0.4)",
+                      color: isScanSuccess ? "#F4EFE4" : "rgba(244, 239, 228, 0.4)",
+                      border: isScanSuccess ? "1px solid #131929" : "1px solid rgba(19, 25, 41, 0.1)",
+                      cursor: (isSubmitting || !isScanSuccess) ? "not-allowed" : "pointer",
                       transition: "background 0.2s, transform 0.08s",
                       display: "flex",
                       alignItems: "center",
                       gap: "0.8rem",
                       opacity: isSubmitting ? 0.7 : 1,
                     }}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.background = "#1E2535")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.background = "#131929")
-                    }
-                    onMouseDown={(e) =>
-                      (e.currentTarget.style.transform = "scale(0.97)")
-                    }
-                    onMouseUp={(e) =>
-                      (e.currentTarget.style.transform = "scale(1)")
-                    }
+                    onMouseEnter={(e) => {
+                      if (isScanSuccess) e.currentTarget.style.background = "#1E2535";
+                    }}
+                    onMouseLeave={(e) => {
+                      if (isScanSuccess) e.currentTarget.style.background = "#131929";
+                    }}
+                    onMouseDown={(e) => {
+                      if (isScanSuccess) e.currentTarget.style.transform = "scale(0.97)";
+                    }}
+                    onMouseUp={(e) => {
+                      if (isScanSuccess) e.currentTarget.style.transform = "scale(1)";
+                    }}
                   >
                     <SealIcon />
-                    {isSubmitting ? "Filing..." : "File for Review"}
+                    {isSubmitting ? "Filing..." : !isScanSuccess ? "Awaiting Secure Scan" : "File for Review"}
                   </button>
                 </div>
               </motion.div>
