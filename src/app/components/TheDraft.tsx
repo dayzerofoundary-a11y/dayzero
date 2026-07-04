@@ -324,7 +324,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
   const [showRefinerModal, setShowRefinerModal] = useState(false);
   const [refinedText, setRefinedText] = useState("");
 
-  const handleRefineClick = () => {
+  const handleRefineClick = async () => {
     const text = form.memo.trim();
     if (!text) {
       toast.error("Please enter a brief description first so the AI can refine it!");
@@ -334,13 +334,60 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
     setIsRefining(true);
     const loadingToastId = toast.loading("AI is structuring your idea...");
 
-    setTimeout(() => {
+    try {
+      const refineUrl = intakeUrl.endsWith('/') 
+        ? `${intakeUrl}refine` 
+        : `${intakeUrl}/refine`;
+
+      const response = await fetch(refineUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          ideaName: form.ideaName,
+          category: form.category,
+          memo: text
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error("AI refinement service unavailable.");
+      }
+
+      const resData = await response.json();
+      if (resData.success && resData.data) {
+        const result = resData.data;
+        const formatted = `Idea Scope: ${form.ideaName}
+
+1. CORE CONCEPT
+${result.coreConcept}
+
+2. 3-POINT MVP TECHNICAL SCOPE
+• Milestone I: ${result.phase1Title}
+  ${result.phase1Desc}
+• Milestone II: ${result.phase2Title}
+  ${result.phase2Desc}
+• Milestone III: ${result.phase3Title}
+  ${result.phase3Desc}
+
+3. SECURITY & ARCHITECTURE NODE
+Designed for stealth-mode deployment. Engineered with database-level encryption, sub-second API endpoint responses, and a modular architecture ready for Git handoff and seamless scale.`;
+
+        setRefinedText(formatted);
+        setShowRefinerModal(true);
+      } else {
+        throw new Error("Invalid response format.");
+      }
+    } catch (err: any) {
+      console.warn("Real-time AI refinement failed. Falling back to local model.", err);
       const result = refineIdeaText(text, form.category);
       setRefinedText(result);
+      setShowRefinerModal(true);
+    } finally {
       toast.dismiss(loadingToastId);
       setIsRefining(false);
-      setShowRefinerModal(true);
-    }, 1200);
+    }
   };
 
   // ── Filing Certificate States & Helpers ─────────────────────────────────────

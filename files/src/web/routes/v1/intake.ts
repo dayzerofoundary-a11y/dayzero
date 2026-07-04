@@ -606,3 +606,263 @@ intakeRoutes.post('/', upload.single('file'), async (req, res) => {
         })
     }
 })
+
+// ── POST /api/v1/intake/refine ──────────────────────────────────────────────
+intakeRoutes.post('/refine', async (req, res) => {
+    try {
+        const { ideaName, category, memo } = req.body as { ideaName?: string, category?: string, memo?: string }
+        if (!ideaName || !memo) {
+            res.status(400).json({
+                success: false,
+                message: 'ideaName and memo are required',
+                data: null,
+                errors: [{ message: 'Missing parameters' }]
+            })
+            return
+        }
+
+        const name = ideaName.trim()
+        const cat = (category || 'General').trim()
+        const desc = memo.trim()
+
+        const prompt = `You are a principal software architect at DayZero Foundary, an elite stealth-mode MVP development studio.
+The user has submitted an idea draft with a name, classification category, and a brief description memo.
+Your task is to refine this raw idea into a highly professional, technically structured MVP product specification.
+You must output a JSON object containing the following exact keys:
+1. "coreConcept": A single, powerful, highly technical elevator pitch describing the architectural concept (e.g., describing databases, data ingestion, processing pipelines, or loggers, using professional engineering terminology).
+2. "phase1Title": A short title for the Phase 1 MVP milestone.
+3. "phase1Desc": A detailed, professional description of the Phase 1 target scope.
+4. "phase2Title": A short title for the Phase 2 MVP milestone.
+5. "phase2Desc": A detailed, professional description of the Phase 2 target scope.
+6. "phase3Title": A short title for the Phase 3 MVP milestone.
+7. "phase3Desc": A detailed, professional description of the Phase 3 target scope.
+
+Raw Idea Details:
+Name: ${name}
+Category: ${cat}
+Memo: ${desc}
+
+Respond ONLY with a valid JSON block. Do not write any markdown or introductory text.`
+
+        // 1. Try Gemini
+        if (process.env.GEMINI_API_KEY) {
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }],
+                        generationConfig: { responseMimeType: 'application/json' }
+                    })
+                })
+                if (response.ok) {
+                    const data = await response.json() as any
+                    const textResponse = data.candidates?.[0]?.content?.parts?.[0]?.text
+                    if (textResponse) {
+                        const parsed = JSON.parse(textResponse.trim())
+                        res.json({ success: true, data: parsed })
+                        return
+                    }
+                }
+            } catch (err) {
+                console.error('[Gemini Refine] failed, falling back:', err)
+            }
+        }
+
+        // 2. Try Claude
+        if (process.env.CLAUDE_API_KEY) {
+            try {
+                const response = await fetch('https://api.anthropic.com/v1/messages', {
+                    method: 'POST',
+                    headers: {
+                        'x-api-key': process.env.CLAUDE_API_KEY,
+                        'anthropic-version': '2023-06-01',
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: 'claude-3-5-sonnet-20241022',
+                        max_tokens: 1024,
+                        messages: [{ role: 'user', content: prompt }]
+                    })
+                })
+                if (response.ok) {
+                    const data = await response.json() as any
+                    const textResponse = data.content?.[0]?.text
+                    if (textResponse) {
+                        const parsed = JSON.parse(textResponse.trim())
+                        res.json({ success: true, data: parsed })
+                        return
+                    }
+                }
+            } catch (err) {
+                console.error('[Claude Refine] failed, falling back:', err)
+            }
+        }
+
+        // 3. Try OpenAI
+        if (process.env.OPENAI_API_KEY) {
+            try {
+                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: 'gpt-4o-mini',
+                        response_format: { type: 'json_object' },
+                        messages: [{ role: 'user', content: prompt }]
+                    })
+                })
+                if (response.ok) {
+                    const data = await response.json() as any
+                    const textResponse = data.choices?.[0]?.message?.content
+                    if (textResponse) {
+                        const parsed = JSON.parse(textResponse.trim())
+                        res.json({ success: true, data: parsed })
+                        return
+                    }
+                }
+            } catch (err) {
+                console.error('[OpenAI Refine] failed, falling back:', err)
+            }
+        }
+
+        // Fallback to local rule-based builder
+        const fallbackResult = refineIdeaTextLocal(desc, cat)
+        res.json({ success: true, data: fallbackResult })
+
+    } catch (err: any) {
+        console.error('[refine] failed:', err)
+        res.status(500).json({
+            success: false,
+            message: 'Failed to refine idea',
+            data: null,
+            errors: [{ message: err?.message || String(err) }]
+        })
+    }
+})
+
+function refineIdeaTextLocal(input: string, category: string) {
+  const text = input.trim();
+  const stopwords = new Set([
+    "a", "an", "the", "and", "or", "but", "is", "are", "was", "were", "be", "been", "being",
+    "in", "on", "at", "by", "for", "with", "about", "against", "between", "into", "through",
+    "during", "before", "after", "above", "below", "to", "from", "up", "down", "in", "out",
+    "on", "off", "over", "under", "again", "further", "then", "once", "here", "there", "when",
+    "where", "why", "how", "all", "any", "both", "each", "few", "more", "most", "other", "some",
+    "such", "no", "nor", "not", "only", "own", "same", "so", "than", "too", "very", "s", "t",
+    "can", "will", "just", "don", "should", "now", "app", "application", "website", "web", "platform",
+    "create", "build", "make", "want", "need", "needs", "software", "system", "tool", "project", "idea"
+  ]);
+
+  const words = text
+    .toLowerCase()
+    .replace(/[^\w\s]/g, "")
+    .split(/\s+/)
+    .filter(w => w.length > 3 && !stopwords.has(w));
+
+  const uniqueKeywords = Array.from(new Set(words));
+  const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+  const key1 = uniqueKeywords[0] ? cap(uniqueKeywords[0]) : "User";
+  const key2 = uniqueKeywords[1] ? cap(uniqueKeywords[1]) : "Data";
+  const key3 = uniqueKeywords[2] ? cap(uniqueKeywords[2]) : "Process";
+
+  const hasAI = /\b(ai|artificial|intelligence|gpt|bot|llm|model|machine|learning)\b/i.test(text);
+  const hasDelivery = /\b(delivery|deliver|shipping|courier|laundry|dry|clean|uber|on-demand)\b/i.test(text);
+  const hasFinance = /\b(finance|pay|payment|wallet|transaction|crypto|bank|money|card)\b/i.test(text);
+  const hasHealth = /\b(health|med|patient|doctor|clinical|hospital|wellness|care)\b/i.test(text);
+  const hasEdu = /\b(education|edtech|learn|student|teacher|course|class|school)\b/i.test(text);
+  const hasBag = /\b(bag|backpack|suitcase|luggage|fashion|brand|purse|handbag|wallet|product|shop|store|ecommerce|e-commerce)\b/i.test(text);
+  const hasTravel = /\b(travel|flight|hotel|trip|booking|vacation|tourism)\b/i.test(text);
+  const hasFood = /\b(food|restaurant|chef|dining|recipe|kitchen|groceries|meal)\b/i.test(text);
+
+  let coreConcept = "";
+  if (hasDelivery) {
+    coreConcept = `A decentralized, high-throughput logistical coordination architecture optimized for real-time dispatch state routing. It leverages low-latency event synchronization to map agent locations directly to consumer queues.`;
+  } else if (hasHealth) {
+    coreConcept = `A secure, HIPAA-compliant patient diagnostics and scheduling coordinator. It integrates encrypted multi-tenant data containment with fine-grained access tokens to secure patient-practitioner records.`;
+  } else if (hasFinance) {
+    coreConcept = `A high-assurance transactional settlement engine supporting atomic double-entry bookkeeping, multi-gateway ledger processing, and state verification using secure signature hashes.`;
+  } else if (hasAI) {
+    coreConcept = `An intelligent cognitive pipeline powered by machine learning architectures. It processes unstructured dataset payloads, extracts semantic vectors, and triggers automated multi-parameter decision trees.`;
+  } else if (hasEdu) {
+    coreConcept = `A modular educational knowledge broker utilizing micro-progress tracking engines and automated curriculum indexers to deliver structured course flows.`;
+  } else if (hasBag) {
+    coreConcept = `A Direct-to-Consumer (D2C) inventory lifecycle and order fulfillment broker. It synchronizes online store catalogs with localized stock ledgers to prevent transactional collisions.`;
+  } else if (hasTravel) {
+    coreConcept = `A multi-modal transit scheduling and itinerary aggregation engine. It dynamically resolves multi-vendor pricing matrices into a unified customer travel sequence.`;
+  } else if (hasFood) {
+    coreConcept = `An on-demand culinary production and delivery broker. It binds live menu states with kitchen queue pipelines and courier routing matrices.`;
+  } else {
+    coreConcept = `A high-performance system engineered for the automated coordination of ${key1} structures and ${key2} payloads. It implements a multi-tier database mapping layer to orchestrate ${key3} sequences with sub-second latency.`;
+  }
+
+  let phase1Title = `Intake & ${key1} Gateway`;
+  let phase1Desc = `A secure, highly responsive portal managing ${key1} uploads, schema inputs, and real-time client validation checks.`;
+  let phase2Title = `${key2} Processing & Orchestration Engine`;
+  let phase2Desc = `An asynchronous worker node managing database write routing, validation pipelines, and event coordination based on ${key2} states.`;
+  let phase3Title = `Stealth ${key3} Administrative Ledger`;
+  let phase3Desc = `An encrypted, token-authorized operational portal to oversee transaction logs, configure ${key3} rules, and audit client state audits.`;
+
+  if (hasDelivery) {
+    phase1Title = "Geographic Booking & Intake Gateway";
+    phase1Desc = "Mobile-optimized interface managing dynamic coordinate inputs, scheduled pickup profiles, and delivery progress indexes.";
+    phase2Title = "Asynchronous Routing & Dispatch Matcher";
+    phase2Desc = "A back-end scheduler running geographical optimization queries to pair agents with courier targets and emit socket updates.";
+    phase3Title = "Settlement Ledger & Carrier Audit Board";
+    phase3Desc = "Secure administrator console auditing payload completions, calculating payouts, and managing operator credentials.";
+  } else if (hasAI) {
+    phase1Title = "Ingress Parser & Vector Interface";
+    phase1Desc = "Responsive layout configured for structured document uploads, prompt templates, and schema compliance checks.";
+    phase2Title = "Inference & Processing Middleware";
+    phase2Desc = "Orchestrates API calls to processing engines, handles request caching, and parses outputs into structured JSON format.";
+    phase3Title = "Inference Logs & Precision Tuner";
+    phase3Desc = "Control board to review model usage metrics, adjust confidence thresholds, and inspect prompt history.";
+  } else if (hasFinance) {
+    phase1Title = "Atomic Transaction & Checkout Portal";
+    phase1Desc = "High-security payment ingress supporting card tokenization, client account linkups, and instant receipt verification.";
+    phase2Title = "Ledger State & Payout Settlement Engine";
+    phase2Desc = "Handles database transactions with isolation check locks, integrates Stripe/webhooks, and verifies ledger accounts.";
+    phase3Title = "AML Compliance & Audit Registry";
+    phase3Desc = "Administrative reporting dashboard to audit transaction logs, flag anomalies, and export tax summaries.";
+  } else if (hasHealth) {
+    phase1Title = "HIPAA Patient Care & Intake Board";
+    phase1Desc = "Fully encrypted portal for medical history forms, scheduler slots, and secure client communication.";
+    phase2Title = "Encrypted Patient Record Broker";
+    phase2Desc = "Synchronizes clinical records with database storage using AES-256 field-level encryption and full audit trails.";
+    phase3Title = "Clinical Administration Ledger";
+    phase3Desc = "Authorized dashboard tracking practitioner permissions, shift scheduling logs, and system access checks.";
+  } else if (hasEdu) {
+    phase1Title = "Learner Portal & Course Dashboard";
+    phase1Desc = "Modular curriculum console featuring progress states, video player containers, and quiz forms.";
+    phase2Title = "Progress Tracking & Scoring Engine";
+    phase2Desc = "Computes score metrics, processes lesson completion states, and updates student certification records.";
+    phase3Title = "Educator Curriculum & Analytics Portal";
+    phase3Desc = "Teacher console to build modular lessons, adjust scoring, and review aggregate student completion data.";
+  } else if (hasBag) {
+    phase1Title = "Product Showroom & Ingress Checkout";
+    phase1Desc = "D2C catalog interface managing visual variants, dimensional details, and secure cart payment gates.";
+    phase2Title = "Stock Registry & Inventory Broker";
+    phase2Desc = "Monitors real-time stock balances across warehouses and manages order dispatch queues on incoming purchases.";
+    phase3Title = "Logistics Carrier & Fulfillment Portal";
+    phase3Desc = "Backend shipping administrator to print dispatch labels, map shipping updates, and track tracking APIs.";
+  } else if (hasTravel) {
+    phase1Title = "Visual Itinerary & Booking Ingress";
+    phase1Desc = "Search dashboard permitting custom date settings, route configurations, and customer details.";
+    phase2Title = "External API Aggregator Engine";
+    phase2Desc = "Aggregates travel availability databases (flights, hotels) into a single, unified booking payload.";
+    phase3Title = "Reservation Ledger & Markup Controller";
+    phase3Desc = "Operations dashboard monitoring reservation receipts, configuring ticketing margins, and routing vendor payouts.";
+  }
+
+  return {
+    coreConcept,
+    phase1Title,
+    phase1Desc,
+    phase2Title,
+    phase2Desc,
+    phase3Title,
+    phase3Desc
+  };
+}
