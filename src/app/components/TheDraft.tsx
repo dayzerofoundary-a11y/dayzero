@@ -763,8 +763,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
               margin: "0 auto",
             }}
           >
-            Draft your idea the way a banker files a cheque. We receive it, verify it,
-            and begin building — no public exposure, no prior commitment from you.
+            Every product starts with a first draft. Submit your ideas with confidence. Every draft is reviewed privately before any work begins.
           </p>
         </motion.div>
 
@@ -905,7 +904,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                 transition={{ duration: 0.5, ease: "easeOut", delay: 0.15 }}
                 style={{ padding: "1.25rem 1.75rem 1rem" }}
               >
-                <label style={labelStyle}>Drawn in Favour of</label>
+                <label style={labelStyle}>Project name</label>
                 <div
                   style={{
                     display: "flex",
@@ -982,7 +981,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                   borderBottom: "1px solid rgba(19,25,41,0.08)",
                 }}
               >
-                <label style={labelStyle}>Ambition — On the scale of</label>
+                <label style={labelStyle}>How ambitious is this idea?</label>
                 <div
                   style={{
                     display: "flex",

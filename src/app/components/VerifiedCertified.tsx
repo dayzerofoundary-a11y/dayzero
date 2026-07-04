@@ -164,7 +164,7 @@ export function VerifiedCertified() {
                     letterSpacing: "0.12em",
                   }}
                 >
-                  hereby certifies that the following build criteria have been satisfied
+                  This MVP meets the DayZero Foundary build standard.
                 </div>
               </div>
 

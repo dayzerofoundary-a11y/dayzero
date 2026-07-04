@@ -140,7 +140,7 @@ export function Hero({ draftRef }: HeroProps) {
               style={{ color: "#C9A24A", fontStyle: "italic" }}
             >
               <span>We mint yours</span>
-              <span>into a real product.</span>
+              <span>into a market-ready product.</span>
             </em>
           </motion.h1>
 
@@ -159,7 +159,7 @@ export function Hero({ draftRef }: HeroProps) {
             }}
             className="hero-copy"
           >
-             A working MVP built completely <strong style={{ color: "#C9A24A", fontWeight: 700, fontStyle: "italic", textDecoration: "underline", textDecorationColor: "rgba(201,162,74,0.4)", textUnderlineOffset: "4px" }}>at zero cost</strong>, certified by industry veterans and shipped under NDA.
+             We build your first MVP <strong style={{ color: "#C9A24A", fontWeight: 700, fontStyle: "italic", textDecoration: "underline", textDecorationColor: "rgba(201,162,74,0.4)", textUnderlineOffset: "4px" }}>at no cost</strong>, review it with experienced professionals, and deliver it under a strict Non-Disclosure Agreement (NDA).
           </motion.p>
 
           {/* Trust strip */}
@@ -179,9 +179,9 @@ export function Hero({ draftRef }: HeroProps) {
             className="trust-strip"
           >
             {[
-              ["Your MVP cost", "Zero Cost"],
-              ["Built by", "Veixon Team"],
-              ["Trusted & Checked by", "Industry Veterans"],
+              ["Cost", "Free to start"],
+              ["Built by", "Veixon"],
+              ["Reviewed by", "Experts"],
             ].map(([label, value], i) => (
               <div
                 key={label}

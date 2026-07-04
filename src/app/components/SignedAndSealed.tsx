@@ -6,17 +6,17 @@ const GUARANTEES = [
   {
     icon: FileSignature,
     title: "Signed before a word is said.",
-    body: "A legally binding Non-Disclosure Agreement (NDA) is executed before any detail of the idea is submitted. You do not commit to anything; we do.",
+    body: "We sign the NDA before you share your idea. Your work stays private from the very first conversation.",
   },
   {
     icon: Users,
-    title: "Seen only by the build team.",
-    body: "No manager, no partner, no investor — only the engineers assigned to your project have access. The circle is small and documented.",
+    title: "Reviewed by a small team.",
+    body: "Your idea is shared only with the engineers working on your project. No unnecessary access. No large internal teams.",
   },
   {
     icon: LockKeyhole,
     title: "Never reused, sold, or disclosed.",
-    body: "Nothing about the idea, or about you, is ever disclosed to anyone — including your employer. You retain one hundred percent of the intellectual property.",
+    body: "Your idea stays private. We never share, sell, or reuse it, and you keep full ownership of your intellectual property.",
   },
 ];
 
@@ -95,9 +95,7 @@ export function SignedAndSealed() {
               margin: "0 auto",
             }}
           >
-            Disclosing an unbuilt idea carries real risk. We have structured the
-            engagement so that the only party with any obligation, before you share
-            anything, is us.
+            Before you share your idea, we sign the NDA. Your work stays private from the very first conversation.
           </p>
         </motion.div>
 
