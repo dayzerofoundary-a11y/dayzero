@@ -99,7 +99,8 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
   // ── Signature States & Helpers ─────────────────────────────────────────────
   const [signatureImage, setSignatureImage] = useState<string | null>(null);
   const [showSignatureModal, setShowSignatureModal] = useState(false);
-  const [signatureTab, setSignatureTab] = useState<"draw" | "type">("draw");
+  const [signatureTab, setSignatureTab] = useState<"draw" | "type" | "upload">("draw");
+  const [uploadedSignatureFilename, setUploadedSignatureFilename] = useState<string | null>(null);
   const [paths, setPaths] = useState<Array<Array<{ x: number; y: number }>>>([]);
   const [isDrawing, setIsDrawing] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -302,6 +303,30 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
 
   const handleClear = () => {
     setPaths([]);
+    if (signatureTab === "upload") {
+      setSignatureImage(null);
+      setUploadedSignatureFilename(null);
+    }
+  };
+
+  const handleSignatureFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("Signature file size must be under 5MB");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      if (event.target?.result) {
+        setSignatureImage(event.target.result as string);
+        setUploadedSignatureFilename(file.name);
+        toast.success(`Signature file "${file.name}" loaded successfully.`);
+      }
+    };
+    reader.readAsDataURL(file);
   };
 
   const adoptSignature = () => {
@@ -313,8 +338,14 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
       }
       const dataUrl = canvas.toDataURL("image/png");
       setSignatureImage(dataUrl);
+    } else if (signatureTab === "upload") {
+      if (!signatureImage) {
+        toast.error("Please upload a signature file first.");
+        return;
+      }
     } else {
       setSignatureImage(null);
+      setUploadedSignatureFilename(null);
     }
     setShowSignatureModal(false);
   };
@@ -532,12 +563,28 @@ Designed for stealth-mode deployment. Engineered with database-level encryption,
     ctx.fillText("DISCLOSING PARTY SIGNATURE", sigX, sigY + 32);
 
     if (certDetails.signatureImage) {
-      const img = new Image();
-      img.src = certDetails.signatureImage;
-      img.onload = () => {
-        ctx.drawImage(img, sigX - 90, sigY - 35, 180, 45);
+      if (certDetails.signatureImage.startsWith("data:application/pdf;")) {
+        ctx.fillStyle = "#A8822C";
+        ctx.font = "bold 13px 'Inter', sans-serif";
+        ctx.fillText("PDF SIGNATURE FILED", sigX, sigY - 10);
+        ctx.fillStyle = "#6A6355";
+        ctx.font = "italic 11px 'Inter', sans-serif";
+        ctx.fillText(certDetails.name || "Stealth Founder", sigX, sigY + 5);
         triggerDownload();
-      };
+      } else {
+        const img = new Image();
+        img.src = certDetails.signatureImage;
+        img.onload = () => {
+          ctx.drawImage(img, sigX - 90, sigY - 35, 180, 45);
+          triggerDownload();
+        };
+        img.onerror = () => {
+          ctx.fillStyle = "#1E2535";
+          ctx.font = "italic 28px 'Cormorant Garamond', Georgia, serif";
+          ctx.fillText(certDetails.name || "Stealth Founder", sigX, sigY - 2);
+          triggerDownload();
+        };
+      }
     } else {
       ctx.fillStyle = "#1E2535";
       ctx.font = "italic 32px 'Cormorant Garamond', Georgia, serif";
@@ -1699,13 +1746,27 @@ Designed for stealth-mode deployment. Engineered with database-level encryption,
                         style={{
                           height: "50px",
                           display: "flex",
-                          alignItems: "flex-end",
+                          alignItems: "center",
                           minWidth: "180px",
                           borderBottom: "1px solid rgba(19,25,41,0.2)",
                           paddingBottom: "2px",
                         }}
                       >
-                        <img src={signatureImage} alt="Handdrawn Signature" style={{ height: "45px", maxWidth: "220px", objectFit: "contain" }} />
+                        {signatureImage.startsWith("data:application/pdf;") ? (
+                          <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                            <span style={{ fontSize: "1.1rem" }}>📄</span>
+                            <div style={{ display: "flex", flexDirection: "column", textAlign: "left" }}>
+                              <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.6rem", fontWeight: 600, color: "#A8822C", textTransform: "uppercase", letterSpacing: "0.05em", lineHeight: 1.1 }}>
+                                PDF Signature
+                              </span>
+                              <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.52rem", color: "#6A6355", textOverflow: "ellipsis", overflow: "hidden", maxWidth: "160px", whiteSpace: "nowrap" }}>
+                                {uploadedSignatureFilename || "signature.pdf"}
+                              </span>
+                            </div>
+                          </div>
+                        ) : (
+                          <img src={signatureImage} alt="Handdrawn Signature" style={{ height: "45px", maxWidth: "220px", objectFit: "contain" }} />
+                        )}
                       </div>
                     ) : (
                       <div
@@ -2169,11 +2230,35 @@ Designed for stealth-mode deployment. Engineered with database-level encryption,
                 >
                   Type Name
                 </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSignatureTab("upload");
+                    setSignatureImage(null);
+                    setUploadedSignatureFilename(null);
+                  }}
+                  style={{
+                    flex: 1,
+                    padding: "0.85rem",
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: "0.75rem",
+                    fontWeight: 500,
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    background: signatureTab === "upload" ? "rgba(168,130,44,0.08)" : "transparent",
+                    color: signatureTab === "upload" ? "#A8822C" : "#6A6355",
+                    border: "none",
+                    borderBottom: signatureTab === "upload" ? "2px solid #A8822C" : "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  Upload File
+                </button>
               </div>
 
               {/* Tab Content */}
               <div style={{ padding: "1.5rem" }}>
-                {signatureTab === "draw" ? (
+                {signatureTab === "draw" && (
                   <div>
                     <div style={{ border: "1px solid rgba(168,130,44,0.25)", background: "#FFF", borderRadius: "2px", overflow: "hidden", position: "relative" }}>
                       <canvas
@@ -2240,7 +2325,9 @@ Designed for stealth-mode deployment. Engineered with database-level encryption,
                       </button>
                     </div>
                   </div>
-                ) : (
+                )}
+
+                {signatureTab === "type" && (
                   <div>
                     <input
                       type="text"
@@ -2266,6 +2353,96 @@ Designed for stealth-mode deployment. Engineered with database-level encryption,
                         {form.name || "Your Signature"}
                       </div>
                     </div>
+                  </div>
+                )}
+
+                {signatureTab === "upload" && (
+                  <div>
+                    <div style={{
+                      border: "1px dashed rgba(168, 130, 44, 0.35)",
+                      borderRadius: "2px",
+                      background: "rgba(168, 130, 44, 0.02)",
+                      padding: "2rem 1.5rem",
+                      textAlign: "center",
+                      cursor: "pointer",
+                      position: "relative",
+                      transition: "all 0.2s ease",
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#A8822C")}
+                    onMouseLeave={(e) => (e.currentTarget.style.borderColor = "rgba(168, 130, 44, 0.35)")}
+                    >
+                      <input
+                        type="file"
+                        accept="image/png, image/jpeg, image/jpg, application/pdf"
+                        onChange={handleSignatureFileUpload}
+                        style={{
+                          position: "absolute",
+                          left: 0,
+                          top: 0,
+                          width: "100%",
+                          height: "100%",
+                          opacity: 0,
+                          cursor: "pointer",
+                          zIndex: 5,
+                        }}
+                      />
+                      <div style={{ fontSize: "2rem", marginBottom: "0.75rem" }}>
+                        📥
+                      </div>
+                      <div style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.78rem", fontWeight: 500, color: "#131929", marginBottom: "0.25rem" }}>
+                        Upload Signature File
+                      </div>
+                      <div style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.62rem", color: "#6A6355" }}>
+                        PNG, JPG, JPEG, or PDF (Max 5MB)
+                      </div>
+                    </div>
+
+                    {signatureImage && (
+                      <div style={{
+                        marginTop: "1rem",
+                        padding: "0.75rem 1rem",
+                        background: "#FFF",
+                        border: "1px solid rgba(168, 130, 44, 0.2)",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        borderRadius: "2px"
+                      }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                          <span style={{ fontSize: "1.2rem" }}>
+                            {signatureImage.startsWith("data:application/pdf;") ? "📄" : "🖼️"}
+                          </span>
+                          <div style={{ display: "flex", flexDirection: "column", textAlign: "left" }}>
+                            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.68rem", fontWeight: 600, color: "#131929" }}>
+                              Signature Document Loaded
+                            </span>
+                            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.58rem", color: "#6A6355", maxWidth: "240px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                              {uploadedSignatureFilename || "signature.pdf"}
+                            </span>
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSignatureImage(null);
+                            setUploadedSignatureFilename(null);
+                          }}
+                          style={{
+                            border: "none",
+                            background: "transparent",
+                            color: "#A8822C",
+                            fontFamily: "'Inter', sans-serif",
+                            fontSize: "0.62rem",
+                            fontWeight: 600,
+                            letterSpacing: "0.05em",
+                            textTransform: "uppercase",
+                            cursor: "pointer",
+                          }}
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -2730,7 +2907,16 @@ Designed for stealth-mode deployment. Engineered with database-level encryption,
                         }}
                       >
                         {certDetails.signatureImage ? (
-                          <img src={certDetails.signatureImage} alt="Signature" style={{ height: "40px", maxWidth: "160px", objectFit: "contain" }} />
+                          certDetails.signatureImage.startsWith("data:application/pdf;") ? (
+                            <div style={{ display: "flex", alignItems: "center", gap: "0.25rem", paddingBottom: "4px" }}>
+                              <span style={{ fontSize: "1rem" }}>📄</span>
+                              <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.58rem", fontWeight: 600, color: "#A8822C", textTransform: "uppercase" }}>
+                                PDF Signature Filed
+                              </span>
+                            </div>
+                          ) : (
+                            <img src={certDetails.signatureImage} alt="Signature" style={{ height: "40px", maxWidth: "160px", objectFit: "contain" }} />
+                          )
                         ) : (
                           <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontStyle: "italic", fontWeight: 500, fontSize: "1.8rem", color: "#1E2535" }}>
                             {certDetails.name || "Stealth Founder"}

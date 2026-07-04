@@ -529,14 +529,35 @@ intakeRoutes.post('/', upload.single('file'), async (req, res) => {
                         })
                     }
 
-                    if (signature && signature.startsWith('data:image/png;base64,')) {
-                        const base64Data = signature.replace(/^data:image\/png;base64,/, '')
-                        mailAttachments.push({
-                            filename:    'signature.png',
-                            content:     Buffer.from(base64Data, 'base64'),
-                            contentType: 'image/png',
-                            cid:         'signatureImage'
-                        })
+                    if (signature && signature.startsWith('data:')) {
+                        const commaIdx = signature.indexOf(',')
+                        if (commaIdx !== -1) {
+                            const meta = signature.slice(0, commaIdx)
+                            const base64Data = signature.slice(commaIdx + 1)
+                            const buffer = Buffer.from(base64Data, 'base64')
+                            
+                            if (meta.includes('image/png')) {
+                                mailAttachments.push({
+                                    filename:    'signature.png',
+                                    content:     buffer,
+                                    contentType: 'image/png',
+                                    cid:         'signatureImage'
+                                })
+                            } else if (meta.includes('image/jpeg') || meta.includes('image/jpg')) {
+                                mailAttachments.push({
+                                    filename:    'signature.jpg',
+                                    content:     buffer,
+                                    contentType: 'image/jpeg',
+                                    cid:         'signatureImage'
+                                })
+                            } else if (meta.includes('application/pdf')) {
+                                mailAttachments.push({
+                                    filename:    'signature.pdf',
+                                    content:     buffer,
+                                    contentType: 'application/pdf'
+                                })
+                            }
+                        }
                     }
 
                     if (mailAttachments.length > 0) {
