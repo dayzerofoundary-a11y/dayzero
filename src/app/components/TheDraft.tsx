@@ -387,7 +387,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
     // 4. Header Text
     ctx.textAlign = "center";
     ctx.fillStyle = "#131929";
-    ctx.font = "bold 44px Georgia, serif";
+    ctx.font = "bold 44px 'Lora', Georgia, serif";
     ctx.fillText("DAYZERO FOUNDARY", canvas.width / 2, 130);
 
     ctx.fillStyle = "#A8822C";
@@ -404,7 +404,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
 
     // 5. Certification legal statement
     ctx.fillStyle = "#6A6355";
-    ctx.font = "italic 16px Georgia, serif";
+    ctx.font = "italic 16px 'Lora', Georgia, serif";
     ctx.fillText("This document certifies that the confidential concept outlined below has been officially", canvas.width / 2, 245);
     ctx.fillText("recorded in the DayZero Foundary ledger and is fully protected under the legally binding", canvas.width / 2, 275);
     ctx.fillText("Non-Disclosure Agreement (NDA) executed prior to transmission.", canvas.width / 2, 305);
@@ -431,7 +431,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
       ctx.fillText(item.label, labelX, y);
 
       ctx.fillStyle = "#131929";
-      ctx.font = "16px Georgia, serif";
+      ctx.font = "16px 'Lora', Georgia, serif";
       ctx.fillText(item.value, valueX, y);
 
       ctx.strokeStyle = "rgba(19,25,41,0.06)";
@@ -462,7 +462,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
     ctx.font = "bold 8px 'Inter', sans-serif";
     ctx.fillText("CERTIFIED", sealX, sealY - 10);
     ctx.fillStyle = "#C9A24A";
-    ctx.font = "bold 15px Georgia, serif";
+    ctx.font = "bold 15px 'Lora', Georgia, serif";
     ctx.fillText("DZF", sealX, sealY + 5);
     ctx.fillStyle = "rgba(244,239,228,0.7)";
     ctx.font = "bold 6px 'Inter', sans-serif";
@@ -493,7 +493,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
       };
     } else {
       ctx.fillStyle = "#1E2535";
-      ctx.font = "italic 32px Georgia, serif";
+      ctx.font = "italic 32px 'Lora', Georgia, serif";
       ctx.fillText(certDetails.name || "Stealth Founder", sigX, sigY - 2);
       triggerDownload();
     }
@@ -2522,7 +2522,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                   <div style={{ textAlign: "center", marginBottom: "2rem" }}>
                     <p
                       style={{
-                        fontFamily: "Georgia, serif",
+                        fontFamily: "'Lora', Georgia, serif",
                         fontSize: "0.82rem",
                         fontStyle: "italic",
                         color: "#6A6355",
@@ -2576,7 +2576,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                           </span>
                           <span
                             style={{
-                              fontFamily: "Georgia, serif",
+                              fontFamily: "'Lora', Georgia, serif",
                               fontSize: "0.8rem",
                               fontWeight: 500,
                               color: "#131929",

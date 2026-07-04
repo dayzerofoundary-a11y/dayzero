@@ -153,7 +153,7 @@ function buildEmailHtml(fields: EmailFields, castId: string, hasSignature: boole
         value
             ? `<tr style="border-bottom: 1px solid rgba(19, 25, 41, 0.05)">
                 <td style="padding: 10px 14px; font-weight: 600; font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #A8822C; vertical-align: top; width: 150px;">${escapeHtml(label)}</td>
-                <td style="padding: 10px 14px; font-family: Georgia, serif; font-size: 14px; color: #131929; vertical-align: top;">${escapeHtml(value).replace(/\n/g, '<br>')}</td>
+                <td style="padding: 10px 14px; font-family: 'Lora', Georgia, serif; font-size: 14px; color: #131929; vertical-align: top;">${escapeHtml(value).replace(/\n/g, '<br>')}</td>
                </tr>`
             : ''
 
@@ -179,15 +179,15 @@ function buildEmailHtml(fields: EmailFields, castId: string, hasSignature: boole
               <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                   <td>
-                    <span style="font-family: Georgia, serif; font-size: 26px; font-weight: 700; color: #F4EFE4; letter-spacing: 0.02em;">DayZero</span>
-                    <span style="font-family: Georgia, serif; font-size: 18px; font-weight: 600; font-style: italic; color: #C9A24A;">Foundary</span>
+                    <span style="font-family: 'Lora', Georgia, serif; font-size: 26px; font-weight: 700; color: #F4EFE4; letter-spacing: 0.02em;">DayZero</span>
+                    <span style="font-family: 'Lora', Georgia, serif; font-size: 18px; font-weight: 600; font-style: italic; color: #C9A24A;">Foundary</span>
                     <div style="font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(244, 239, 228, 0.65); margin-top: 6px;">
                       Stealth Registry Record
                     </div>
                   </td>
                   <td align="right" style="vertical-align: top;">
                     <div style="font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: #C9A24A;">Registry Reference</div>
-                    <div style="font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #F4EFE4; margin-top: 4px;">${escapeHtml(castId)}</div>
+                    <div style="font-family: 'Lora', Georgia, serif; font-size: 20px; font-weight: 700; color: #F4EFE4; margin-top: 4px;">${escapeHtml(castId)}</div>
                     <div style="font-family: 'Inter', sans-serif; font-size: 11px; color: rgba(244, 239, 228, 0.55); margin-top: 4px;">${new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</div>
                   </td>
                 </tr>
@@ -226,7 +226,7 @@ function buildEmailHtml(fields: EmailFields, castId: string, hasSignature: boole
               </div>
               <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 35px; width: 100%;">
                 <tr>
-                  <td style="background-color: #FFFFFF; border-left: 3px solid #A8822C; padding: 20px; font-family: Georgia, serif; font-size: 14px; line-height: 1.65; color: #1E2535; border-top: 1px solid rgba(19, 25, 41, 0.06); border-right: 1px solid rgba(19, 25, 41, 0.06); border-bottom: 1px solid rgba(19, 25, 41, 0.06);">
+                  <td style="background-color: #FFFFFF; border-left: 3px solid #A8822C; padding: 20px; font-family: 'Lora', Georgia, serif; font-size: 14px; line-height: 1.65; color: #1E2535; border-top: 1px solid rgba(19, 25, 41, 0.06); border-right: 1px solid rgba(19, 25, 41, 0.06); border-bottom: 1px solid rgba(19, 25, 41, 0.06);">
                     ${escapeHtml(fields.description).replace(/\n/g, '<br>')}
                   </td>
                 </tr>
@@ -253,7 +253,7 @@ function buildEmailHtml(fields: EmailFields, castId: string, hasSignature: boole
                       <tr>
                         <td style="background-color: #1A4A3C; padding: 12px 18px; border-radius: 2px; text-align: center; border: 1px solid #C9A24A;">
                           <div style="font-family: 'Inter', sans-serif; font-size: 8px; font-weight: 600; letter-spacing: 0.12em; color: #F4EFE4;">DZF CERTIFIED</div>
-                          <div style="font-family: Georgia, serif; font-size: 15px; font-weight: 700; color: #C9A24A; margin: 3px 0;">SECURE</div>
+                          <div style="font-family: 'Lora', Georgia, serif; font-size: 15px; font-weight: 700; color: #C9A24A; margin: 3px 0;">SECURE</div>
                           <div style="font-family: 'Inter', sans-serif; font-size: 7px; color: rgba(244, 239, 228, 0.75);">RECORD RECORDED</div>
                         </td>
                       </tr>
@@ -266,7 +266,7 @@ function buildEmailHtml(fields: EmailFields, castId: string, hasSignature: boole
                         <td style="border-bottom: 1px solid #131929; padding-bottom: 4px; height: 45px; text-align: center;">
                           ${hasSignature 
                             ? `<img src="cid:signatureImage" alt="Signature" style="max-height: 45px; max-width: 180px; display: block; margin: 0 auto;"/>` 
-                            : `<span style="font-family: Georgia, serif; font-size: 20px; font-style: italic; color: #1E2535; font-weight: 500;">${escapeHtml(fields.name)}</span>`}
+                            : `<span style="font-family: 'Lora', Georgia, serif; font-size: 20px; font-style: italic; color: #1E2535; font-weight: 500;">${escapeHtml(fields.name)}</span>`}
                         </td>
                       </tr>
                       <tr>
