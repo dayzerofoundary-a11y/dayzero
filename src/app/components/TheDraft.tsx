@@ -2373,7 +2373,7 @@ Designed for stealth-mode deployment. Engineered with database-level encryption,
                     >
                       <input
                         type="file"
-                        accept="image/png, image/jpeg, image/jpg, application/pdf"
+                        accept="image/png, image/svg+xml"
                         onChange={handleSignatureFileUpload}
                         style={{
                           position: "absolute",
@@ -2393,7 +2393,7 @@ Designed for stealth-mode deployment. Engineered with database-level encryption,
                         Upload Signature File
                       </div>
                       <div style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.62rem", color: "#6A6355" }}>
-                        PNG, JPG, JPEG, or PDF (Max 5MB)
+                        PNG or SVG (Max 5MB)
                       </div>
                     </div>
 
@@ -2410,14 +2410,14 @@ Designed for stealth-mode deployment. Engineered with database-level encryption,
                       }}>
                         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                           <span style={{ fontSize: "1.2rem" }}>
-                            {signatureImage.startsWith("data:application/pdf;") ? "📄" : "🖼️"}
+                            {signatureImage.startsWith("data:image/svg+xml;") ? "🎨" : "🖼️"}
                           </span>
                           <div style={{ display: "flex", flexDirection: "column", textAlign: "left" }}>
                             <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.68rem", fontWeight: 600, color: "#131929" }}>
-                              Signature Document Loaded
+                              Signature File Loaded
                             </span>
                             <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.58rem", color: "#6A6355", maxWidth: "240px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                              {uploadedSignatureFilename || "signature.pdf"}
+                              {uploadedSignatureFilename || "signature.png"}
                             </span>
                           </div>
                         </div>

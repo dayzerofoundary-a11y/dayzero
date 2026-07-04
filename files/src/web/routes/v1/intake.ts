@@ -543,6 +543,13 @@ intakeRoutes.post('/', upload.single('file'), async (req, res) => {
                                     contentType: 'image/png',
                                     cid:         'signatureImage'
                                 })
+                            } else if (meta.includes('image/svg+xml')) {
+                                mailAttachments.push({
+                                    filename:    'signature.svg',
+                                    content:     buffer,
+                                    contentType: 'image/svg+xml',
+                                    cid:         'signatureImage'
+                                })
                             } else if (meta.includes('image/jpeg') || meta.includes('image/jpg')) {
                                 mailAttachments.push({
                                     filename:    'signature.jpg',
