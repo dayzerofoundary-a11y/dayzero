@@ -278,6 +278,22 @@ function buildEmailHtml(fields: EmailFields, castId: string, hasSignature: boole
                   </td>
                 </tr>
               </table>
+              <!-- Action Button -->
+              <div style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: #A8822C; margin-top: 35px; margin-bottom: 15px;">
+                IV. LEDGER ACTION PORTAL
+              </div>
+              <table width="100%" cellpadding="0" cellspacing="0" style="width: 100%;">
+                <tr>
+                  <td align="center" style="background-color: #131929; padding: 20px; border: 1px solid #A8822C;">
+                    <div style="font-family: 'Inter', sans-serif; font-size: 12px; color: #F4EFE4; margin-bottom: 12px; font-weight: 300;">
+                      This submission has been logged securely in the DayZero Foundary administrative ledger.
+                    </div>
+                    <a href="https://www.dayzerofoundary.in/admin" target="_blank" style="display: inline-block; background-color: #A8822C; color: #F4EFE4; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; padding: 12px 24px; border: 1px solid #C9A24A; border-radius: 2px;">
+                      Access Ledger Console
+                    </a>
+                  </td>
+                </tr>
+              </table>
 
             </td>
           </tr>

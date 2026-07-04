@@ -81,6 +81,10 @@ export default function App() {
           -webkit-font-smoothing: antialiased;
         }
 
+        input, button, select, textarea {
+          font-family: inherit;
+        }
+
         input[type="range"] {
           -webkit-appearance: none;
           appearance: none;
