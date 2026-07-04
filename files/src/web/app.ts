@@ -28,7 +28,7 @@ export function initApp(app: Express) {
                     allowed.includes(origin) || 
                     origin.endsWith('.vercel.app') || 
                     origin.includes('dayzerofoundary.in') || 
-                    origin.includes('dayzerofoundry.in')
+                    origin.includes('dayzerofoundary.in')
                 ) {
                     callback(null, true)
                 } else {

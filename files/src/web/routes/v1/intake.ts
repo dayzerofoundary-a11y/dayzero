@@ -180,7 +180,7 @@ function buildEmailHtml(fields: EmailFields, castId: string, hasSignature: boole
                 <tr>
                   <td>
                     <span style="font-family: Georgia, serif; font-size: 26px; font-weight: 700; color: #F4EFE4; letter-spacing: 0.02em;">DayZero</span>
-                    <span style="font-family: Georgia, serif; font-size: 18px; font-weight: 600; font-style: italic; color: #C9A24A;">Foundry</span>
+                    <span style="font-family: Georgia, serif; font-size: 18px; font-weight: 600; font-style: italic; color: #C9A24A;">Foundary</span>
                     <div style="font-family: 'Poppins', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(244, 239, 228, 0.65); margin-top: 6px;">
                       Stealth Registry Record
                     </div>
@@ -286,7 +286,7 @@ function buildEmailHtml(fields: EmailFields, castId: string, hasSignature: boole
           <tr>
             <td style="background-color: #131929; padding: 25px 35px; border-top: 1px solid #A8822C; text-align: center;">
               <div style="font-family: 'Poppins', sans-serif; font-size: 9px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(244, 239, 228, 0.65);">
-                Confidential Registry • DayZero Foundry • NDA Shield Active
+                Confidential Registry • DayZero Foundary • NDA Shield Active
               </div>
               <div style="font-family: 'Poppins', sans-serif; font-size: 8px; color: #C9A24A; margin-top: 6px; letter-spacing: 0.05em;">
                 DayZero Ledger Reference Entry · DZ-LEDGER-2026
@@ -480,7 +480,7 @@ intakeRoutes.post('/', upload.single('file'), async (req, res) => {
                     const transporter = createTransporter()
 
                     const mailOptions: nodemailer.SendMailOptions = {
-                        from:    `"DayZero Foundry" <${process.env.SMTP_FROM ?? process.env.SMTP_USER}>`,
+                        from:    `"DayZero Foundary" <${process.env.SMTP_FROM ?? process.env.SMTP_USER}>`,
                         to:      smtpTo,
                         replyTo: fields.email,
                         subject: `[DayZero] New Idea — ${fields.ideaName} · ${castId}`,

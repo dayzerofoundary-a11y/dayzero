@@ -2,7 +2,7 @@
 
 ## Overview
 
-DayZero Foundry's production backend replaces the current Firebase/mock implementation with a self-hosted, fully-typed Node.js/Express/TypeScript API backed by PostgreSQL (via Prisma ORM) and Redis. The design preserves the existing `/api/v1/intake` contract consumed by `TheDraft` frontend component while building a complete platform covering authentication, RBAC, admin APIs, file uploads, notifications, analytics, audit logging, and real-time capabilities.
+DayZero Foundary's production backend replaces the current Firebase/mock implementation with a self-hosted, fully-typed Node.js/Express/TypeScript API backed by PostgreSQL (via Prisma ORM) and Redis. The design preserves the existing `/api/v1/intake` contract consumed by `TheDraft` frontend component while building a complete platform covering authentication, RBAC, admin APIs, file uploads, notifications, analytics, audit logging, and real-time capabilities.
 
 **Engineering philosophy:** build it once, build it right — every layer is observable, every failure is handled, every contract is typed, and every sensitive operation is auditable.
 

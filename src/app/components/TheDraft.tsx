@@ -388,7 +388,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
     ctx.textAlign = "center";
     ctx.fillStyle = "#131929";
     ctx.font = "bold 44px Georgia, serif";
-    ctx.fillText("DAYZERO FOUNDRY", canvas.width / 2, 130);
+    ctx.fillText("DAYZERO FOUNDARY", canvas.width / 2, 130);
 
     ctx.fillStyle = "#A8822C";
     ctx.font = "bold 13px 'Poppins', sans-serif";
@@ -406,7 +406,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
     ctx.fillStyle = "#6A6355";
     ctx.font = "italic 16px Georgia, serif";
     ctx.fillText("This document certifies that the confidential concept outlined below has been officially", canvas.width / 2, 245);
-    ctx.fillText("recorded in the DayZero Foundry ledger and is fully protected under the legally binding", canvas.width / 2, 275);
+    ctx.fillText("recorded in the DayZero Foundary ledger and is fully protected under the legally binding", canvas.width / 2, 275);
     ctx.fillText("Non-Disclosure Agreement (NDA) executed prior to transmission.", canvas.width / 2, 305);
 
     // 6. Data Rows
@@ -502,7 +502,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
       ctx.fillStyle = "rgba(106,99,85,0.45)";
       ctx.textAlign = "center";
       ctx.font = "9px 'Poppins', sans-serif";
-      ctx.fillText("Confidential Idea Registry · DayZero Foundry · Protected under legally binding NDA agreement.", canvas.width / 2, 755);
+      ctx.fillText("Confidential Idea Registry · DayZero Foundary · Protected under legally binding NDA agreement.", canvas.width / 2, 755);
 
       const link = document.createElement("a");
       link.download = `DayZero_Certificate_${certDetails.castId || "Filing"}.png`;
@@ -841,7 +841,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                         color: "#A8822C",
                       }}
                     >
-                      Foundry
+                      Foundary
                     </span>
                   </div>
                   <div
@@ -1880,10 +1880,10 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                 }}
               >
                 <p style={{ marginBottom: "1rem" }}>
-                  <strong>1. Purpose.</strong> This Non-Disclosure Agreement (the "Agreement") is entered into by and between DayZeroFoundry / Veixon (the "Receiving Party") and the Submitting Party (the "Disclosing Party") for the purpose of evaluating a potential business relationship or product development collaboration (the "Purpose").
+                  <strong>1. Purpose.</strong> This Non-Disclosure Agreement (the "Agreement") is entered into by and between DayZeroFoundary / Veixon (the "Receiving Party") and the Submitting Party (the "Disclosing Party") for the purpose of evaluating a potential business relationship or product development collaboration (the "Purpose").
                 </p>
                 <p style={{ marginBottom: "1rem" }}>
-                  <strong>2. Confidential Information.</strong> "Confidential Information" means any and all technical and non-technical information provided by the Disclosing Party via the DayZeroFoundry submission form, including but not limited to idea concepts, product specifications, business models, algorithms, intellectual property, and market strategies.
+                  <strong>2. Confidential Information.</strong> "Confidential Information" means any and all technical and non-technical information provided by the Disclosing Party via the DayZeroFoundary submission form, including but not limited to idea concepts, product specifications, business models, algorithms, intellectual property, and market strategies.
                 </p>
                 <p style={{ marginBottom: "1rem" }}>
                   <strong>3. Obligations.</strong> The Receiving Party agrees that it will:
@@ -2495,7 +2495,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                         letterSpacing: "0.02em",
                       }}
                     >
-                      DayZeroFoundry
+                      DayZeroFoundary
                     </div>
                     <div
                       style={{
@@ -2532,7 +2532,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                         maxWidth: "500px",
                       }}
                     >
-                      This document certifies that the confidential concept outlined below has been officially recorded in the DayZero Foundry ledger and is fully protected under the legally binding Non-Disclosure Agreement (NDA) executed prior to transmission.
+                      This document certifies that the confidential concept outlined below has been officially recorded in the DayZero Foundary ledger and is fully protected under the legally binding Non-Disclosure Agreement (NDA) executed prior to transmission.
                     </p>
 
                     {/* Metadata table */}

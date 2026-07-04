@@ -1,4 +1,4 @@
-# DayZeroFoundry - Single-page MVP Web Product
+# DayZeroFoundary - Single-page MVP Web Product
 
 We are creating a platform for innovative thinkers to become future entrepreneurs. This is a single-page MVP web product codebase.
 

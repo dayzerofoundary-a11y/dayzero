@@ -31,7 +31,7 @@ export function Footer() {
               marginBottom: "0.3rem",
             }}
           >
-            DayZero<span style={{ color: "#A8822C" }}>Foundry</span>
+            DayZero<span style={{ color: "#A8822C" }}>Foundary</span>
           </div>
           <div
             style={{

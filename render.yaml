@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: dayzerofoundry-api
+    name: dayzerofoundary-api
     env: node
     buildCommand: "cd files && npm install"
     startCommand: "cd files && node server.js"

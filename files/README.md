@@ -1,4 +1,4 @@
-# DayZeroFoundry API (backend)
+# DayZeroFoundary API (backend)
 
 This backend is created in `files/` to match the existing root scripts and platform config.
 

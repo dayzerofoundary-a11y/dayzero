@@ -145,7 +145,7 @@ export function VerifiedCertified() {
                     marginBottom: "0.25rem",
                   }}
                 >
-                  DayZeroFoundry
+                  DayZeroFoundary
                 </div>
                 <div
                   style={{
@@ -269,7 +269,7 @@ export function VerifiedCertified() {
                       color: "#6A6355",
                     }}
                   >
-                    Chief of Certification · DayZeroFoundry
+                    Chief of Certification · DayZeroFoundary
                   </div>
                 </div>
 

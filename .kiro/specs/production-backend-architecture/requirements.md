@@ -2,7 +2,7 @@
 
 ## Introduction
 
-DayZero Foundry is a platform for innovative thinkers to become future entrepreneurs. The current React/Vite frontend uses Firebase Firestore for data persistence and a minimal Node.js intake API. This feature replaces all temporary/mock/Firebase implementations with a production-ready, self-hosted backend built on Node.js, Express.js, TypeScript, Prisma ORM, PostgreSQL, and Redis.
+DayZero Foundary is a platform for innovative thinkers to become future entrepreneurs. The current React/Vite frontend uses Firebase Firestore for data persistence and a minimal Node.js intake API. This feature replaces all temporary/mock/Firebase implementations with a production-ready, self-hosted backend built on Node.js, Express.js, TypeScript, Prisma ORM, PostgreSQL, and Redis.
 
 The new backend must integrate seamlessly with the existing React frontend — specifically preserving the `/api/intake` endpoint contract used by `TheDraft` component, replacing the Firebase-powered `AdminDashboard` with a secure JWT-authenticated admin API, and providing a complete platform for future growth including authentication, file uploads, notifications, analytics, audit logging, and real-time capabilities.
 
@@ -71,7 +71,7 @@ Engineering philosophy: **build it once, build it right** — maintainability, s
 
 ### Requirement 3: Idea Intake API (Frontend Compatibility)
 
-**User Story:** As a Submitter, I want to submit my idea through the existing DayZero Foundry web form without any frontend changes, so that my submission is securely received, persisted in the production database, and I receive a Cast_ID confirmation.
+**User Story:** As a Submitter, I want to submit my idea through the existing DayZero Foundary web form without any frontend changes, so that my submission is securely received, persisted in the production database, and I receive a Cast_ID confirmation.
 
 #### Acceptance Criteria
 

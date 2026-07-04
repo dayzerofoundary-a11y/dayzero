@@ -136,7 +136,7 @@ export function AdminDashboard() {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "3rem" }}>
           <div>
             <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "2.5rem", color: "#131929", marginBottom: "0.5rem" }}>Idea Registry</h1>
-            <p style={{ fontSize: "0.9rem", color: "#6A6355" }}>Secure administration panel · DayZero Foundry</p>
+            <p style={{ fontSize: "0.9rem", color: "#6A6355" }}>Secure administration panel · DayZero Foundary</p>
           </div>
           <div style={{ display: "flex", gap: "1rem" }}>
             <button

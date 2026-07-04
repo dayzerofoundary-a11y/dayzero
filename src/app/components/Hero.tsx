@@ -115,7 +115,7 @@ export function Hero({ draftRef }: HeroProps) {
             className="hero-kicker"
           >
             <span style={{ opacity: 0.7, marginRight: "0.5rem" }}>✤</span>
-            DayZeroFoundry · A Veixon Institution
+            DayZeroFoundary · A Veixon Institution
             <span style={{ opacity: 0.7, marginLeft: "0.5rem" }}>✤</span>
           </motion.div>
 
@@ -319,7 +319,7 @@ export function Hero({ draftRef }: HeroProps) {
                         color: "#A8822C",
                       }}
                     >
-                      Foundry
+                      Foundary
                     </span>
                   </div>
                   <div
@@ -691,7 +691,7 @@ const CertifiedStamp = React.memo(function CertifiedStamp({ small = false }: { s
         fill="#1A4A3C"
         style={{ fontFamily: "'Poppins', sans-serif", fontSize: "5px", fontWeight: 400, letterSpacing: "0.2em" }}
       >
-        DAYZERO FOUNDRY
+        DAYZERO FOUNDARY
       </text>
     </svg>
   );

@@ -99,7 +99,7 @@ export function Nav({ onDraftClick }: NavProps) {
             }}
           >
             DayZero
-            <span style={{ color: "#A8822C" }}>Foundry</span>
+            <span style={{ color: "#A8822C" }}>Foundary</span>
           </span>
           <span
             style={{

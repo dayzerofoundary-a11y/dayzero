@@ -192,7 +192,7 @@ export function Team() {
                     letterSpacing: "0.08em",
                   }}
                 >
-                  Filed on record · Founding Director, DayZeroFoundry
+                  Filed on record · Founding Director, DayZeroFoundary
                 </div>
               </div>
             </div>
