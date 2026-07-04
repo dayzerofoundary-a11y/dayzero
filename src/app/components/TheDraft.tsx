@@ -977,87 +977,150 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, ease: "easeOut", delay: 0.25 }}
                 style={{
-                  padding: "0.5rem 1.75rem 1.25rem",
+                  padding: "1.25rem 1.75rem 1.75rem",
                   borderBottom: "1px solid rgba(19,25,41,0.08)",
                 }}
               >
-                <label style={labelStyle}>How ambitious is this idea?</label>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
+                  <label style={{ ...labelStyle, marginBottom: 0 }}>How ambitious is this idea?</label>
+                  <span
+                    style={{
+                      fontFamily: "'Cormorant Garamond', Georgia, serif",
+                      fontSize: "1rem",
+                      fontWeight: 500,
+                      fontStyle: "italic",
+                      color: "#A8822C",
+                      background: "rgba(168, 130, 44, 0.08)",
+                      padding: "0.15rem 0.6rem",
+                      borderRadius: "2px",
+                    }}
+                  >
+                    {AMBITION_LABELS[form.ambition]}
+                  </span>
+                </div>
+
+                <div style={{ position: "relative", padding: "0 0.5rem", marginBottom: "1.2rem" }}>
+                  {/* Custom Ruler Line and Ticks */}
+                  <div
+                    style={{
+                      position: "absolute",
+                      left: "0.5rem",
+                      right: "0.5rem",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      height: "2px",
+                      background: "rgba(19,25,41,0.1)",
+                      zIndex: 0,
+                    }}
+                  />
+                  
+                  {/* Dynamic Filled Track */}
+                  <div
+                    style={{
+                      position: "absolute",
+                      left: "0.5rem",
+                      width: `${(form.ambition / 4) * 100}%`,
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      height: "2px",
+                      background: "#A8822C",
+                      zIndex: 1,
+                      transition: "width 0.2s ease-out",
+                    }}
+                  />
+
+                  {/* 5 Tick Nodes */}
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      position: "relative",
+                      zIndex: 2,
+                      alignItems: "center",
+                      height: "24px",
+                    }}
+                  >
+                    {[0, 1, 2, 3, 4].map((idx) => {
+                      const isActive = idx === form.ambition;
+                      const isFilled = idx <= form.ambition;
+                      return (
+                        <div
+                          key={idx}
+                          onClick={() => update("ambition", idx)}
+                          style={{
+                            width: "12px",
+                            height: "12px",
+                            borderRadius: "50%",
+                            border: `2px solid ${isFilled ? "#A8822C" : "rgba(19,25,41,0.2)"}`,
+                            background: isActive ? "#A8822C" : "#F4EFE4",
+                            cursor: "pointer",
+                            transition: "all 0.2s ease-out",
+                            transform: isActive ? "scale(1.3)" : "scale(1)",
+                            boxShadow: isActive ? "0 0 8px rgba(168,130,44,0.4)" : "none",
+                          }}
+                        />
+                      );
+                    })}
+                  </div>
+
+                  {/* Invisible range input overlaid for accessibility/keyboard/drag support */}
+                  <input
+                    type="range"
+                    min={0}
+                    max={4}
+                    step={1}
+                    value={form.ambition}
+                    onChange={(e) => update("ambition", Number(e.target.value))}
+                    style={{
+                      position: "absolute",
+                      left: "0",
+                      width: "100%",
+                      top: "0",
+                      height: "100%",
+                      opacity: 0,
+                      cursor: "pointer",
+                      zIndex: 3,
+                    }}
+                  />
+                </div>
+
+                {/* 5 Label Items under Ticks */}
                 <div
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
-                    alignItems: "center",
-                    gap: "1rem",
-                  }}
-                  className="ambition-row"
-                >
-                  <span
-                    style={{
-                      fontFamily: "'Inter', sans-serif",
-                      fontSize: "0.8rem",
-                      color: "#A8822C",
-                      whiteSpace: "nowrap",
-                    }}
-                    className="ambition-label"
-                  >
-                    Incremental
-                  </span>
-                  <div style={{ flex: 1, position: "relative" }}>
-                    {/* Tick marks */}
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        marginBottom: "4px",
-                        padding: "0 2px",
-                      }}
-                    >
-                      {[0, 1, 2, 3, 4].map((i) => (
-                        <div
-                          key={i}
-                          style={{
-                            width: "1px",
-                            height: i === 0 || i === 4 ? "8px" : "5px",
-                            background:
-                              i <= form.ambition ? "#A8822C" : "rgba(19,25,41,0.2)",
-                          }}
-                        />
-                      ))}
-                    </div>
-                    <input
-                      type="range"
-                      min={0}
-                      max={4}
-                      step={1}
-                      value={form.ambition}
-                      onChange={(e) => update("ambition", Number(e.target.value))}
-                      style={{ width: "100%", accentColor: "#A8822C", cursor: "pointer" }}
-                    />
-                  </div>
-                  <span
-                    style={{
-                      fontFamily: "'Inter', sans-serif",
-                      fontSize: "0.8rem",
-                      color: "#A8822C",
-                      whiteSpace: "nowrap",
-                    }}
-                    className="ambition-label"
-                  >
-                    Category-defining
-                  </span>
-                </div>
-                <div
-                  style={{
-                    textAlign: "center",
-                    fontFamily: "'Cormorant Garamond', serif",
-                    fontSize: "0.9rem",
-                    fontWeight: 500,
-                    fontStyle: "italic",
-                    color: "#A8822C",
-                    marginTop: "0.35rem",
+                    padding: "0",
+                    marginTop: "0.5rem",
                   }}
                 >
-                  {AMBITION_LABELS[form.ambition]}
+                  {AMBITION_LABELS.map((label, idx) => {
+                    const isActive = idx === form.ambition;
+                    return (
+                      <button
+                        type="button"
+                        key={idx}
+                        onClick={() => update("ambition", idx)}
+                        style={{
+                          background: "none",
+                          border: "none",
+                          padding: "0",
+                          margin: "0",
+                          fontFamily: "'Inter', sans-serif",
+                          fontSize: "0.6rem",
+                          fontWeight: isActive ? 600 : 400,
+                          letterSpacing: "0.08em",
+                          textTransform: "uppercase",
+                          color: isActive ? "#A8822C" : "rgba(19,25,41,0.45)",
+                          cursor: "pointer",
+                          width: "80px",
+                          textAlign: idx === 0 ? "left" : idx === 4 ? "right" : "center",
+                          transition: "color 0.2s, font-weight 0.2s",
+                        }}
+                      >
+                        {label}
+                      </button>
+                    );
+                  })}
                 </div>
               </motion.div>
 
