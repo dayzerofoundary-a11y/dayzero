@@ -44,7 +44,7 @@ export function VerifiedCertified() {
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              fontFamily: "'Poppins', sans-serif",
+              fontFamily: "'Inter', sans-serif",
               fontSize: "0.8rem",
               fontWeight: 500,
               letterSpacing: "0.3em",
@@ -59,7 +59,7 @@ export function VerifiedCertified() {
           </div>
           <h2
             style={{
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "'Lora', serif",
               fontSize: "clamp(2.6rem, 4.5vw, 4rem)",
               fontWeight: 600,
               lineHeight: 1.15,
@@ -74,7 +74,7 @@ export function VerifiedCertified() {
           </h2>
           <p
             style={{
-              fontFamily: "'Poppins', sans-serif",
+              fontFamily: "'Inter', sans-serif",
               fontSize: "1.1rem",
               fontWeight: 300,
               lineHeight: 1.75,
@@ -125,7 +125,7 @@ export function VerifiedCertified() {
               <div style={{ textAlign: "center", marginBottom: "2rem" }}>
                 <div
                   style={{
-                    fontFamily: "'Poppins', sans-serif",
+                    fontFamily: "'Inter', sans-serif",
                     fontSize: "0.55rem",
                     fontWeight: 400,
                     letterSpacing: "0.35em",
@@ -138,7 +138,7 @@ export function VerifiedCertified() {
                 </div>
                 <div
                   style={{
-                    fontFamily: "'Playfair Display', serif",
+                    fontFamily: "'Lora', serif",
                     fontSize: "1.8rem",
                     fontWeight: 600,
                     color: "#131929",
@@ -157,7 +157,7 @@ export function VerifiedCertified() {
                 />
                 <div
                   style={{
-                    fontFamily: "'Poppins', sans-serif",
+                    fontFamily: "'Inter', sans-serif",
                     fontSize: "0.7rem",
                     fontWeight: 300,
                     color: "#6A6355",
@@ -223,7 +223,7 @@ export function VerifiedCertified() {
                     </div>
                     <span
                       style={{
-                        fontFamily: "'Poppins', sans-serif",
+                        fontFamily: "'Inter', sans-serif",
                         fontSize: "0.88rem",
                         fontWeight: 300,
                         lineHeight: 1.6,
@@ -262,7 +262,7 @@ export function VerifiedCertified() {
                   </div>
                   <div
                     style={{
-                      fontFamily: "'Poppins', sans-serif",
+                      fontFamily: "'Inter', sans-serif",
                       fontSize: "0.52rem",
                       letterSpacing: "0.2em",
                       textTransform: "uppercase",
@@ -299,15 +299,15 @@ function CertifiedEmeraldStamp() {
       <circle cx="50" cy="50" r="40" stroke="#1A4A3C" strokeWidth="0.75" strokeDasharray="2.5 2" />
       <circle cx="50" cy="50" r="33" fill="rgba(26,74,60,0.08)" />
       <text x="50" y="44" textAnchor="middle" fill="#1A4A3C"
-        style={{ fontFamily: "'Poppins', sans-serif", fontSize: "7px", fontWeight: 700, letterSpacing: "0.3em" }}>
+        style={{ fontFamily: "'Inter', sans-serif", fontSize: "7px", fontWeight: 700, letterSpacing: "0.3em" }}>
         CERTIFIED
       </text>
       <text x="50" y="57" textAnchor="middle" fill="#1A4A3C"
-        style={{ fontFamily: "'Playfair Display', serif", fontSize: "12px", fontWeight: 700 }}>
+        style={{ fontFamily: "'Lora', serif", fontSize: "12px", fontWeight: 700 }}>
         DZF
       </text>
       <text x="50" y="68" textAnchor="middle" fill="rgba(26,74,60,0.7)"
-        style={{ fontFamily: "'Poppins', sans-serif", fontSize: "5px", letterSpacing: "0.2em" }}>
+        style={{ fontFamily: "'Inter', sans-serif", fontSize: "5px", letterSpacing: "0.2em" }}>
         VERIFIED BUILD
       </text>
     </svg>

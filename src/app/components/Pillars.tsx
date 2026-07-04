@@ -88,7 +88,7 @@ export function Pillars() {
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              fontFamily: "'Poppins', sans-serif",
+              fontFamily: "'Inter', sans-serif",
               fontSize: "0.8rem",
               fontWeight: 500,
               letterSpacing: "0.3em",
@@ -103,7 +103,7 @@ export function Pillars() {
           </div>
           <h2
             style={{
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "'Lora', serif",
               fontSize: "clamp(2.6rem, 4.5vw, 4rem)",
               fontWeight: 600,
               lineHeight: 1.15,
@@ -173,7 +173,7 @@ export function Pillars() {
 
               <div
                 style={{
-                  fontFamily: "'Playfair Display', serif",
+                  fontFamily: "'Lora', serif",
                   fontSize: "1.4rem",
                   fontWeight: 600,
                   color: "#F4EFE4",
@@ -186,7 +186,7 @@ export function Pillars() {
 
               <div
                 style={{
-                  fontFamily: "'Poppins', sans-serif",
+                  fontFamily: "'Inter', sans-serif",
                   fontSize: "0.72rem",
                   fontWeight: 500,
                   letterSpacing: "0.1em",
@@ -209,7 +209,7 @@ export function Pillars() {
 
               <div
                 style={{
-                  fontFamily: "'Poppins', sans-serif",
+                  fontFamily: "'Inter', sans-serif",
                   fontSize: "0.82rem",
                   fontWeight: 300,
                   lineHeight: 1.7,

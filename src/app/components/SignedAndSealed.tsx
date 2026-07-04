@@ -56,7 +56,7 @@ export function SignedAndSealed() {
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              fontFamily: "'Poppins', sans-serif",
+              fontFamily: "'Inter', sans-serif",
               fontSize: "0.8rem",
               fontWeight: 500,
               letterSpacing: "0.3em",
@@ -71,7 +71,7 @@ export function SignedAndSealed() {
           </div>
           <h2
             style={{
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "'Lora', serif",
               fontSize: "clamp(2.6rem, 4.5vw, 4rem)",
               fontWeight: 600,
               lineHeight: 1.15,
@@ -86,7 +86,7 @@ export function SignedAndSealed() {
           </h2>
           <p
             style={{
-              fontFamily: "'Poppins', sans-serif",
+              fontFamily: "'Inter', sans-serif",
               fontSize: "1.1rem",
               fontWeight: 300,
               lineHeight: 1.7,
@@ -152,7 +152,7 @@ export function SignedAndSealed() {
               >
                 <span
                   style={{
-                    fontFamily: "'Poppins', sans-serif",
+                    fontFamily: "'Inter', sans-serif",
                     fontSize: "0.85rem",
                     fontWeight: 600,
                     letterSpacing: "0.05em",
@@ -165,7 +165,7 @@ export function SignedAndSealed() {
               <div style={{ textAlign: "left" }} className="sealed-card-text">
                 <div
                   style={{
-                    fontFamily: "'Playfair Display', serif",
+                    fontFamily: "'Lora', serif",
                     fontSize: "1.4rem",
                     fontWeight: 600,
                     color: "#F4EFE4",
@@ -176,7 +176,7 @@ export function SignedAndSealed() {
                 </div>
                 <div
                   style={{
-                    fontFamily: "'Poppins', sans-serif",
+                    fontFamily: "'Inter', sans-serif",
                     fontSize: "0.85rem",
                     fontWeight: 300,
                     color: "rgba(244, 239, 228, 0.82)",
@@ -192,7 +192,7 @@ export function SignedAndSealed() {
             <div style={{ textAlign: "right" }} className="sealed-card-right">
               <div
                 style={{
-                  fontFamily: "'Poppins', sans-serif",
+                  fontFamily: "'Inter', sans-serif",
                   fontSize: "0.75rem",
                   fontWeight: 600,
                   letterSpacing: "0.15em",
@@ -205,7 +205,7 @@ export function SignedAndSealed() {
               </div>
               <div
                 style={{
-                  fontFamily: "'Playfair Display', serif",
+                  fontFamily: "'Lora', serif",
                   fontSize: "1.15rem",
                   fontWeight: 600,
                   color: "#C9A24A",
@@ -281,7 +281,7 @@ export function SignedAndSealed() {
               {/* Title */}
               <h3
                 style={{
-                  fontFamily: "'Playfair Display', serif",
+                  fontFamily: "'Lora', serif",
                   fontSize: "1.2rem",
                   fontWeight: 600,
                   color: "#F4EFE4",
@@ -295,7 +295,7 @@ export function SignedAndSealed() {
               {/* Body text */}
               <p
                 style={{
-                  fontFamily: "'Poppins', sans-serif",
+                  fontFamily: "'Inter', sans-serif",
                   fontSize: "0.85rem",
                   fontWeight: 300,
                   lineHeight: 1.7,

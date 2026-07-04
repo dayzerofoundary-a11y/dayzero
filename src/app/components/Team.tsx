@@ -61,7 +61,7 @@ export function Team() {
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              fontFamily: "'Poppins', sans-serif",
+              fontFamily: "'Inter', sans-serif",
               fontSize: "0.8rem",
               fontWeight: 500,
               letterSpacing: "0.3em",
@@ -76,7 +76,7 @@ export function Team() {
           </div>
           <h2
             style={{
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "'Lora', serif",
               fontSize: "clamp(2.6rem, 4.5vw, 4rem)",
               fontWeight: 600,
               lineHeight: 1.15,
@@ -91,7 +91,7 @@ export function Team() {
           </h2>
           <p
             style={{
-              fontFamily: "'Poppins', sans-serif",
+              fontFamily: "'Inter', sans-serif",
               fontSize: "1.1rem",
               fontWeight: 300,
               lineHeight: 1.7,
@@ -161,7 +161,7 @@ export function Team() {
               >
                 <span
                   style={{
-                    fontFamily: "'Poppins', sans-serif",
+                    fontFamily: "'Inter', sans-serif",
                     fontSize: "0.8rem",
                     fontWeight: 600,
                     letterSpacing: "0.05em",
@@ -174,7 +174,7 @@ export function Team() {
               <div style={{ textAlign: "left" }} className="team-card-text">
                 <div
                   style={{
-                    fontFamily: "'Playfair Display', serif",
+                    fontFamily: "'Lora', serif",
                     fontSize: "1.4rem",
                     fontWeight: 600,
                     color: "#F4EFE4",
@@ -185,7 +185,7 @@ export function Team() {
                 </div>
                 <div
                   style={{
-                    fontFamily: "'Poppins', sans-serif",
+                    fontFamily: "'Inter', sans-serif",
                     fontSize: "0.85rem",
                     fontWeight: 300,
                     color: "rgba(244, 239, 228, 0.82)",
@@ -201,7 +201,7 @@ export function Team() {
             <div style={{ textAlign: "right" }} className="team-card-right">
               <div
                 style={{
-                  fontFamily: "'Poppins', sans-serif",
+                  fontFamily: "'Inter', sans-serif",
                   fontSize: "0.75rem",
                   fontWeight: 600,
                   letterSpacing: "0.15em",
@@ -214,7 +214,7 @@ export function Team() {
               </div>
               <div
                 style={{
-                  fontFamily: "'Playfair Display', serif",
+                  fontFamily: "'Lora', serif",
                   fontSize: "1.15rem",
                   fontWeight: 600,
                   color: "#C9A24A",
@@ -291,7 +291,7 @@ export function Team() {
               {/* Title */}
               <h3
                 style={{
-                  fontFamily: "'Playfair Display', serif",
+                  fontFamily: "'Lora', serif",
                   fontSize: "1.15rem",
                   fontWeight: 600,
                   color: "#F4EFE4",
@@ -305,7 +305,7 @@ export function Team() {
               {/* Body text */}
               <p
                 style={{
-                  fontFamily: "'Poppins', sans-serif",
+                  fontFamily: "'Inter', sans-serif",
                   fontSize: "0.82rem",
                   fontWeight: 300,
                   lineHeight: 1.7,

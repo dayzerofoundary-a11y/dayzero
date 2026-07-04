@@ -63,7 +63,7 @@ export function HowItWorks() {
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              fontFamily: "'Poppins', sans-serif",
+              fontFamily: "'Inter', sans-serif",
               fontSize: "0.8rem",
               fontWeight: 500,
               letterSpacing: "0.3em",
@@ -78,7 +78,7 @@ export function HowItWorks() {
           </div>
           <h2
             style={{
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "'Lora', serif",
               fontSize: "clamp(2.6rem, 4.5vw, 4rem)",
               fontWeight: 600,
               lineHeight: 1.15,
@@ -93,7 +93,7 @@ export function HowItWorks() {
           </h2>
           <p
             style={{
-              fontFamily: "'Poppins', sans-serif",
+              fontFamily: "'Inter', sans-serif",
               fontSize: "1.1rem",
               fontWeight: 300,
               lineHeight: 1.7,
@@ -194,7 +194,7 @@ export function HowItWorks() {
                 >
                   <div
                     style={{
-                      fontFamily: "'Poppins', sans-serif",
+                      fontFamily: "'Inter', sans-serif",
                       fontSize: "0.52rem",
                       fontWeight: 400,
                       letterSpacing: "0.3em",
@@ -206,7 +206,7 @@ export function HowItWorks() {
                   </div>
                   <div
                     style={{
-                      fontFamily: "'Playfair Display', serif",
+                      fontFamily: "'Lora', serif",
                       fontSize: "1.4rem",
                       fontWeight: 700,
                       color: "#131929",
@@ -220,7 +220,7 @@ export function HowItWorks() {
 
               <div
                 style={{
-                  fontFamily: "'Playfair Display', serif",
+                  fontFamily: "'Lora', serif",
                   fontSize: "1.25rem",
                   fontWeight: 600,
                   color: "#131929",
@@ -232,7 +232,7 @@ export function HowItWorks() {
               </div>
               <div
                 style={{
-                  fontFamily: "'Poppins', sans-serif",
+                  fontFamily: "'Inter', sans-serif",
                   fontSize: "0.88rem",
                   fontWeight: 300,
                   lineHeight: 1.7,
@@ -244,7 +244,7 @@ export function HowItWorks() {
               </div>
               <div
                 style={{
-                  fontFamily: "'Poppins', sans-serif",
+                  fontFamily: "'Inter', sans-serif",
                   fontSize: "0.62rem",
                   fontWeight: 400,
                   letterSpacing: "0.15em",

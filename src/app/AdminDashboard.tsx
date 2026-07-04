@@ -93,26 +93,26 @@ export function AdminDashboard() {
         <form onSubmit={handleLogin} style={{ background: "#F4EFE4", padding: "3rem", width: "100%", maxWidth: "400px", border: "1px solid rgba(168,130,44,0.4)" }}>
           <div style={{ textAlign: "center", marginBottom: "2rem" }}>
             <LockKeyhole size={32} color="#A8822C" style={{ marginBottom: "1rem" }} />
-            <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.5rem", color: "#131929" }}>Admin Portal</h1>
-            <p style={{ fontFamily: "'Poppins', sans-serif", fontSize: "0.8rem", color: "#6A6355", marginTop: "0.5rem" }}>Server-authenticated access</p>
+            <h1 style={{ fontFamily: "'Lora', serif", fontSize: "1.5rem", color: "#131929" }}>Admin Portal</h1>
+            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.8rem", color: "#6A6355", marginTop: "0.5rem" }}>Server-authenticated access</p>
           </div>
 
           <div style={{ marginBottom: "1.5rem" }}>
-            <label style={{ display: "block", fontFamily: "'Poppins', sans-serif", fontSize: "0.7rem", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", color: "#6A6355", marginBottom: "0.5rem" }}>
+            <label style={{ display: "block", fontFamily: "'Inter', sans-serif", fontSize: "0.7rem", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", color: "#6A6355", marginBottom: "0.5rem" }}>
               Password
             </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(19,25,41,0.25)", padding: "0.5rem 0", fontFamily: "'Poppins', sans-serif", fontSize: "1rem", color: "#131929", outline: "none" }}
+              style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(19,25,41,0.25)", padding: "0.5rem 0", fontFamily: "'Inter', sans-serif", fontSize: "1rem", color: "#131929", outline: "none" }}
               autoFocus
               required
             />
           </div>
 
           {error && (
-            <div style={{ color: "#8B1A1A", fontFamily: "'Poppins', sans-serif", fontSize: "0.75rem", marginBottom: "1.5rem" }}>
+            <div style={{ color: "#8B1A1A", fontFamily: "'Inter', sans-serif", fontSize: "0.75rem", marginBottom: "1.5rem" }}>
               {error}
             </div>
           )}
@@ -120,7 +120,7 @@ export function AdminDashboard() {
           <button
             type="submit"
             disabled={loginLoading}
-            style={{ width: "100%", background: "#131929", color: "#F4EFE4", padding: "0.8rem", border: "none", fontFamily: "'Poppins', sans-serif", fontSize: "0.75rem", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", cursor: loginLoading ? "not-allowed" : "pointer", opacity: loginLoading ? 0.7 : 1, transition: "background 0.2s" }}
+            style={{ width: "100%", background: "#131929", color: "#F4EFE4", padding: "0.8rem", border: "none", fontFamily: "'Inter', sans-serif", fontSize: "0.75rem", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", cursor: loginLoading ? "not-allowed" : "pointer", opacity: loginLoading ? 0.7 : 1, transition: "background 0.2s" }}
           >
             {loginLoading ? "Authenticating…" : "Authenticate"}
           </button>
@@ -131,11 +131,11 @@ export function AdminDashboard() {
 
   // ── Dashboard ─────────────────────────────────────────────────────────────
   return (
-    <div style={{ minHeight: "100vh", background: "#F4EFE4", padding: "4rem 2rem", fontFamily: "'Poppins', sans-serif" }}>
+    <div style={{ minHeight: "100vh", background: "#F4EFE4", padding: "4rem 2rem", fontFamily: "'Inter', sans-serif" }}>
       <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "3rem" }}>
           <div>
-            <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "2.5rem", color: "#131929", marginBottom: "0.5rem" }}>Idea Registry</h1>
+            <h1 style={{ fontFamily: "'Lora', serif", fontSize: "2.5rem", color: "#131929", marginBottom: "0.5rem" }}>Idea Registry</h1>
             <p style={{ fontSize: "0.9rem", color: "#6A6355" }}>Secure administration panel · DayZero Foundary</p>
           </div>
           <div style={{ display: "flex", gap: "1rem" }}>
@@ -155,7 +155,7 @@ export function AdminDashboard() {
         </div>
 
         {error && (
-          <div style={{ color: "#8B1A1A", marginBottom: "1.5rem", fontFamily: "'Poppins', sans-serif", fontSize: "0.85rem" }}>
+          <div style={{ color: "#8B1A1A", marginBottom: "1.5rem", fontFamily: "'Inter', sans-serif", fontSize: "0.85rem" }}>
             {error}
           </div>
         )}

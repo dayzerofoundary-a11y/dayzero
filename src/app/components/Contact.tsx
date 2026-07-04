@@ -61,7 +61,7 @@ export function Contact() {
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              fontFamily: "'Poppins', sans-serif",
+              fontFamily: "'Inter', sans-serif",
               fontSize: "0.8rem",
               fontWeight: 500,
               letterSpacing: "0.3em",
@@ -76,7 +76,7 @@ export function Contact() {
           </div>
           <h2
             style={{
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "'Lora', serif",
               fontSize: "clamp(2.6rem, 4.5vw, 4rem)",
               fontWeight: 600,
               lineHeight: 1.15,
@@ -91,7 +91,7 @@ export function Contact() {
           </h2>
           <p
             style={{
-              fontFamily: "'Poppins', sans-serif",
+              fontFamily: "'Inter', sans-serif",
               fontSize: "1.1rem",
               fontWeight: 300,
               lineHeight: 1.7,
@@ -150,7 +150,7 @@ export function Contact() {
                   position: "absolute",
                   top: "20px",
                   right: "20px",
-                  fontFamily: "'Playfair Display', serif",
+                  fontFamily: "'Lora', serif",
                   fontSize: "3.5rem",
                   fontWeight: 700,
                   color: "rgba(168,130,44,0.05)",
@@ -165,7 +165,7 @@ export function Contact() {
               <div>
                 <div
                   style={{
-                    fontFamily: "'Playfair Display', serif",
+                    fontFamily: "'Lora', serif",
                     fontSize: "1.4rem",
                     fontWeight: 600,
                     color: "#131929",
@@ -176,7 +176,7 @@ export function Contact() {
                 </div>
                 <div
                   style={{
-                    fontFamily: "'Poppins', sans-serif",
+                    fontFamily: "'Inter', sans-serif",
                     fontSize: "0.68rem",
                     fontWeight: 500,
                     letterSpacing: "0.15em",
@@ -203,7 +203,7 @@ export function Contact() {
                     display: "flex",
                     alignItems: "center",
                     gap: "0.75rem",
-                    fontFamily: "'Poppins', sans-serif",
+                    fontFamily: "'Inter', sans-serif",
                     fontSize: "0.9rem",
                     color: "#131929",
                     textDecoration: "none",
@@ -222,7 +222,7 @@ export function Contact() {
                     display: "flex",
                     alignItems: "center",
                     gap: "0.75rem",
-                    fontFamily: "'Poppins', sans-serif",
+                    fontFamily: "'Inter', sans-serif",
                     fontSize: "0.9rem",
                     color: "#131929",
                     textDecoration: "none",

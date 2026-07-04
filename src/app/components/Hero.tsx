@@ -67,7 +67,7 @@ export function Hero({ draftRef }: HeroProps) {
           top: "50%",
           left: "50%",
           transform: "translate(-50%,-50%)",
-          fontFamily: "'Playfair Display', serif",
+          fontFamily: "'Lora', serif",
           fontSize: "clamp(8rem, 22vw, 22rem)",
           fontWeight: 700,
           color: "rgba(244,239,228,0.025)",
@@ -104,7 +104,7 @@ export function Hero({ draftRef }: HeroProps) {
             style={{
               display: "inline-flex",
               alignItems: "center",
-              fontFamily: "'Poppins', sans-serif",
+              fontFamily: "'Inter', sans-serif",
               fontSize: "0.8rem",
               fontWeight: 500,
               letterSpacing: "0.3em",
@@ -124,7 +124,7 @@ export function Hero({ draftRef }: HeroProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.25 }}
             style={{
-              fontFamily: "'Playfair Display', Georgia, serif",
+              fontFamily: "'Lora', Georgia, serif",
               fontSize: "clamp(2.4rem, 4vw, 3.6rem)",
               fontWeight: 600,
               lineHeight: 1.12,
@@ -149,7 +149,7 @@ export function Hero({ draftRef }: HeroProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
             style={{
-              fontFamily: "'Poppins', sans-serif",
+              fontFamily: "'Inter', sans-serif",
               fontSize: "1.05rem",
               fontWeight: 300,
               lineHeight: 1.7,
@@ -195,7 +195,7 @@ export function Hero({ draftRef }: HeroProps) {
               >
                 <div
                   style={{
-                    fontFamily: "'Poppins', sans-serif",
+                    fontFamily: "'Inter', sans-serif",
                     fontSize: "0.55rem",
                     fontWeight: 500,
                     letterSpacing: "0.22em",
@@ -208,7 +208,7 @@ export function Hero({ draftRef }: HeroProps) {
                 </div>
                 <div
                   style={{
-                    fontFamily: "'Playfair Display', serif",
+                    fontFamily: "'Lora', serif",
                     fontSize: "1rem",
                     fontWeight: 600,
                     color: "#C9A24A",
@@ -303,7 +303,7 @@ export function Hero({ draftRef }: HeroProps) {
                   >
                     <span
                       style={{
-                        fontFamily: "'Playfair Display', serif",
+                        fontFamily: "'Lora', serif",
                         fontSize: "1.4rem",
                         fontWeight: 700,
                       }}
@@ -312,7 +312,7 @@ export function Hero({ draftRef }: HeroProps) {
                     </span>
                     <span
                       style={{
-                        fontFamily: "'Playfair Display', serif",
+                        fontFamily: "'Lora', serif",
                         fontSize: "0.85rem",
                         fontWeight: 600,
                         fontStyle: "italic",
@@ -324,7 +324,7 @@ export function Hero({ draftRef }: HeroProps) {
                   </div>
                   <div
                     style={{
-                      fontFamily: "'Poppins', sans-serif",
+                      fontFamily: "'Inter', sans-serif",
                       fontSize: "0.65rem",
                       letterSpacing: "0.15em",
                       textTransform: "uppercase",
@@ -340,7 +340,7 @@ export function Hero({ draftRef }: HeroProps) {
                 <div style={{ textAlign: "right" }}>
                   <div
                     style={{
-                      fontFamily: "'Poppins', sans-serif",
+                      fontFamily: "'Inter', sans-serif",
                       fontSize: "0.52rem",
                       letterSpacing: "0.15em",
                       textTransform: "uppercase",
@@ -351,7 +351,7 @@ export function Hero({ draftRef }: HeroProps) {
                   </div>
                   <div
                     style={{
-                      fontFamily: "'Playfair Display', serif",
+                      fontFamily: "'Lora', serif",
                       fontSize: "0.85rem",
                       fontWeight: 600,
                       color: "#131929",
@@ -374,7 +374,7 @@ export function Hero({ draftRef }: HeroProps) {
               <div style={{ marginBottom: "0.9rem" }}>
                 <div
                   style={{
-                    fontFamily: "'Poppins', sans-serif",
+                    fontFamily: "'Inter', sans-serif",
                     fontSize: "0.55rem",
                     fontWeight: 400,
                     letterSpacing: "0.18em",
@@ -396,7 +396,7 @@ export function Hero({ draftRef }: HeroProps) {
                 >
                   <span
                     style={{
-                      fontFamily: "'Playfair Display', serif",
+                      fontFamily: "'Lora', serif",
                       fontSize: "1.15rem",
                       fontWeight: 600,
                       color: "#131929",
@@ -407,7 +407,7 @@ export function Hero({ draftRef }: HeroProps) {
                   </span>
                   <span
                     style={{
-                      fontFamily: "'Playfair Display', serif",
+                      fontFamily: "'Lora', serif",
                       fontSize: "0.85rem",
                       fontWeight: 600,
                       color: "#131929",
@@ -424,7 +424,7 @@ export function Hero({ draftRef }: HeroProps) {
               <div style={{ marginBottom: "1rem" }}>
                 <div
                   style={{
-                    fontFamily: "'Poppins', sans-serif",
+                    fontFamily: "'Inter', sans-serif",
                     fontSize: "0.55rem",
                     letterSpacing: "0.18em",
                     textTransform: "uppercase",
@@ -438,7 +438,7 @@ export function Hero({ draftRef }: HeroProps) {
                   style={{
                     borderBottom: "1px solid rgba(19,25,41,0.2)",
                     paddingBottom: "0.3rem",
-                    fontFamily: "'Poppins', sans-serif",
+                    fontFamily: "'Inter', sans-serif",
                     fontSize: "0.75rem",
                     fontWeight: 300,
                     color: "#131929",
@@ -473,7 +473,7 @@ export function Hero({ draftRef }: HeroProps) {
                   </div>
                   <div
                     style={{
-                      fontFamily: "'Poppins', sans-serif",
+                      fontFamily: "'Inter', sans-serif",
                       fontSize: "0.5rem",
                       letterSpacing: "0.18em",
                       textTransform: "uppercase",
@@ -518,7 +518,7 @@ export function Hero({ draftRef }: HeroProps) {
           <button
             onClick={scrollToDraft}
             style={{
-              fontFamily: "'Poppins', sans-serif",
+              fontFamily: "'Inter', sans-serif",
               fontSize: "0.72rem",
               fontWeight: 500,
               letterSpacing: "0.2em",
@@ -542,7 +542,7 @@ export function Hero({ draftRef }: HeroProps) {
               document.getElementById("sealed")?.scrollIntoView({ behavior: "smooth" })
             }
             style={{
-              fontFamily: "'Poppins', sans-serif",
+              fontFamily: "'Inter', sans-serif",
               fontSize: "0.72rem",
               fontWeight: 400,
               letterSpacing: "0.18em",
@@ -680,7 +680,7 @@ const CertifiedStamp = React.memo(function CertifiedStamp({ small = false }: { s
         y="41"
         textAnchor="middle"
         fill="#1A4A3C"
-        style={{ fontFamily: "'Poppins', sans-serif", fontSize: "7px", fontWeight: 600, letterSpacing: "0.25em" }}
+        style={{ fontFamily: "'Inter', sans-serif", fontSize: "7px", fontWeight: 600, letterSpacing: "0.25em" }}
       >
         CERTIFIED
       </text>
@@ -689,7 +689,7 @@ const CertifiedStamp = React.memo(function CertifiedStamp({ small = false }: { s
         y="53"
         textAnchor="middle"
         fill="#1A4A3C"
-        style={{ fontFamily: "'Poppins', sans-serif", fontSize: "5px", fontWeight: 400, letterSpacing: "0.2em" }}
+        style={{ fontFamily: "'Inter', sans-serif", fontSize: "5px", fontWeight: 400, letterSpacing: "0.2em" }}
       >
         DAYZERO FOUNDARY
       </text>

@@ -46,7 +46,7 @@ export default function App() {
             color: "#F4EFE4",
             border: "1px solid rgba(168,130,44,0.45)",
             borderRadius: "0",
-            fontFamily: "'Poppins', sans-serif",
+            fontFamily: "'Inter', sans-serif",
             fontSize: "0.82rem",
             letterSpacing: "0.04em",
             boxShadow: "0 8px 32px rgba(13,18,32,0.5)",
@@ -71,7 +71,7 @@ export default function App() {
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         html {
-          font-family: 'Poppins', 'Poppins', system-ui, sans-serif;
+          font-family: 'Inter', 'Inter', system-ui, sans-serif;
           scroll-behavior: smooth;
         }
 

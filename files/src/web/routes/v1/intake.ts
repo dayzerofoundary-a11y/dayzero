@@ -152,7 +152,7 @@ function buildEmailHtml(fields: EmailFields, castId: string, hasSignature: boole
     const row = (label: string, value: string) =>
         value
             ? `<tr style="border-bottom: 1px solid rgba(19, 25, 41, 0.05)">
-                <td style="padding: 10px 14px; font-weight: 600; font-family: 'Poppins', 'Helvetica Neue', Arial, sans-serif; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #A8822C; vertical-align: top; width: 150px;">${escapeHtml(label)}</td>
+                <td style="padding: 10px 14px; font-weight: 600; font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #A8822C; vertical-align: top; width: 150px;">${escapeHtml(label)}</td>
                 <td style="padding: 10px 14px; font-family: Georgia, serif; font-size: 14px; color: #131929; vertical-align: top;">${escapeHtml(value).replace(/\n/g, '<br>')}</td>
                </tr>`
             : ''
@@ -181,14 +181,14 @@ function buildEmailHtml(fields: EmailFields, castId: string, hasSignature: boole
                   <td>
                     <span style="font-family: Georgia, serif; font-size: 26px; font-weight: 700; color: #F4EFE4; letter-spacing: 0.02em;">DayZero</span>
                     <span style="font-family: Georgia, serif; font-size: 18px; font-weight: 600; font-style: italic; color: #C9A24A;">Foundary</span>
-                    <div style="font-family: 'Poppins', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(244, 239, 228, 0.65); margin-top: 6px;">
+                    <div style="font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(244, 239, 228, 0.65); margin-top: 6px;">
                       Stealth Registry Record
                     </div>
                   </td>
                   <td align="right" style="vertical-align: top;">
-                    <div style="font-family: 'Poppins', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: #C9A24A;">Registry Reference</div>
+                    <div style="font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: #C9A24A;">Registry Reference</div>
                     <div style="font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #F4EFE4; margin-top: 4px;">${escapeHtml(castId)}</div>
-                    <div style="font-family: 'Poppins', sans-serif; font-size: 11px; color: rgba(244, 239, 228, 0.55); margin-top: 4px;">${new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</div>
+                    <div style="font-family: 'Inter', sans-serif; font-size: 11px; color: rgba(244, 239, 228, 0.55); margin-top: 4px;">${new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</div>
                   </td>
                 </tr>
               </table>
@@ -198,7 +198,7 @@ function buildEmailHtml(fields: EmailFields, castId: string, hasSignature: boole
           <!-- Legal Certified Stamp Ribbon -->
           <tr>
             <td style="background-color: rgba(168, 130, 44, 0.08); border-bottom: 1px solid rgba(168, 130, 44, 0.15); padding: 12px 35px; text-align: center;">
-              <span style="font-family: 'Poppins', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: #A8822C;">
+              <span style="font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: #A8822C;">
                 🔒 SECURITY CLEARANCE ACTIVE · PROTECTED UNDER EXECUTION NDA
               </span>
             </td>
@@ -209,7 +209,7 @@ function buildEmailHtml(fields: EmailFields, castId: string, hasSignature: boole
             <td style="padding: 30px 35px 40px;">
               
               <!-- Idea Box Heading -->
-              <div style="font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: #A8822C; margin-bottom: 15px;">
+              <div style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: #A8822C; margin-bottom: 15px;">
                 I. PROJECT SPECIFICATIONS
               </div>
 
@@ -221,7 +221,7 @@ function buildEmailHtml(fields: EmailFields, castId: string, hasSignature: boole
               </table>
 
               <!-- Description Block -->
-              <div style="font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: #A8822C; margin-bottom: 15px;">
+              <div style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: #A8822C; margin-bottom: 15px;">
                 II. CONCEPT MEMORANDUM & SCOPE
               </div>
               <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 35px; width: 100%;">
@@ -233,7 +233,7 @@ function buildEmailHtml(fields: EmailFields, castId: string, hasSignature: boole
               </table>
 
               <!-- Submitter Block -->
-              <div style="font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: #A8822C; margin-bottom: 15px;">
+              <div style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: #A8822C; margin-bottom: 15px;">
                 III. DISCLOSING PARTY CERTIFICATION
               </div>
               <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-bottom: 30px; background-color: #EDE8DC; border: 1px solid rgba(19, 25, 41, 0.08); width: 100%;">
@@ -252,9 +252,9 @@ function buildEmailHtml(fields: EmailFields, castId: string, hasSignature: boole
                     <table cellpadding="0" cellspacing="0">
                       <tr>
                         <td style="background-color: #1A4A3C; padding: 12px 18px; border-radius: 2px; text-align: center; border: 1px solid #C9A24A;">
-                          <div style="font-family: 'Poppins', sans-serif; font-size: 8px; font-weight: 600; letter-spacing: 0.12em; color: #F4EFE4;">DZF CERTIFIED</div>
+                          <div style="font-family: 'Inter', sans-serif; font-size: 8px; font-weight: 600; letter-spacing: 0.12em; color: #F4EFE4;">DZF CERTIFIED</div>
                           <div style="font-family: Georgia, serif; font-size: 15px; font-weight: 700; color: #C9A24A; margin: 3px 0;">SECURE</div>
-                          <div style="font-family: 'Poppins', sans-serif; font-size: 7px; color: rgba(244, 239, 228, 0.75);">RECORD RECORDED</div>
+                          <div style="font-family: 'Inter', sans-serif; font-size: 7px; color: rgba(244, 239, 228, 0.75);">RECORD RECORDED</div>
                         </td>
                       </tr>
                     </table>
@@ -270,7 +270,7 @@ function buildEmailHtml(fields: EmailFields, castId: string, hasSignature: boole
                         </td>
                       </tr>
                       <tr>
-                        <td style="font-family: 'Poppins', sans-serif; font-size: 8px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #6A6355; padding-top: 6px;">
+                        <td style="font-family: 'Inter', sans-serif; font-size: 8px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #6A6355; padding-top: 6px;">
                           Disclosing Party Signature
                         </td>
                       </tr>
@@ -285,10 +285,10 @@ function buildEmailHtml(fields: EmailFields, castId: string, hasSignature: boole
           <!-- Footer Certificate Registry Label -->
           <tr>
             <td style="background-color: #131929; padding: 25px 35px; border-top: 1px solid #A8822C; text-align: center;">
-              <div style="font-family: 'Poppins', sans-serif; font-size: 9px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(244, 239, 228, 0.65);">
+              <div style="font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(244, 239, 228, 0.65);">
                 Confidential Registry • DayZero Foundary • NDA Shield Active
               </div>
-              <div style="font-family: 'Poppins', sans-serif; font-size: 8px; color: #C9A24A; margin-top: 6px; letter-spacing: 0.05em;">
+              <div style="font-family: 'Inter', sans-serif; font-size: 8px; color: #C9A24A; margin-top: 6px; letter-spacing: 0.05em;">
                 DayZero Ledger Reference Entry · DZ-LEDGER-2026
               </div>
             </td>
