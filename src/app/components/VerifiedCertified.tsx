@@ -59,9 +59,9 @@ export function VerifiedCertified() {
           </div>
           <h2
             style={{
-              fontFamily: "'Lora', serif",
+              fontFamily: "'Cormorant Garamond', serif",
               fontSize: "clamp(2.6rem, 4.5vw, 4rem)",
-              fontWeight: 600,
+              fontWeight: 400,
               lineHeight: 1.15,
               color: "#131929",
               marginBottom: "2rem",
@@ -138,9 +138,9 @@ export function VerifiedCertified() {
                 </div>
                 <div
                   style={{
-                    fontFamily: "'Lora', serif",
+                    fontFamily: "'Cormorant Garamond', serif",
                     fontSize: "1.8rem",
-                    fontWeight: 600,
+                    fontWeight: 400,
                     color: "#131929",
                     marginBottom: "0.25rem",
                   }}
@@ -303,7 +303,7 @@ function CertifiedEmeraldStamp() {
         CERTIFIED
       </text>
       <text x="50" y="57" textAnchor="middle" fill="#1A4A3C"
-        style={{ fontFamily: "'Lora', serif", fontSize: "12px", fontWeight: 700 }}>
+        style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", fontWeight: 400 }}>
         DZF
       </text>
       <text x="50" y="68" textAnchor="middle" fill="rgba(26,74,60,0.7)"

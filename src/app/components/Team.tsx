@@ -76,9 +76,9 @@ export function Team() {
           </div>
           <h2
             style={{
-              fontFamily: "'Lora', serif",
+              fontFamily: "'Cormorant Garamond', serif",
               fontSize: "clamp(2.6rem, 4.5vw, 4rem)",
-              fontWeight: 600,
+              fontWeight: 400,
               lineHeight: 1.15,
               color: "#F4EFE4",
               marginBottom: "2rem",
@@ -174,9 +174,9 @@ export function Team() {
               <div style={{ textAlign: "left" }} className="team-card-text">
                 <div
                   style={{
-                    fontFamily: "'Lora', serif",
+                    fontFamily: "'Cormorant Garamond', serif",
                     fontSize: "1.4rem",
-                    fontWeight: 600,
+                    fontWeight: 400,
                     color: "#F4EFE4",
                     marginBottom: "0.4rem",
                   }}
@@ -214,9 +214,9 @@ export function Team() {
               </div>
               <div
                 style={{
-                  fontFamily: "'Lora', serif",
+                  fontFamily: "'Cormorant Garamond', serif",
                   fontSize: "1.15rem",
-                  fontWeight: 600,
+                  fontWeight: 400,
                   color: "#C9A24A",
                 }}
               >
@@ -291,9 +291,9 @@ export function Team() {
               {/* Title */}
               <h3
                 style={{
-                  fontFamily: "'Lora', serif",
+                  fontFamily: "'Cormorant Garamond', serif",
                   fontSize: "1.15rem",
-                  fontWeight: 600,
+                  fontWeight: 400,
                   color: "#F4EFE4",
                   marginBottom: "0.8rem",
                   lineHeight: 1.3,

@@ -76,9 +76,9 @@ export function Contact() {
           </div>
           <h2
             style={{
-              fontFamily: "'Lora', serif",
+              fontFamily: "'Cormorant Garamond', serif",
               fontSize: "clamp(2.6rem, 4.5vw, 4rem)",
-              fontWeight: 600,
+              fontWeight: 400,
               lineHeight: 1.15,
               color: "#131929",
               marginBottom: "2rem",
@@ -150,9 +150,9 @@ export function Contact() {
                   position: "absolute",
                   top: "20px",
                   right: "20px",
-                  fontFamily: "'Lora', serif",
+                  fontFamily: "'Cormorant Garamond', serif",
                   fontSize: "3.5rem",
-                  fontWeight: 700,
+                  fontWeight: 400,
                   color: "rgba(168,130,44,0.05)",
                   lineHeight: 1,
                   userSelect: "none",
@@ -165,9 +165,9 @@ export function Contact() {
               <div>
                 <div
                   style={{
-                    fontFamily: "'Lora', serif",
+                    fontFamily: "'Cormorant Garamond', serif",
                     fontSize: "1.4rem",
-                    fontWeight: 600,
+                    fontWeight: 400,
                     color: "#131929",
                     marginBottom: "0.25rem",
                   }}

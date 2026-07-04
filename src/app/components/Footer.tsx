@@ -23,9 +23,9 @@ export function Footer() {
         <div>
           <div
             style={{
-              fontFamily: "'Lora', Georgia, serif",
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
               fontSize: "1.1rem",
-              fontWeight: 600,
+              fontWeight: 400,
               color: "#F4EFE4",
               letterSpacing: "0.01em",
               marginBottom: "0.3rem",

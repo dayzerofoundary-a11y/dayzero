@@ -90,9 +90,9 @@ export function Nav({ onDraftClick }: NavProps) {
         >
           <span
             style={{
-              fontFamily: "'Lora', Georgia, serif",
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
               fontSize: "1.55rem",
-              fontWeight: 600,
+              fontWeight: 400,
               color: textColor,
               letterSpacing: "0.01em",
               transition: "color 0.4s",
@@ -249,7 +249,7 @@ function SealMark() {
         y="11"
         textAnchor="middle"
         fill="currentColor"
-        style={{ fontFamily: "'Lora', serif", fontSize: "4px", fontWeight: 700 }}
+        style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "4px", fontWeight: 400 }}
       >
         DZF
       </text>

@@ -93,7 +93,7 @@ export function AdminDashboard() {
         <form onSubmit={handleLogin} style={{ background: "#F4EFE4", padding: "3rem", width: "100%", maxWidth: "400px", border: "1px solid rgba(168,130,44,0.4)" }}>
           <div style={{ textAlign: "center", marginBottom: "2rem" }}>
             <LockKeyhole size={32} color="#A8822C" style={{ marginBottom: "1rem" }} />
-            <h1 style={{ fontFamily: "'Lora', serif", fontSize: "1.5rem", color: "#131929" }}>Admin Portal</h1>
+            <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.5rem", color: "#131929" }}>Admin Portal</h1>
             <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.8rem", color: "#6A6355", marginTop: "0.5rem" }}>Server-authenticated access</p>
           </div>
 
@@ -135,7 +135,7 @@ export function AdminDashboard() {
       <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "3rem" }}>
           <div>
-            <h1 style={{ fontFamily: "'Lora', serif", fontSize: "2.5rem", color: "#131929", marginBottom: "0.5rem" }}>Idea Registry</h1>
+            <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "2.5rem", color: "#131929", marginBottom: "0.5rem" }}>Idea Registry</h1>
             <p style={{ fontSize: "0.9rem", color: "#6A6355" }}>Secure administration panel · DayZero Foundary</p>
           </div>
           <div style={{ display: "flex", gap: "1rem" }}>

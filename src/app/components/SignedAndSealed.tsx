@@ -71,9 +71,9 @@ export function SignedAndSealed() {
           </div>
           <h2
             style={{
-              fontFamily: "'Lora', serif",
+              fontFamily: "'Cormorant Garamond', serif",
               fontSize: "clamp(2.6rem, 4.5vw, 4rem)",
-              fontWeight: 600,
+              fontWeight: 400,
               lineHeight: 1.15,
               color: "#C9A24A",
               marginBottom: "2rem",
@@ -165,9 +165,9 @@ export function SignedAndSealed() {
               <div style={{ textAlign: "left" }} className="sealed-card-text">
                 <div
                   style={{
-                    fontFamily: "'Lora', serif",
+                    fontFamily: "'Cormorant Garamond', serif",
                     fontSize: "1.4rem",
-                    fontWeight: 600,
+                    fontWeight: 400,
                     color: "#F4EFE4",
                     marginBottom: "0.4rem",
                   }}
@@ -205,9 +205,9 @@ export function SignedAndSealed() {
               </div>
               <div
                 style={{
-                  fontFamily: "'Lora', serif",
+                  fontFamily: "'Cormorant Garamond', serif",
                   fontSize: "1.15rem",
-                  fontWeight: 600,
+                  fontWeight: 400,
                   color: "#C9A24A",
                 }}
               >
@@ -281,9 +281,9 @@ export function SignedAndSealed() {
               {/* Title */}
               <h3
                 style={{
-                  fontFamily: "'Lora', serif",
+                  fontFamily: "'Cormorant Garamond', serif",
                   fontSize: "1.2rem",
-                  fontWeight: 600,
+                  fontWeight: 400,
                   color: "#F4EFE4",
                   marginBottom: "1rem",
                   lineHeight: 1.3,

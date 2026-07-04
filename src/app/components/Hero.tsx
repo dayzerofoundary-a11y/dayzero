@@ -67,9 +67,9 @@ export function Hero({ draftRef }: HeroProps) {
           top: "50%",
           left: "50%",
           transform: "translate(-50%,-50%)",
-          fontFamily: "'Lora', serif",
+          fontFamily: "'Cormorant Garamond', serif",
           fontSize: "clamp(8rem, 22vw, 22rem)",
-          fontWeight: 700,
+          fontWeight: 400,
           color: "rgba(244,239,228,0.025)",
           letterSpacing: "0.05em",
           userSelect: "none",
@@ -124,9 +124,9 @@ export function Hero({ draftRef }: HeroProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.25 }}
             style={{
-              fontFamily: "'Lora', Georgia, serif",
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
               fontSize: "clamp(2.4rem, 4vw, 3.6rem)",
-              fontWeight: 600,
+              fontWeight: 400,
               lineHeight: 1.12,
               color: "#F4EFE4",
               marginBottom: "1.5rem",
@@ -208,9 +208,9 @@ export function Hero({ draftRef }: HeroProps) {
                 </div>
                 <div
                   style={{
-                    fontFamily: "'Lora', serif",
+                    fontFamily: "'Cormorant Garamond', serif",
                     fontSize: "1rem",
-                    fontWeight: 600,
+                    fontWeight: 400,
                     color: "#C9A24A",
                     letterSpacing: "0.02em",
                   }}
@@ -303,18 +303,18 @@ export function Hero({ draftRef }: HeroProps) {
                   >
                     <span
                       style={{
-                        fontFamily: "'Lora', serif",
+                        fontFamily: "'Cormorant Garamond', serif",
                         fontSize: "1.4rem",
-                        fontWeight: 700,
+                        fontWeight: 400,
                       }}
                     >
                       DayZero
                     </span>
                     <span
                       style={{
-                        fontFamily: "'Lora', serif",
+                        fontFamily: "'Cormorant Garamond', serif",
                         fontSize: "0.85rem",
-                        fontWeight: 600,
+                        fontWeight: 400,
                         fontStyle: "italic",
                         color: "#A8822C",
                       }}
@@ -351,9 +351,9 @@ export function Hero({ draftRef }: HeroProps) {
                   </div>
                   <div
                     style={{
-                      fontFamily: "'Lora', serif",
+                      fontFamily: "'Cormorant Garamond', serif",
                       fontSize: "0.85rem",
-                      fontWeight: 600,
+                      fontWeight: 400,
                       color: "#131929",
                     }}
                   >
@@ -396,9 +396,9 @@ export function Hero({ draftRef }: HeroProps) {
                 >
                   <span
                     style={{
-                      fontFamily: "'Lora', serif",
+                      fontFamily: "'Cormorant Garamond', serif",
                       fontSize: "1.15rem",
-                      fontWeight: 600,
+                      fontWeight: 400,
                       color: "#131929",
                       fontStyle: "italic",
                     }}
@@ -407,9 +407,9 @@ export function Hero({ draftRef }: HeroProps) {
                   </span>
                   <span
                     style={{
-                      fontFamily: "'Lora', serif",
+                      fontFamily: "'Cormorant Garamond', serif",
                       fontSize: "0.85rem",
-                      fontWeight: 600,
+                      fontWeight: 400,
                       color: "#131929",
                       border: "1px solid rgba(19,25,41,0.25)",
                       padding: "0.15rem 0.5rem",

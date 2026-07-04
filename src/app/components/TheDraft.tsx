@@ -387,7 +387,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
     // 4. Header Text
     ctx.textAlign = "center";
     ctx.fillStyle = "#131929";
-    ctx.font = "bold 44px 'Lora', Georgia, serif";
+    ctx.font = "bold 44px 'Cormorant Garamond', Georgia, serif";
     ctx.fillText("DAYZERO FOUNDARY", canvas.width / 2, 130);
 
     ctx.fillStyle = "#A8822C";
@@ -404,7 +404,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
 
     // 5. Certification legal statement
     ctx.fillStyle = "#6A6355";
-    ctx.font = "italic 16px 'Lora', Georgia, serif";
+    ctx.font = "italic 16px 'Cormorant Garamond', Georgia, serif";
     ctx.fillText("This document certifies that the confidential concept outlined below has been officially", canvas.width / 2, 245);
     ctx.fillText("recorded in the DayZero Foundary ledger and is fully protected under the legally binding", canvas.width / 2, 275);
     ctx.fillText("Non-Disclosure Agreement (NDA) executed prior to transmission.", canvas.width / 2, 305);
@@ -431,7 +431,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
       ctx.fillText(item.label, labelX, y);
 
       ctx.fillStyle = "#131929";
-      ctx.font = "16px 'Lora', Georgia, serif";
+      ctx.font = "16px 'Cormorant Garamond', Georgia, serif";
       ctx.fillText(item.value, valueX, y);
 
       ctx.strokeStyle = "rgba(19,25,41,0.06)";
@@ -462,7 +462,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
     ctx.font = "bold 8px 'Inter', sans-serif";
     ctx.fillText("CERTIFIED", sealX, sealY - 10);
     ctx.fillStyle = "#C9A24A";
-    ctx.font = "bold 15px 'Lora', Georgia, serif";
+    ctx.font = "bold 15px 'Cormorant Garamond', Georgia, serif";
     ctx.fillText("DZF", sealX, sealY + 5);
     ctx.fillStyle = "rgba(244,239,228,0.7)";
     ctx.font = "bold 6px 'Inter', sans-serif";
@@ -493,7 +493,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
       };
     } else {
       ctx.fillStyle = "#1E2535";
-      ctx.font = "italic 32px 'Lora', Georgia, serif";
+      ctx.font = "italic 32px 'Cormorant Garamond', Georgia, serif";
       ctx.fillText(certDetails.name || "Stealth Founder", sigX, sigY - 2);
       triggerDownload();
     }
@@ -736,9 +736,9 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
           </div>
           <h2
             style={{
-              fontFamily: "'Lora', serif",
+              fontFamily: "'Cormorant Garamond', serif",
               fontSize: "clamp(2.6rem, 4.5vw, 4rem)",
-              fontWeight: 600,
+              fontWeight: 400,
               lineHeight: 1.15,
               color: "#131929",
               marginBottom: "2rem",
@@ -824,18 +824,18 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                   >
                     <span
                       style={{
-                        fontFamily: "'Lora', serif",
+                        fontFamily: "'Cormorant Garamond', serif",
                         fontSize: "1.9rem",
-                        fontWeight: 700,
+                        fontWeight: 400,
                       }}
                     >
                       DayZero
                     </span>
                     <span
                       style={{
-                        fontFamily: "'Lora', serif",
+                        fontFamily: "'Cormorant Garamond', serif",
                         fontSize: "1.25rem",
-                        fontWeight: 600,
+                        fontWeight: 400,
                         fontStyle: "italic",
                         color: "#A8822C",
                       }}
@@ -870,9 +870,9 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                   </div>
                   <div
                     style={{
-                      fontFamily: "'Lora', serif",
+                      fontFamily: "'Cormorant Garamond', serif",
                       fontSize: "1.6rem",
-                      fontWeight: 600,
+                      fontWeight: 400,
                       color: "#131929",
                     }}
                   >
@@ -933,18 +933,18 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                       background: "transparent",
                       border: "none",
                       outline: "none",
-                      fontFamily: "'Lora', serif",
+                      fontFamily: "'Cormorant Garamond', serif",
                       fontSize: "1.6rem",
-                      fontWeight: 600,
+                      fontWeight: 400,
                       fontStyle: "italic",
                       color: "#131929",
                     }}
                   />
                   <span
                     style={{
-                      fontFamily: "'Lora', serif",
+                      fontFamily: "'Cormorant Garamond', serif",
                       fontSize: "1rem",
-                      fontWeight: 600,
+                      fontWeight: 400,
                       color: "#131929",
                       border: "1px solid rgba(19,25,41,0.25)",
                       padding: "0.15rem 0.6rem",
@@ -1049,7 +1049,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                 <div
                   style={{
                     textAlign: "center",
-                    fontFamily: "'Lora', serif",
+                    fontFamily: "'Cormorant Garamond', serif",
                     fontSize: "0.9rem",
                     fontWeight: 500,
                     fontStyle: "italic",
@@ -1765,9 +1765,9 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
             >
               <div
                 style={{
-                  fontFamily: "'Lora', serif",
+                  fontFamily: "'Cormorant Garamond', serif",
                   fontSize: "1.75rem",
-                  fontWeight: 600,
+                  fontWeight: 400,
                   color: "#F4EFE4",
                   marginBottom: "0.5rem",
                 }}
@@ -1842,9 +1842,9 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
               >
                 <h3
                   style={{
-                    fontFamily: "'Lora', serif",
+                    fontFamily: "'Cormorant Garamond', serif",
                     fontSize: "1.4rem",
-                    fontWeight: 600,
+                    fontWeight: 400,
                     color: "#131929",
                     margin: 0,
                   }}
@@ -1986,9 +1986,9 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
               >
                 <h3
                   style={{
-                    fontFamily: "'Lora', serif",
+                    fontFamily: "'Cormorant Garamond', serif",
                     fontSize: "1.2rem",
-                    fontWeight: 600,
+                    fontWeight: 400,
                     color: "#131929",
                     margin: 0,
                   }}
@@ -2264,9 +2264,9 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
               >
                 <h3
                   style={{
-                    fontFamily: "'Lora', serif",
+                    fontFamily: "'Cormorant Garamond', serif",
                     fontSize: "1.2rem",
-                    fontWeight: 600,
+                    fontWeight: 400,
                     color: "#131929",
                     margin: 0,
                   }}
@@ -2487,9 +2487,9 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                     </div>
                     <div
                       style={{
-                        fontFamily: "'Lora', serif",
+                        fontFamily: "'Cormorant Garamond', serif",
                         fontSize: "2rem",
-                        fontWeight: 600,
+                        fontWeight: 400,
                         color: "#131929",
                         letterSpacing: "0.02em",
                       }}
@@ -2522,7 +2522,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                   <div style={{ textAlign: "center", marginBottom: "2rem" }}>
                     <p
                       style={{
-                        fontFamily: "'Lora', Georgia, serif",
+                        fontFamily: "'Cormorant Garamond', Georgia, serif",
                         fontSize: "0.82rem",
                         fontStyle: "italic",
                         color: "#6A6355",
@@ -2576,7 +2576,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                           </span>
                           <span
                             style={{
-                              fontFamily: "'Lora', Georgia, serif",
+                              fontFamily: "'Cormorant Garamond', Georgia, serif",
                               fontSize: "0.8rem",
                               fontWeight: 500,
                               color: "#131929",
@@ -2876,7 +2876,7 @@ const FullWaxSeal = React.memo(function FullWaxSeal() {
         CERTIFIED
       </text>
       <text x="70" y="78" textAnchor="middle" fill="#C9A24A"
-        style={{ fontFamily: "'Lora', serif", fontSize: "14px", fontWeight: 700 }}>
+        style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", fontWeight: 400 }}>
         DZF
       </text>
       <text x="70" y="92" textAnchor="middle" fill="rgba(244,239,228,0.65)"

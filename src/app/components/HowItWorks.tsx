@@ -78,9 +78,9 @@ export function HowItWorks() {
           </div>
           <h2
             style={{
-              fontFamily: "'Lora', serif",
+              fontFamily: "'Cormorant Garamond', serif",
               fontSize: "clamp(2.6rem, 4.5vw, 4rem)",
-              fontWeight: 600,
+              fontWeight: 400,
               lineHeight: 1.15,
               color: "#131929",
               marginBottom: "2rem",
@@ -206,9 +206,9 @@ export function HowItWorks() {
                   </div>
                   <div
                     style={{
-                      fontFamily: "'Lora', serif",
+                      fontFamily: "'Cormorant Garamond', serif",
                       fontSize: "1.4rem",
-                      fontWeight: 700,
+                      fontWeight: 400,
                       color: "#131929",
                       lineHeight: 1.1,
                     }}
@@ -220,9 +220,9 @@ export function HowItWorks() {
 
               <div
                 style={{
-                  fontFamily: "'Lora', serif",
+                  fontFamily: "'Cormorant Garamond', serif",
                   fontSize: "1.25rem",
-                  fontWeight: 600,
+                  fontWeight: 400,
                   color: "#131929",
                   marginBottom: "0.75rem",
                   lineHeight: 1.25,

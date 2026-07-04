@@ -103,9 +103,9 @@ export function Pillars() {
           </div>
           <h2
             style={{
-              fontFamily: "'Lora', serif",
+              fontFamily: "'Cormorant Garamond', serif",
               fontSize: "clamp(2.6rem, 4.5vw, 4rem)",
-              fontWeight: 600,
+              fontWeight: 400,
               lineHeight: 1.15,
               color: "#F4EFE4",
               marginBottom: "2rem",
@@ -173,9 +173,9 @@ export function Pillars() {
 
               <div
                 style={{
-                  fontFamily: "'Lora', serif",
+                  fontFamily: "'Cormorant Garamond', serif",
                   fontSize: "1.4rem",
-                  fontWeight: 600,
+                  fontWeight: 400,
                   color: "#F4EFE4",
                   marginBottom: "0.4rem",
                   lineHeight: 1.2,
