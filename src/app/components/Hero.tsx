@@ -463,7 +463,7 @@ export function Hero({ draftRef }: HeroProps) {
                       borderBottom: "1px solid rgba(19,25,41,0.2)",
                       paddingBottom: "0.25rem",
                       minWidth: "160px",
-                      fontFamily: "'Pinyon Script', cursive",
+                      fontFamily: "'Cormorant Garamond', Georgia, serif", fontStyle: "italic", fontWeight: 500,
                       fontSize: "1.6rem",
                       color: "#1E2535",
                       lineHeight: 1,

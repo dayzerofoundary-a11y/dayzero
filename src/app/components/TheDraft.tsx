@@ -1600,7 +1600,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                     ) : (
                       <div
                         style={{
-                          fontFamily: "'Pinyon Script', cursive",
+                          fontFamily: "'Cormorant Garamond', Georgia, serif", fontStyle: "italic", fontWeight: 500,
                           fontSize: "2.2rem",
                           color: "#1E2535",
                           lineHeight: 1.2,
@@ -2152,7 +2152,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                       <div style={{ fontSize: "0.6rem", textTransform: "uppercase", letterSpacing: "0.15em", color: "#6A6355", marginBottom: "0.5rem" }}>
                         Preview
                       </div>
-                      <div style={{ fontFamily: "'Pinyon Script', cursive", fontSize: "2rem", color: "#1E2535" }}>
+                      <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontStyle: "italic", fontWeight: 500, fontSize: "2rem", color: "#1E2535" }}>
                         {form.name || "Your Signature"}
                       </div>
                     </div>
@@ -2622,7 +2622,7 @@ export function TheDraft({ sectionRef }: TheDraftProps) {
                         {certDetails.signatureImage ? (
                           <img src={certDetails.signatureImage} alt="Signature" style={{ height: "40px", maxWidth: "160px", objectFit: "contain" }} />
                         ) : (
-                          <span style={{ fontFamily: "'Pinyon Script', cursive", fontSize: "1.8rem", color: "#1E2535" }}>
+                          <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontStyle: "italic", fontWeight: 500, fontSize: "1.8rem", color: "#1E2535" }}>
                             {certDetails.name || "Stealth Founder"}
                           </span>
                         )}

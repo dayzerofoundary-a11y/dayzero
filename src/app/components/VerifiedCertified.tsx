@@ -251,7 +251,7 @@ export function VerifiedCertified() {
                 <div>
                   <div
                     style={{
-                      fontFamily: "'Pinyon Script', cursive",
+                      fontFamily: "'Cormorant Garamond', Georgia, serif", fontStyle: "italic", fontWeight: 500,
                       fontSize: "1.8rem",
                       color: "#131929",
                       lineHeight: 1,
