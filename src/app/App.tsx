@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { Toaster } from "sonner";
 import { motion, useScroll, useSpring } from "motion/react";
+import { Analytics } from "@vercel/analytics/react";
 import { Nav } from "./components/Nav";
 import { Hero } from "./components/Hero";
 import { TheDraft } from "./components/TheDraft";
