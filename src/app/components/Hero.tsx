@@ -221,7 +221,46 @@ export function Hero({ draftRef }: HeroProps) {
             ))}
           </motion.div>
 
-
+          <motion.button
+            initial={prefersReduced ? {} : { opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut", delay: 0.65 }}
+            onClick={scrollToDraft}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "0.75rem",
+              padding: "1rem 2.25rem",
+              background: "#A8822C",
+              color: "#F4EFE4",
+              border: "1px solid #C9A24A",
+              borderRadius: "2px",
+              fontFamily: "'Inter', sans-serif",
+              fontSize: "0.78rem",
+              fontWeight: 600,
+              letterSpacing: "0.2em",
+              textTransform: "uppercase",
+              cursor: "pointer",
+              boxShadow: "0 8px 24px rgba(168,130,44,0.35)",
+              transition: "all 0.2s ease-out",
+              marginTop: "1.5rem",
+              width: "fit-content",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "#C9A24A";
+              e.currentTarget.style.boxShadow = "0 12px 32px rgba(168,130,44,0.5)";
+              e.currentTarget.style.transform = "translateY(-2px)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "#A8822C";
+              e.currentTarget.style.boxShadow = "0 8px 24px rgba(168,130,44,0.35)";
+              e.currentTarget.style.transform = "translateY(0)";
+            }}
+          >
+            <span>File a Draft at Zero Cost</span>
+            <span>→</span>
+          </motion.button>
         </div>
 
         {/* Right — 3D Check & Actions */}
