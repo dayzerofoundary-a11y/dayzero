@@ -14,7 +14,7 @@ const STEPS = [
     stamp: "02",
     verb: "Endorse",
     headline: "A single scope call.",
-    body: "One conversation — thirty minutes. One short call to understand your idea and agree on what we'll build. No presentations. No approval process. Simple briefing.",
+    body: "One conversation — thirty minutes. One short call to understand your idea and agree on what we will build. No presentations. No approval process. Simple briefing.",
     detail: "No commitment required.",
     accent: "#C9A24A",
   },
@@ -55,7 +55,7 @@ export function HowItWorks() {
           initial={prefersReduced ? {} : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           style={{ textAlign: "center", marginBottom: "4.5rem" }}
         >
           <div
@@ -69,7 +69,7 @@ export function HowItWorks() {
               letterSpacing: "0.3em",
               textTransform: "uppercase",
               color: "#A8822C",
-              marginBottom: "1.5rem",
+              marginBottom: "1.25rem",
             }}
           >
             <span style={{ opacity: 0.7, marginRight: "0.5rem" }}>✤</span>
@@ -83,9 +83,9 @@ export function HowItWorks() {
               fontWeight: 400,
               lineHeight: 1.15,
               color: "#131929",
-              marginBottom: "2rem",
+              marginBottom: "1rem",
               textAlign: "center",
-              margin: "0 auto 2rem",
+              margin: "0 auto 1.5rem",
               maxWidth: "800px",
             }}
           >
@@ -94,7 +94,7 @@ export function HowItWorks() {
           <p
             style={{
               fontFamily: "'Inter', sans-serif",
-              fontSize: "1.1rem",
+              fontSize: "1.05rem",
               fontWeight: 300,
               lineHeight: 1.7,
               color: "#6A6355",
@@ -110,73 +110,53 @@ export function HowItWorks() {
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "0",
+            gap: "2rem",
             position: "relative",
           }}
           className="how-grid"
         >
-          {/* Connector lines */}
-          <motion.div
-            aria-hidden
-            initial={prefersReduced ? {} : { scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.8, ease: "easeInOut", delay: 0.25 }}
-            style={{
-              position: "absolute",
-              top: "52px",
-              left: "calc(100% / 6)",
-              right: "calc(100% / 6)",
-              height: "1px",
-              background:
-                "linear-gradient(90deg, transparent, rgba(168,130,44,0.4), rgba(168,130,44,0.4), transparent)",
-              pointerEvents: "none",
-              zIndex: 0,
-              transformOrigin: "left",
-            }}
-            className="how-connector"
-          />
-
           {STEPS.map((s, i) => (
             <motion.div
               key={s.stamp}
-              initial={prefersReduced ? {} : { opacity: 0, y: 28 }}
+              initial={prefersReduced ? {} : { opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: i * 0.12 }}
+              transition={{ duration: 0.5, ease: "easeOut", delay: i * 0.1 }}
+              whileHover={prefersReduced ? {} : { y: -4 }}
               style={{
-                padding: "0 2.5rem",
-                borderRight:
-                  i < STEPS.length - 1
-                    ? "1px solid rgba(19,25,41,0.1)"
-                    : "none",
+                background: "#FFF",
+                border: "1px solid rgba(168, 130, 44, 0.25)",
+                padding: "2.5rem 2rem",
+                borderRadius: "4px",
                 position: "relative",
                 zIndex: 1,
                 textAlign: "center",
+                boxShadow: "0 8px 24px rgba(19, 25, 41, 0.05)",
+                transition: "all 0.3s ease",
               }}
-              className="how-step"
+              className="how-step-card"
             >
-              {/* Stamp circle */}
+              {/* Stamp Circle */}
               <div
                 style={{
-                  width: "104px",
-                  height: "104px",
-                  margin: "0 auto 2rem",
+                  width: "90px",
+                  height: "90px",
+                  margin: "0 auto 1.75rem",
                   position: "relative",
                 }}
               >
                 <svg
-                  width="104"
-                  height="104"
-                  viewBox="0 0 104 104"
+                  width="90"
+                  height="90"
+                  viewBox="0 0 90 90"
                   fill="none"
                   style={{ position: "absolute", inset: 0 }}
                 >
-                  <circle cx="52" cy="52" r="50" stroke={s.accent} strokeWidth="1.5" />
+                  <circle cx="45" cy="45" r="43" stroke={s.accent} strokeWidth="1.5" />
                   <circle
-                    cx="52"
-                    cy="52"
-                    r="44"
+                    cx="45"
+                    cy="45"
+                    r="37"
                     stroke={s.accent}
                     strokeWidth="0.5"
                     strokeDasharray="3 2.5"
@@ -199,64 +179,80 @@ export function HowItWorks() {
                       fontWeight: 400,
                       letterSpacing: "0.3em",
                       textTransform: "uppercase",
-                      color: s.accent,
+                      color: "#A8822C",
+                      marginBottom: "2px",
                     }}
                   >
-                    {s.stamp}
+                    PHASE
                   </div>
                   <div
                     style={{
                       fontFamily: "'Cormorant Garamond', serif",
-                      fontSize: "1.4rem",
-                      fontWeight: 400,
+                      fontSize: "1.75rem",
+                      fontWeight: 600,
+                      lineHeight: 1,
                       color: "#131929",
-                      lineHeight: 1.1,
                     }}
                   >
-                    {s.verb}
+                    {s.stamp}
                   </div>
                 </div>
               </div>
 
               <div
                 style={{
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: "0.68rem",
+                  fontWeight: 600,
+                  letterSpacing: "0.2em",
+                  textTransform: "uppercase",
+                  color: s.accent,
+                  marginBottom: "0.4rem",
+                }}
+              >
+                {s.verb}
+              </div>
+
+              <div
+                style={{
                   fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: "1.25rem",
-                  fontWeight: 400,
+                  fontSize: "1.6rem",
+                  fontWeight: 500,
                   color: "#131929",
-                  marginBottom: "0.75rem",
-                  lineHeight: 1.25,
+                  marginBottom: "1rem",
                 }}
               >
                 {s.headline}
               </div>
-              <div
+
+              <p
                 style={{
                   fontFamily: "'Inter', sans-serif",
-                  fontSize: "0.88rem",
+                  fontSize: "0.85rem",
                   fontWeight: 300,
-                  lineHeight: 1.7,
+                  lineHeight: 1.65,
                   color: "#6A6355",
-                  marginBottom: "1rem",
+                  marginBottom: "1.5rem",
                 }}
               >
                 {s.body}
-              </div>
+              </p>
+
               <div
                 style={{
-                  fontFamily: "'Inter', sans-serif",
-                  fontSize: "0.62rem",
-                  fontWeight: 400,
-                  letterSpacing: "0.15em",
-                  textTransform: "uppercase",
-                  color: s.accent,
-                  padding: "0.4rem 0.75rem",
-                  border: `1px solid ${s.accent}`,
                   display: "inline-block",
-                  opacity: 0.85,
+                  padding: "0.3rem 0.75rem",
+                  background: "rgba(168, 130, 44, 0.08)",
+                  border: "1px solid rgba(168, 130, 44, 0.2)",
+                  borderRadius: "2px",
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: "0.65rem",
+                  fontWeight: 500,
+                  color: "#A8822C",
+                  letterSpacing: "0.05em",
                 }}
               >
-                {s.detail}
+                ✓ {s.detail}
               </div>
             </motion.div>
           ))}
@@ -264,11 +260,10 @@ export function HowItWorks() {
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
-          .how-grid { grid-template-columns: 1fr !important; }
-          .how-step { border-right: none !important; border-bottom: 1px solid rgba(19,25,41,0.1); padding: 2rem 1rem; }
-          .how-step:last-child { border-bottom: none; }
-          .how-connector { display: none; }
+        @media (max-width: 900px) {
+          .how-grid {
+            grid-template-columns: 1fr !important;
+          }
         }
       `}</style>
     </section>

@@ -9,34 +9,39 @@ const PILLARS = [
     tagline: "You focus on the idea.",
     body: "From planning to delivery, we handle the build. Your involvement is limited to the kickoff and the final review.",
     accent: "#A8822C",
+    span: "col-span-1 md:col-span-2 lg:col-span-2",
   },
   {
     icon: Hammer,
     title: "Effort",
     tagline: "We build it.",
     body: "Design, development, testing, and deployment are handled by our team, so you can stay focused on your work.",
-    accent: "#A8822C",
+    accent: "#C9A24A",
+    span: "col-span-1 md:col-span-1 lg:col-span-1",
   },
   {
     icon: Shield,
     title: "Security",
     tagline: "Protected from day one.",
     body: "We sign the NDA before you share your idea. Your idea is protected from the moment you contact us.",
-    accent: "#C9A24A",
+    accent: "#A8822C",
+    span: "col-span-1 md:col-span-1 lg:col-span-1",
   },
   {
     icon: Award,
     title: "Quality",
     tagline: "Reviewed before delivery.",
-    body: "Every MVP is reviewed before delivery. We only ship builds we're confident in.",
-    accent: "#A8822C",
+    body: "Every MVP is reviewed before delivery. We only ship builds we are confident in.",
+    accent: "#C9A24A",
+    span: "col-span-1 md:col-span-2 lg:col-span-2",
   },
   {
     icon: Banknote,
     title: "Cost",
     tagline: "Free to start.",
     body: "Your first MVP is built at no cost. If you choose to continue after the MVP, you can add development, scaling, or custom features as your product grows.",
-    accent: "#C9A24A",
+    accent: "#A8822C",
+    span: "col-span-1 md:col-span-3 lg:col-span-3",
   },
 ];
 
@@ -55,14 +60,14 @@ export function Pillars() {
     >
       <GuillocheBackground color="#F4EFE4" opacity={0.03} />
 
-      {/* Ledger grid lines */}
+      {/* Grid line accent */}
       <div
         aria-hidden
         style={{
           position: "absolute",
           inset: 0,
           backgroundImage:
-            "linear-gradient(rgba(244,239,228,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(244,239,228,0.04) 1px, transparent 1px)",
+            "linear-gradient(rgba(244,239,228,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(244,239,228,0.035) 1px, transparent 1px)",
           backgroundSize: "60px 60px",
           pointerEvents: "none",
         }}
@@ -80,7 +85,7 @@ export function Pillars() {
           initial={prefersReduced ? {} : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           style={{ textAlign: "center", marginBottom: "4.5rem" }}
         >
           <div
@@ -94,7 +99,7 @@ export function Pillars() {
               letterSpacing: "0.3em",
               textTransform: "uppercase",
               color: "#A8822C",
-              marginBottom: "1.5rem",
+              marginBottom: "1.25rem",
             }}
           >
             <span style={{ opacity: 0.7, marginRight: "0.5rem" }}>✤</span>
@@ -108,76 +113,121 @@ export function Pillars() {
               fontWeight: 400,
               lineHeight: 1.15,
               color: "#F4EFE4",
-              marginBottom: "2rem",
+              marginBottom: "1rem",
               textAlign: "center",
-              margin: "0 auto 2rem",
+              margin: "0 auto 1.5rem",
               maxWidth: "800px",
             }}
           >
             What every engagement is worth.
           </h2>
+          <p
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: "0.9rem",
+              color: "rgba(244, 239, 228, 0.75)",
+              maxWidth: "600px",
+              margin: "0 auto",
+              lineHeight: 1.6,
+            }}
+          >
+            Guaranteed principles backed by our NDA shield and stealth execution framework.
+          </p>
         </motion.div>
 
+        {/* Bento Grid */}
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(5, 1fr)",
-            gap: "1px",
-            background: "rgba(168, 130, 44, 0.35)",
-            border: "1px solid rgba(168, 130, 44, 0.35)",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: "1.25rem",
           }}
-          className="pillars-grid"
+          className="pillars-bento-grid"
         >
           {PILLARS.map((p, i) => (
             <motion.div
               key={p.title}
-              initial={prefersReduced ? {} : { opacity: 0, y: 24 }}
+              initial={prefersReduced ? {} : { opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.55, ease: "easeOut", delay: i * 0.08 }}
-              whileHover={prefersReduced ? {} : { scale: 1.025, backgroundColor: "rgba(26, 34, 56, 0.85)", y: -4, zIndex: 10 }}
+              transition={{ duration: 0.45, ease: "easeOut", delay: i * 0.06 }}
+              whileHover={
+                prefersReduced
+                  ? {}
+                  : {
+                      y: -4,
+                      borderColor: "rgba(168, 130, 44, 0.6)",
+                      boxShadow: "0 12px 32px rgba(168, 130, 44, 0.12)",
+                    }
+              }
               style={{
-                backgroundColor: "rgba(19, 25, 41, 0.75)",
-                padding: "2rem 1.5rem",
+                backgroundColor: "rgba(19, 25, 41, 0.8)",
+                border: "1px solid rgba(168, 130, 44, 0.2)",
+                borderRadius: "4px",
+                padding: "2.25rem 1.75rem",
                 position: "relative",
                 overflow: "hidden",
                 display: "flex",
                 flexDirection: "column",
-                gap: "0",
-                boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
+                gap: "0.75rem",
+                transition: "border-color 0.3s ease, box-shadow 0.3s ease",
+                gridColumn: i === 0 ? "span 2" : i === 4 ? "span 3" : "span 1",
               }}
+              className="bento-card"
             >
-              {/* Large background icon */}
+              {/* Radial subtle ambient glow */}
               <div
-                aria-hidden
                 style={{
                   position: "absolute",
-                  bottom: "-30px",
-                  right: "-30px",
-                  color: "rgba(168, 130, 44, 0.07)",
-                  userSelect: "none",
+                  top: 0,
+                  right: 0,
+                  width: "200px",
+                  height: "200px",
+                  background: "radial-gradient(circle, rgba(168,130,44,0.08) 0%, transparent 70%)",
                   pointerEvents: "none",
                 }}
-              >
-                <p.icon size={140} strokeWidth={1} />
-              </div>
+              />
 
               <div
                 style={{
-                  color: p.accent,
-                  marginBottom: "0.75rem",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  marginBottom: "0.5rem",
                 }}
               >
-                <p.icon size={20} strokeWidth={1.5} />
+                <div
+                  style={{
+                    color: p.accent,
+                    background: "rgba(168, 130, 44, 0.08)",
+                    padding: "0.6rem",
+                    borderRadius: "4px",
+                    display: "inline-flex",
+                    border: "1px solid rgba(168, 130, 44, 0.2)",
+                  }}
+                >
+                  <p.icon size={22} strokeWidth={1.5} />
+                </div>
+                <span
+                  style={{
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: "0.6rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.15em",
+                    textTransform: "uppercase",
+                    color: "rgba(168, 130, 44, 0.6)",
+                  }}
+                >
+                  DENOMINATION 0{i + 1}
+                </span>
               </div>
 
               <div
                 style={{
                   fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: "1.4rem",
-                  fontWeight: 400,
+                  fontSize: "1.65rem",
+                  fontWeight: 500,
                   color: "#F4EFE4",
-                  marginBottom: "0.4rem",
                   lineHeight: 1.2,
                 }}
               >
@@ -188,63 +238,40 @@ export function Pillars() {
                 style={{
                   fontFamily: "'Inter', sans-serif",
                   fontSize: "0.72rem",
-                  fontWeight: 500,
+                  fontWeight: 600,
                   letterSpacing: "0.1em",
                   color: p.accent,
-                  marginBottom: "1rem",
                   textTransform: "uppercase",
                 }}
               >
                 {p.tagline}
               </div>
 
-              <div
-                style={{
-                  width: "24px",
-                  height: "1px",
-                  background: "rgba(168,130,44,0.4)",
-                  marginBottom: "1rem",
-                }}
-              />
-
-              <div
+              <p
                 style={{
                   fontFamily: "'Inter', sans-serif",
-                  fontSize: "0.82rem",
+                  fontSize: "0.85rem",
                   fontWeight: 300,
-                  lineHeight: 1.7,
+                  lineHeight: 1.65,
                   color: "rgba(244, 239, 228, 0.82)",
-                  flex: 1,
+                  marginTop: "0.25rem",
                 }}
               >
                 {p.body}
-              </div>
-
-              {/* Corner ornament */}
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: "12px",
-                  right: "12px",
-                  opacity: 0.2,
-                }}
-              >
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <circle cx="9" cy="9" r="8" stroke="#A8822C" strokeWidth="0.75" />
-                  <circle cx="9" cy="9" r="5" stroke="#A8822C" strokeWidth="0.5" />
-                </svg>
-              </div>
+              </p>
             </motion.div>
           ))}
         </div>
       </div>
 
       <style>{`
-        @media (max-width: 900px) {
-          .pillars-grid { grid-template-columns: repeat(2, 1fr) !important; }
-        }
-        @media (max-width: 480px) {
-          .pillars-grid { grid-template-columns: 1fr !important; }
+        @media (max-width: 960px) {
+          .pillars-bento-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .bento-card {
+            grid-column: span 1 !important;
+          }
         }
       `}</style>
     </section>
