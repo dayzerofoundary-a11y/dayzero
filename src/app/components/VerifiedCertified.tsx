@@ -162,9 +162,44 @@ export function VerifiedCertified() {
                     fontWeight: 300,
                     color: "#6A6355",
                     letterSpacing: "0.12em",
+                    marginBottom: "1rem",
                   }}
                 >
                   This MVP meets the DayZero Foundary build standard.
+                </div>
+
+                {/* 3-Stage Pipeline Badges */}
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: "0.5rem",
+                    flexWrap: "wrap",
+                    margin: "1rem 0",
+                  }}
+                >
+                  {[
+                    "01. Architecture Audit",
+                    "02. Security & Encryption",
+                    "03. Runnable Git Handoff",
+                  ].map((stage, idx) => (
+                    <span
+                      key={idx}
+                      style={{
+                        fontFamily: "'Inter', sans-serif",
+                        fontSize: "0.6rem",
+                        fontWeight: 600,
+                        letterSpacing: "0.08em",
+                        color: "#1A4A3C",
+                        background: "rgba(26, 74, 60, 0.08)",
+                        border: "1px solid rgba(26, 74, 60, 0.2)",
+                        padding: "0.3rem 0.65rem",
+                        borderRadius: "2px",
+                      }}
+                    >
+                      ✓ {stage}
+                    </span>
+                  ))}
                 </div>
               </div>
 
