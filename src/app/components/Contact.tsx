@@ -17,13 +17,6 @@ const CONTACTS = [
     phone: "+91 9618587055",
     label: "AR",
   },
-  {
-    name: "Shlok Karn",
-    role: "Founder & CTO",
-    email: "karnshlok3@gmail.com",
-    phone: "+91 70132 66120",
-    label: "SK",
-  },
 ];
 
 export function Contact() {
@@ -107,9 +100,9 @@ export function Contact() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
+            gridTemplateColumns: "repeat(2, 1fr)",
             gap: "2rem",
-            maxWidth: "1200px",
+            maxWidth: "900px",
             margin: "0 auto",
           }}
           className="contact-grid"
